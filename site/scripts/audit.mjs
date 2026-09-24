@@ -249,7 +249,8 @@ try {
     const n = await p.locator("tbody tr").count();
     assert.ok(n >= 2, "rows rendered without JavaScript");
     assert.equal(await p.locator('[data-chart="score"] .bar').count(), n);
-    await p.locator('tbody a[href="/cmp/cookieyes-nextjs/"]').click();
+    // Whichever profile the leaderboard opens on, its link goes to that profile's page.
+    await p.locator('tbody a[href^="/cmp/cookieyes-nextjs/"]').first().click();
     assert.match(await p.title(), /to banner|LCP/);
     report.noJavaScript.push({
       width,

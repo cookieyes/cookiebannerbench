@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { loadHistory, loadRun } from "@/data/source";
-import { SITE_URL } from "@/lib/config";
+import { detailHref, SITE_URL } from "@/lib/config";
 import { PUBLISHED } from "@/lib/published";
 export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       "/about/",
       "/runs/",
       "/privacy/",
-      ...PUBLISHED.map((p) => `/cmp/${p.app}/`),
+      ...PUBLISHED.flatMap((p) => run.profiles.map((profile) => detailHref(p.app, profile))),
     ].map((path) => ({
       url: `${SITE_URL}${path}`,
       lastModified: run.finishedAt,

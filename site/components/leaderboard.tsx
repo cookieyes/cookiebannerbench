@@ -1,5 +1,5 @@
 import { Mark, ScoreChip, Value } from "@/components/ui";
-import { LEADERBOARD_SLICE } from "@/lib/config";
+import { detailHref, LEADERBOARD_SLICE } from "@/lib/config";
 import { formatMetric, type Unit } from "@/lib/metrics";
 import { MODEL_LABEL } from "@/lib/models";
 import type { Row, Slice } from "@/lib/ranking";
@@ -185,7 +185,17 @@ function costOf(row: Row, chart: Chart): string | null {
     .join(" · ");
 }
 
-function HeroChart({ rows, chart, active }: { rows: Row[]; chart: Chart; active: boolean }) {
+function HeroChart({
+  rows,
+  chart,
+  active,
+  profile,
+}: {
+  rows: Row[];
+  chart: Chart;
+  active: boolean;
+  profile: string;
+}) {
   const items = rows
     .filter((r) => !r.control)
     .map((r) => ({ row: r, value: points(r, chart.key), cost: costOf(r, chart) }))
@@ -264,7 +274,12 @@ function HeroChart({ rows, chart, active }: { rows: Row[]; chart: Chart; active:
       </div>
       <div className="bar-feet" aria-hidden="true">
         {items.map((i) => (
-          <a key={i.row.app} className="bar-foot" href={`/cmp/${i.row.app}/`} tabIndex={-1}>
+          <a
+            key={i.row.app}
+            className="bar-foot"
+            href={detailHref(i.row.app, profile)}
+            tabIndex={-1}
+          >
             <span className="name">{i.row.label}</span>
             <span className="pkg">{shortSlug(i.row)}</span>
           </a>
@@ -381,7 +396,7 @@ export function Results({
           </fieldset>
         </div>
         {charts.map((c, i) => (
-          <HeroChart key={c.key} rows={rows} chart={c} active={i === 0} />
+          <HeroChart key={c.key} rows={rows} chart={c} active={i === 0} profile={slice.profile} />
         ))}
       </div>
 
@@ -469,7 +484,7 @@ export function Results({
                   <span className="identity">
                     <Mark app={row.app} />
                     <span>
-                      <a href={`/cmp/${row.app}/`}>{row.label}</a>
+                      <a href={detailHref(row.app, slice.profile)}>{row.label}</a>
                       <span className="slug">{slugOf(row)}</span>
                     </span>
                   </span>

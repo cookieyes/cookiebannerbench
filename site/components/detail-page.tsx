@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ICONS, Mark, MetricCard, Notice, Pill, ScoreChip, Value } from "@/components/ui";
 import { loadAppMetadata, loadMeasurements, loadTargets } from "@/data/source";
-import { DEFAULT_SLICE } from "@/lib/config";
+import { DEFAULT_SLICE, detailHref } from "@/lib/config";
 import { detailData } from "@/lib/detail";
 import { formatDate, formatMetric } from "@/lib/metrics";
 import { MODEL_LABEL } from "@/lib/models";
@@ -48,12 +48,18 @@ const OutArrow = () => (
   </svg>
 );
 
-export function DetailPage({ app }: { app: string }) {
-  const { entry, run, rows, row, control, conditions } = detailData(app);
+export function DetailPage({
+  app,
+  profile = DEFAULT_SLICE.profile,
+}: {
+  app: string;
+  profile?: string;
+}) {
+  const { entry, run, rows, row, control, conditions } = detailData(app, profile);
   const meta = loadAppMetadata(app);
   const target = loadTargets()[app];
   const loads = loadMeasurements(app).filter(
-    (m) => m.profile === DEFAULT_SLICE.profile && m.cache === DEFAULT_SLICE.cache,
+    (m) => m.profile === profile && m.cache === DEFAULT_SLICE.cache,
   );
   const bannerLoads = loads.map((m) => m.bannerVisible).filter((v): v is number => v !== null);
   const scores = row.scores;
@@ -77,7 +83,7 @@ export function DetailPage({ app }: { app: string }) {
       ? "Not scored"
       : `${scores.provisional ? "Provisional" : BAND_WORD[band ?? "fair"]}${spread ? ` · ${spread}` : ""}`;
   const loadCount = row.n ?? run.iterations;
-  const conditionLine = `throttled mobile · cold cache · p75 of ${loadCount} loads`;
+  const conditionLine = `${profile.replace("-", " ")} · cold cache · p75 of ${loadCount} loads`;
   // The npm name, which for a package's mode (c15t offline) is not the shown name.
   const npm = entry.npmPackage ?? row.package;
   const slug = npm ? `${npm}@${row.version.split("@").pop()}` : row.app;
@@ -98,7 +104,7 @@ export function DetailPage({ app }: { app: string }) {
     <>
       <SiteHeader />
       <main id="main" className="page">
-        <JsonLd data={datasetLd(run, `/cmp/${app}/`, [row])} />
+        <JsonLd data={datasetLd(run, detailHref(app, profile), [row])} />
 
         <div className="page-top">
           <a className="btn ghost back" href="/">
@@ -333,7 +339,15 @@ export function DetailPage({ app }: { app: string }) {
                   return (
                     <tr key={`${slice.profile}${slice.cache}`}>
                       <td className="l t-ident">
-                        {slice.profile} · {slice.cache}
+                        {slice.profile === profile ? (
+                          <span aria-current="page">
+                            {slice.profile} · {slice.cache}
+                          </span>
+                        ) : (
+                          <a href={detailHref(app, slice.profile)}>
+                            {slice.profile} · {slice.cache}
+                          </a>
+                        )}
                       </td>
                       <td>
                         <ScoreChip scores={r.scores} />

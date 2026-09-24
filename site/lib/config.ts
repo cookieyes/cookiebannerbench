@@ -17,6 +17,12 @@ export const DEFAULT_SLICE = {
  * select away on the leaderboard.
  */
 export const LEADERBOARD_SLICE = { ...DEFAULT_SLICE, profile: "fast-desktop" };
+/**
+ * An installation's detail page for a test profile. The default profile keeps
+ * the plain /cmp/<app>/ address; every other profile has its own page beneath it.
+ */
+export const detailHref = (app: string, profile: string = DEFAULT_SLICE.profile) =>
+  profile === DEFAULT_SLICE.profile ? `/cmp/${app}/` : `/cmp/${app}/${profile}/`;
 
 // ---------------------------------------------------------------------------
 // Legal identity, used by /privacy/. Kept here so the details a reviewer will

@@ -2,9 +2,11 @@ name: site
 
 on:
   push:
-    paths: ["site/**", "results/**", "apps/**/consentbench.json", "targets.json", "lighthouserc.json"]
+    paths: ["site/**", "results/**", "apps/**/cookiebannerbench.json", "targets.json", "lighthouserc.json"]
+  # No path filter on pull requests. `verify` is a required status check on
+  # main, and a required check that is skipped never reports, which would leave
+  # any pull request outside those paths unmergeable.
   pull_request:
-    paths: ["site/**", "results/**", "lighthouserc.json"]
 
 jobs:
   verify:
@@ -18,14 +20,18 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
-      - run: pnpm --filter @consentbench/site typecheck
+      - run: pnpm typecheck
+      - run: pnpm --filter @cookiebannerbench/site typecheck
+      # Harness unit tests, then the site's. The site's run again inside
+      # `build`; the harness's run nowhere else.
+      - run: pnpm test
       # `build` runs the unit tests, exports (pages plus the leaderboard
       # condition fragments), strips the hydration runtime, then scans every
       # exported file for removed vendor names. Fails on harness schema drift.
-      - run: pnpm --filter @consentbench/site build
+      - run: pnpm --filter @cookiebannerbench/site build
 
       - name: Install Chromium
-        run: pnpm --filter @consentbench/harness exec playwright install --with-deps chromium
+        run: pnpm --filter @cookiebannerbench/harness exec playwright install --with-deps chromium
 
       - name: Serve the export
         run: |
@@ -37,14 +43,14 @@ jobs:
       # canonical URLs; then sort/filter/condition/theme interactions with the
       # keyboard, and the no-JavaScript render at both widths.
       - name: Accessibility and interaction audit
-        run: pnpm --filter @consentbench/site audit:a11y
+        run: pnpm --filter @cookiebannerbench/site audit:a11y
         env:
           AUDIT_OUTPUT: ${{ github.workspace }}/audit
 
-      # Mobile emulation, median of 3 per route, thresholds from lighthouserc.json:
-      # 100 in all four categories, CLS ≤ 0.02, TBT ≤ 100 ms, FCP ≤ 1.2 s, LCP ≤ 1.8 s.
+      # Mobile emulation, median of 5 per route, thresholds from lighthouserc.json:
+      # 100 in all four categories, CLS ≤ 0.02, TBT ≤ 100 ms, FCP ≤ 1.2 s, LCP ≤ 2.5 s.
       - name: Lighthouse
-        run: pnpm --filter @consentbench/site audit:perf
+        run: pnpm --filter @cookiebannerbench/site audit:perf
         env:
           LH_OUTPUT: ${{ github.workspace }}/audit/lighthouse
 

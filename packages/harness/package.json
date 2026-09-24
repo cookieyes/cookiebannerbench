@@ -1,10 +1,10 @@
 {
-  "name": "@consentbench/harness",
+  "name": "@cookiebannerbench/harness",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "bin": {
-    "consentbench": "./dist/index.js"
+    "cookiebannerbench": "./dist/index.js"
   },
   "exports": "./dist/index.js",
   "scripts": {

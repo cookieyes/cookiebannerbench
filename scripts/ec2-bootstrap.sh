@@ -36,10 +36,10 @@ cd "$(dirname "$0")/.."
 pnpm install --frozen-lockfile
 pnpm build:harness
 # --with-deps pulls the shared libraries headless chromium needs on a bare VM.
-pnpm --filter @consentbench/harness exec playwright install --with-deps chromium
+pnpm --filter @cookiebannerbench/harness exec playwright install --with-deps chromium
 
 echo ""
 echo "Ready. Versions:"
 echo "  node     $(node -v)"
 echo "  pnpm     $(pnpm -v)"
-echo "  chromium $(pnpm --filter @consentbench/harness exec playwright --version 2>/dev/null || echo '?')"
+echo "  chromium $(pnpm --filter @cookiebannerbench/harness exec playwright --version 2>/dev/null || echo '?')"

@@ -121,8 +121,8 @@ export default function Privacy() {
             </li>
           </ul>
           <p className="t-body">
-            The current site also stores the localStorage value <code>consentbench-theme</code>,
-            which remembers whether you chose the light or dark theme. The value stays in your
+            The current site also stores the localStorage value <code>cookiebannerbench-theme</code>
+            , which remembers whether you chose the light or dark theme. The value stays in your
             browser, contains no identifier and is removed when you clear site data or return the
             theme to "system".
           </p>

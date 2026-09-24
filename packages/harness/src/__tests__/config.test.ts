@@ -16,8 +16,8 @@ describe("parseAppConfig", () => {
   });
 
   it("names the file in the error so a bad config is findable", () => {
-    expect(() => parseAppConfig("{}", "apps/foo/consentbench.json")).toThrow(
-      /apps\/foo\/consentbench\.json: "name" is required/,
+    expect(() => parseAppConfig("{}", "apps/foo/cookiebannerbench.json")).toThrow(
+      /apps\/foo\/cookiebannerbench\.json: "name" is required/,
     );
   });
 

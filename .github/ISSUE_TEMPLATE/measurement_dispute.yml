@@ -1,0 +1,87 @@
+name: 📊 Dispute a published measurement
+description: A number on cookiebannerbench.com looks wrong
+title: "[Measurement]: "
+labels: ["measurement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the most useful issue you can open. A published number that is
+        wrong is worse than one that is missing, so we would rather hear about it.
+
+        Please tell us which run and which condition, because a figure only means
+        anything inside one run on one machine. Every recorded run is committed
+        under `results/`, and the run ID is printed on every page that shows a number.
+
+  - type: input
+    id: installation
+    attributes:
+      label: Installation
+      description: The name as the site shows it, or the folder under `apps/`.
+      placeholder: "e.g. cookieyes-nextjs"
+    validations:
+      required: true
+
+  - type: input
+    id: run-id
+    attributes:
+      label: Run ID
+      description: Shown on the leaderboard and on every detail page.
+      placeholder: "e.g. 2026-09-23T13-16-00-056Z"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Condition
+      description: Which profile the disputed figure is shown under.
+      options:
+        - fast-desktop
+        - throttled-mobile
+        - Both / not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: claim
+    attributes:
+      label: What the site says, and what you believe is correct
+      description: Name the metric and quote the published value.
+      placeholder: |
+        The site reports a banner-visible p75 of 1.9 s. Measuring the same
+        deployment from the same region I consistently see around 0.8 s.
+    validations:
+      required: true
+
+  - type: textarea
+    id: basis
+    attributes:
+      label: What are you comparing against?
+      description: >
+        Your own measurement, the vendor's documentation, a trace, a WebPageTest
+        run — anything we can check. If the claim is that the installation itself
+        is wrong, point at the file in `apps/` and say what it should be.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: region
+    attributes:
+      label: If you measured it yourself
+      description: >
+        Some vendors decide from the visitor's IP whether to render a banner at
+        all, so a run from outside the EU is not comparable with ours.
+      options:
+        - label: I measured from an EU region.
+          required: false
+        - label: I am not submitting my own measurement.
+          required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        **What happens next.** If the setup was wrong on our side, we fix the app
+        and record a new run. The new run is published beside the old one — an old
+        run is never edited, because a benchmark that quietly rewrites its history
+        is not evidence of anything.

@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { AppConfig, TargetMap } from "./types.js";
 
-const CONFIG_FILE = "consentbench.json";
+const CONFIG_FILE = "cookiebannerbench.json";
 const TARGETS_FILE = "targets.json";
 
 function fail(where: string, problem: string): never {
@@ -50,7 +50,7 @@ export function parseAppConfig(raw: string, where: string): AppConfig {
   };
 }
 
-/** Reads every consentbench.json under the apps directory, sorted by name. */
+/** Reads every cookiebannerbench.json under the apps directory, sorted by name. */
 export function loadApps(appsDir: string): AppConfig[] {
   if (!existsSync(appsDir)) {
     fail(appsDir, "apps directory not found");

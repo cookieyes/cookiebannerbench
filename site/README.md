@@ -70,7 +70,7 @@ Swapping these files for an API later touches that one module.
 | Source | Read from | Used for |
 |---|---|---|
 | `../results/<runId>/run.json` | most recent run directory | all metrics, ranking |
-| `../apps/*/consentbench.json` | per-app config | vendor grouping, tags |
+| `../apps/*/cookiebannerbench.json` | per-app config | vendor grouping, tags |
 | `../targets.json` | deployed URL, version, date | provenance |
 
 Each file is parsed with a **zod schema** (`lib/schema.ts`) mirroring
@@ -84,7 +84,7 @@ request time.
 
 The site derives its vendor list from the harness — there is no list to edit.
 
-1. Add the benchmark app in `../apps/<name>/` with a `consentbench.json`
+1. Add the benchmark app in `../apps/<name>/` with a `cookiebannerbench.json`
    carrying a `vendor` field.
 2. Deploy it and add its entry to `../targets.json`.
 3. Run the harness so the vendor appears in a `run.json`.

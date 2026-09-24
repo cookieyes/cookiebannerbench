@@ -88,7 +88,7 @@ export interface Measurement extends Sample {
   at: string;
 }
 
-/** A per-app benchmark target, read from the app's `consentbench.json`. */
+/** A per-app benchmark target, read from the app's `cookiebannerbench.json`. */
 export interface AppConfig {
   /** Directory name under `apps/`, and the key used in `targets.json`. */
   name: string;

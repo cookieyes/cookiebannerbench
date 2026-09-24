@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Deploy every benchmark app to Vercel as its own project.
 #
-# Project + subdomain convention:  consentbench-<app>.vercel.app
+# Project + subdomain convention:  cookiebannerbench-<app>.vercel.app
 # Deploys run sequentially — Vercel rate-limits concurrent builds.
 #
 # Auth: reads VERCEL_TOKEN from the environment, or from ./.vercel-token
@@ -61,7 +61,7 @@ OUT="$ROOT/deployed-urls.txt"
 : > "$OUT"
 
 for app in "${APPS[@]}"; do
-  project="consentbench-${app}"
+  project="cookiebannerbench-${app}"
   echo ""
   echo "──────── $app  →  $project ────────"
   cd "$ROOT/apps/$app"
@@ -81,7 +81,7 @@ for app in "${APPS[@]}"; do
   #
   # The auto alias is truncated when the project name is long, and gets a random
   # suffix when the subdomain is already taken globally (that is where
-  # "consentbench-baseline-henna" came from) — so read it, never guess it.
+  # "cookiebannerbench-baseline-henna" came from) — so read it, never guess it.
   alias_url=$(grep -oE '^.*Aliased[[:space:]]+https://[a-zA-Z0-9.-]+\.vercel\.app' "$log" \
               | grep -oE 'https://[a-zA-Z0-9.-]+\.vercel\.app' | head -1)
   [ -z "$alias_url" ] && alias_url="$url"
@@ -95,4 +95,4 @@ done
 
 echo ""
 echo "Wrote $OUT"
-echo "Next: update targets.json, then run  consentbench preflight"
+echo "Next: update targets.json, then run  cookiebannerbench preflight"

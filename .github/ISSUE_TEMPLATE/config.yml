@@ -1,0 +1,15 @@
+# Disables the option to open a blank/freeform issue, forcing use of the templates above.
+blank_issues_enabled: false
+
+contact_links:
+  - name: 🔒 Report a security vulnerability
+    url: https://github.com/cookieyes/cookiebannerbench/security/advisories/new
+    about: Please do NOT report security vulnerabilities as a public issue. Use private reporting instead.
+
+  - name: 📖 How we test
+    url: https://cookiebannerbench.com/methodology/
+    about: The method, what is published and the known limits — read this before disputing a number or proposing a change.
+
+  - name: 📈 The leaderboard
+    url: https://cookiebannerbench.com
+    about: Every published number, with the run that produced it.

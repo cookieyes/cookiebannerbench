@@ -2,7 +2,7 @@ packages:
   - "apps/*"
   - "packages/*"
   # Demo pages that are deployed but never benchmarked. The harness only reads
-  # apps/*/consentbench.json, so nothing here enters a run.
+  # apps/*/cookiebannerbench.json, so nothing here enters a run.
   - "demos/*"
   # The public benchmark site. Reads results/ at build time; never measured.
   - "site"

@@ -1,0 +1,89 @@
+name: 🐛 Bug report
+description: Something in the harness, the site or the repo isn't working
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For a published figure that looks wrong, use **Dispute a published
+        measurement** instead — it asks for the run ID and condition we need.
+
+        For a security vulnerability, please do **not** file a public issue.
+        See [SECURITY.md](../../SECURITY.md).
+
+  - type: checkboxes
+    id: existing-issue-check
+    attributes:
+      label: Is there an existing issue for this?
+      options:
+        - label: I have searched existing issues and this is not a duplicate.
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Harness / CLI (@cookiebannerbench/harness)
+        - Site (cookiebannerbench.com)
+        - A test app under apps/
+        - Build, CI or tooling
+        - Not sure / other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: If a command failed, paste the command and its output.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. pnpm install && pnpm build:harness
+        2. pnpm bench run --iterations 5
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Node version, pnpm version, browser — whatever's relevant. For a site bug, the page URL.
+      placeholder: |
+        - OS: macOS 15
+        - Node: 22.x
+        - pnpm: 9.x
+        - Browser: Chrome 140
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Screenshots, console errors, logs — anything else that helps.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Are you willing to submit a PR to fix this?
+      options:
+        - label: Yes, I'd like to work on this.
+          required: false

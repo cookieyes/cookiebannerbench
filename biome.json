@@ -6,6 +6,7 @@
       "!**/dist",
       "!**/.next",
       "!**/results",
+      "!**/results-archive",
       "!**/node_modules",
       "!**/.vercel",
       "!site/out",

@@ -13,7 +13,7 @@ for (const scheme of ["light", "dark"]) {
     const ctx = await b.newContext({ colorScheme: scheme });
     const p = await ctx.newPage();
     const res = await p.goto(BASE + path, { waitUntil: "load" });
-    if (!res || res.status() !== 200) {
+    if (res?.status() !== 200) {
       throw new Error(`${path} returned ${res?.status()} — auditing a 404 would report phantom violations`);
     }
     await p.evaluate(axe);

@@ -187,7 +187,7 @@ lines.push("");
 lines.push("Category scores under method 2 (points out of 100):");
 lines.push("");
 const cats = rows[0]?.categories.map((c) => c.label) ?? [];
-lines.push(pad("installation", 34) + cats.map((c) => num(c, 15)).join("") + "   partial");
+lines.push(`${pad("installation", 34)}${cats.map((c) => num(c, 15)).join("")}   partial`);
 lines.push("-".repeat(112));
 for (const r of rows) {
   lines.push(

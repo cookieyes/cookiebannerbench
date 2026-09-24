@@ -67,9 +67,9 @@ export const COLUMNS: Column[] = [
   {
     key: "lcp",
     label: "LCP",
-    term: "Largest Contentful Paint",
+    term: "Largest Contentful Paint delay",
     define:
-      "How long until the biggest element on screen, usually the main image or headline, has rendered. Reported, not scored.",
+      "How much later the biggest element on screen, usually the main image or headline, renders than on the no-SDK control under the same condition. Reported, not scored.",
     unit: "ms",
     priority: 8,
     dir: "asc",
@@ -77,9 +77,9 @@ export const COLUMNS: Column[] = [
   {
     key: "cls",
     label: "CLS",
-    term: "Cumulative Layout Shift",
+    term: "Cumulative Layout Shift added",
     define:
-      "How much content jumps around while the page loads, for example when a banner pushes it down. 0 means nothing moved. Reported, not scored.",
+      "How much more content jumps around than on the no-SDK control under the same condition, for example when a banner pushes it down. 0 means the banner moved nothing. Reported, not scored.",
     unit: "shift",
     priority: 9,
     dir: "asc",
@@ -87,9 +87,9 @@ export const COLUMNS: Column[] = [
   {
     key: "tbt",
     label: "TBT",
-    term: "Total Blocking Time",
+    term: "Total Blocking Time added",
     define:
-      "How long scripts kept the browser too busy to respond to a tap or click, counting only the part of each long task past 50 ms. Scored in Page Impact, as the increase over the no-SDK control.",
+      "How much longer scripts kept the browser too busy to respond to a tap or click than on the no-SDK control under the same condition, counting only the part of each long task past 50 ms. Scored in Page Impact.",
     unit: "ms",
     priority: 11,
     dir: "asc",
@@ -97,22 +97,34 @@ export const COLUMNS: Column[] = [
   {
     key: "fcp",
     label: "FCP",
-    term: "First Contentful Paint",
+    term: "First Contentful Paint delay",
     define:
-      "How long until the first text or image appears on screen. Scored in Page Impact, as the delay beyond the no-SDK control.",
+      "How much later the first text or image appears than on the no-SDK control under the same condition, so the site's own load time is taken out. Scored in Page Impact.",
     unit: "ms",
     priority: 11,
     dir: "asc",
   },
 ];
 
+/** The browser timings, shown as the increase over the control like the score reads them. */
+const OVER_CONTROL = new Set(["fcp", "lcp", "tbt", "cls"]);
+
 /** The number a cell shows, or null for a dash. Costs are what the row cost beyond the control. */
-export function cellValue(row: Row, key: string): number | null {
+export function cellValue(row: Row, key: string, control?: Row): number | null {
   if (key === "score") return row.scores.overall === null ? null : roundScore(row.scores.overall);
   if (key === "extraBytes") {
     if (row.control) return 0;
     const bytes = row.scores.categories.flatMap((c) => c.metrics).find((m) => m.id === "bytes");
     return bytes?.measured ? (bytes.cost ?? null) : null;
+  }
+  if (OVER_CONTROL.has(key)) {
+    if (row.control) return 0;
+    // max(0, value − control), the same increase the score takes; the site's
+    // own load time is the control's, so what is left is the SDK's.
+    const k = key as "fcp" | "lcp" | "tbt" | "cls";
+    const own = row.values[k];
+    const base = control?.values[k];
+    return own === undefined || base === undefined ? null : Math.max(0, own - base);
   }
   if (row.control && (key === "bannerVisible" || key === "bannerViewportCoverage")) return null;
   // No banner detected: coverage is unmeasured, not 0 % of the viewport.
@@ -320,6 +332,7 @@ export function Results({
   // entry in the field, so it is stated on the method page rather than ranked
   // here. `allRows` still carries it: the scores were computed from it.
   const rows = allRows.filter((r) => !r.control);
+  const control = allRows.find((r) => r.control);
   const charts = chartsFor(rows);
   const conditionText = `${slice.profile.replace("-", " ")} · ${slice.cache} cache · ${slice.percentile}`;
   const attrs = (row: Row) => ({
@@ -328,7 +341,7 @@ export function Results({
     "data-search":
       `${row.label} ${row.package ?? ""} ${MODEL_LABEL[row.installModel]}`.toLowerCase(),
     "data-values": JSON.stringify(
-      Object.fromEntries(COLUMNS.map((c) => [c.key, cellValue(row, c.key)])),
+      Object.fromEntries(COLUMNS.map((c) => [c.key, cellValue(row, c.key, control)])),
     ),
   });
   const cellProps = (c: Column) => ({
@@ -490,7 +503,7 @@ export function Results({
                   </span>
                 </th>
                 {COLUMNS.map((c) => {
-                  const v = cellValue(row, c.key);
+                  const v = cellValue(row, c.key, control);
                   if (c.key === "score")
                     return (
                       <td key={c.key} {...cellProps(c)} className="sticky-2">

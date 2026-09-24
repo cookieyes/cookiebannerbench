@@ -3,15 +3,37 @@
   "routes": [
     {
       "src": "^/$",
-      "has": [{ "type": "header", "key": "accept", "value": { "re": "text/markdown" } }],
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": {
+            "re": "text/markdown"
+          }
+        }
+      ],
       "dest": "/index.md",
-      "headers": { "content-type": "text/markdown; charset=utf-8", "vary": "Accept" }
+      "headers": {
+        "content-type": "text/markdown; charset=utf-8",
+        "vary": "Accept"
+      }
     },
     {
       "src": "^/(.+?)/$",
-      "has": [{ "type": "header", "key": "accept", "value": { "re": "text/markdown" } }],
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": {
+            "re": "text/markdown"
+          }
+        }
+      ],
       "dest": "/$1/index.md",
-      "headers": { "content-type": "text/markdown; charset=utf-8", "vary": "Accept" }
+      "headers": {
+        "content-type": "text/markdown; charset=utf-8",
+        "vary": "Accept"
+      }
     }
   ],
   "headers": [
@@ -22,16 +44,20 @@
           "key": "Link",
           "value": "</index.md>; rel=\"alternate\"; type=\"text/markdown\", </methodology/>; rel=\"help\", </sitemap.xml>; rel=\"describedby\"; type=\"application/xml\", <https://github.com/cookieyes/cookiebannerbench/blob/main/LICENSE>; rel=\"license\""
         },
-        { "key": "Vary", "value": "Accept" }
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
       ]
     },
     {
       "source": "/(.*)/",
-      "headers": [{ "key": "Vary", "value": "Accept" }]
-    },
-    {
-      "source": "/(.*)\\.md",
-      "headers": [{ "key": "Content-Type", "value": "text/markdown; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
     }
   ]
 }

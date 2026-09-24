@@ -2,7 +2,10 @@
   "name": "matched-c15t-backend",
   "label": "c15t (matched, hosted backend)",
   "vendor": "c15t",
-  "bannerSelectors": ["[data-testid=\"consent-banner-root\"]"],
+  "bannerSelectors": [
+    "[data-testid=\"consent-banner-card\"]",
+    "[data-testid=\"consent-banner-root\"]"
+  ],
   "serviceHosts": ["c15t.com", "consent.io", "inth.app"],
   "tags": ["matched", "backend"]
 }

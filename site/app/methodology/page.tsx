@@ -351,7 +351,7 @@ export default function Methodology() {
             </p>
             <p className="t-body">
               To dispute a number, open an issue with the installation, run ID and condition, or{" "}
-              <a href="https://www.cookieyes.com/contact-us/">contact CookieYes</a>, which publishes
+              <a href="https://www.cookieyes.com/contact/">contact CookieYes</a>, which publishes
               the site. A configuration fix is re-run and the new run is published beside the old
               one; the old one is not edited.
             </p>

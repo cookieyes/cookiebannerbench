@@ -112,6 +112,12 @@ export default function Methodology() {
               name describes throttling, not phone-screen emulation. Dates are UTC.
             </p>
             <p>
+              The leaderboard opens on <code>fast-desktop</code>; <code>throttled-mobile</code> is
+              one selection away, and there is no cache selection because every load is cold. An
+              installation's detail page opens on whichever profile the leaderboard was showing, and
+              links to the other.
+            </p>
+            <p>
               The test installations carry their own framework setup, so a difference between two
               pages includes that setup. It is not a controlled estimate of SDK cost alone, which is
               why every cost is expressed against the no-SDK control on the same condition.
@@ -207,6 +213,15 @@ export default function Methodology() {
                 banner, coverage and the wait until the banner can be clicked are absolute, because
                 the control has no banner. The score is rounded once, to an integer, and the band is
                 read from the rounded number.
+              </p>
+              <p className="t-body">
+                <b>Browser timings on the leaderboard.</b> FCP, LCP, TBT and CLS are shown the same
+                way the score reads its inputs: <code>max(0, value − control)</code> on the profile
+                and percentile being shown. The test site's own load time (DNS, TLS, the server's
+                response, HTML, CSS and fonts) is the control's too, so it is taken out and what
+                remains is the consent layer's. An installation that came out faster than the
+                control shows 0. Detail pages keep the absolute timings, with the control's own
+                figure beside each delay.
               </p>
               <p className="t-body">
                 <b>Bands:</b> Good {BANDS.good}–100, Fair {BANDS.fair}–{BANDS.good - 1}, Poor below{" "}

@@ -121,11 +121,14 @@ pnpm audit:perf   # Lighthouse, mobile emulation, median of 3 per route, asserte
 
 ### How the export stays small
 
-The document ships only the default leaderboard condition (throttled mobile /
-cold / p75) as complete HTML. The other eleven profile × cache × percentile
-conditions are rendered by `app/slices/[run]/[slice]/route.ts` into standalone
-fragments at `/slices/<run>/<profile>_<cache>_<percentile>.html`, and
-`public/enhance.js` fetches one the first time it is selected — one request,
+The document ships only the default leaderboard condition (`LEADERBOARD_SLICE`:
+fast desktop / cold / p75) as complete HTML. The other profile × percentile
+conditions (every run is cold-cache only, so there is no cache control) are
+rendered by `app/slices/[run]/[slice]/route.ts` into standalone fragments,
+exported as `/slices/<run>/<profile>_<cache>_<percentile>.html`, and
+`public/enhance.js` fetches one the first time it is selected at its clean URL,
+`/slices/<run>/<profile>_<cache>_<percentile>/` (Vercel answers the `.html`
+path with a 404; `serve.mjs` resolves both) — one request,
 one `replaceWith`, no client-side templating. The homepage is ~20 KB gzipped,
 readers without JavaScript get the full default table, and first-load JS is
 under 3 KB gzipped. `scripts/finalize-export.mjs` strips the unused App Router

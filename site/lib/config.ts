@@ -11,6 +11,12 @@ export const DEFAULT_SLICE = {
   cache: DEFAULT_CACHE,
   percentile: DEFAULT_PERCENTILE,
 };
+/**
+ * The condition the leaderboard opens on. Detail pages, share images and the
+ * methodology examples stay on DEFAULT_SLICE; the other conditions are one
+ * select away on the leaderboard.
+ */
+export const LEADERBOARD_SLICE = { ...DEFAULT_SLICE, profile: "fast-desktop" };
 
 // ---------------------------------------------------------------------------
 // Legal identity, used by /privacy/. Kept here so the details a reviewer will

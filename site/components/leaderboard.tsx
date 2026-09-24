@@ -1,5 +1,5 @@
 import { Mark, ScoreChip, Value } from "@/components/ui";
-import { DEFAULT_SLICE } from "@/lib/config";
+import { LEADERBOARD_SLICE } from "@/lib/config";
 import { formatMetric, type Unit } from "@/lib/metrics";
 import { MODEL_LABEL } from "@/lib/models";
 import type { Row, Slice } from "@/lib/ranking";
@@ -346,12 +346,6 @@ export function Results({
                 </select>
               </label>
               <label className="t-label">
-                Cache
-                <select disabled name="cache" defaultValue={slice.cache}>
-                  <option value="cold">cold</option>
-                </select>
-              </label>
-              <label className="t-label">
                 Percentile
                 <select disabled name="percentile" defaultValue={slice.percentile}>
                   {["p50", "p75", "p95"].map((p) => (
@@ -522,7 +516,7 @@ export function Leaderboard({
   profiles: string[];
   runId: string;
 }) {
-  const defaultKey = `${DEFAULT_SLICE.profile}|${DEFAULT_SLICE.cache}|${DEFAULT_SLICE.percentile}`;
+  const defaultKey = `${LEADERBOARD_SLICE.profile}|${LEADERBOARD_SLICE.cache}|${LEADERBOARD_SLICE.percentile}`;
   const rows = slices[defaultKey] ?? [];
   return (
     <section
@@ -534,14 +528,15 @@ export function Leaderboard({
     >
       <noscript>
         <p className="notice t-body-sm" style={{ marginTop: "var(--space-3)" }}>
-          Showing throttled mobile, cold cache, p75. JavaScript enables sorting, search and the
-          other conditions; every detail page works without it.
+          Showing {LEADERBOARD_SLICE.profile.replace("-", " ")}, {LEADERBOARD_SLICE.cache} cache,{" "}
+          {LEADERBOARD_SLICE.percentile}. JavaScript enables sorting, search and the other
+          conditions; every detail page works without it.
         </p>
       </noscript>
       {/* Only the default condition ships in the document. The others are served
           as fragments from app/slices/[run]/[slice]/route.ts and fetched by
           enhance.js the first time a reader selects one. */}
-      <Results rows={rows} runId={runId} slice={DEFAULT_SLICE} profiles={profiles} />
+      <Results rows={rows} runId={runId} slice={LEADERBOARD_SLICE} profiles={profiles} />
     </section>
   );
 }

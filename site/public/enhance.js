@@ -105,17 +105,22 @@ const enhance = () => {
     const query = () => control("query");
     const mobileMetric = () => control("mobile-metric");
     const picker = () => region().querySelector(".col-picker");
+    // Every run is cold-cache only, so there is no cache control; the cache
+    // part of the key is read off the region itself.
     const selectedKey = () =>
-      ["profile", "cache", "percentile"].map((n) => control(n).value).join("|");
+      [
+        control("profile").value,
+        region().dataset.condition.split("|")[1],
+        control("percentile").value,
+      ].join("|");
     /** Put a region's own selects back to the condition it renders, before it is cached. */
     const rewind = (r) => {
-      const [profile, cache, percentile] = r.dataset.condition.split("|");
+      const [profile, , percentile] = r.dataset.condition.split("|");
       const set = (name, value) => {
         const el = r.querySelector(`[name=${name}]`);
         if (el) el.value = value;
       };
       set("profile", profile);
-      set("cache", cache);
       set("percentile", percentile);
     };
     /**
@@ -301,7 +306,7 @@ const enhance = () => {
         applyMobile();
         return;
       }
-      if (!["profile", "cache", "percentile"].includes(name)) return;
+      if (!["profile", "percentile"].includes(name)) return;
       const key = selectedKey();
       const current = region();
       if (current.dataset.condition === key) {

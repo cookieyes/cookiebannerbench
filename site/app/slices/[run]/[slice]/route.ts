@@ -1,7 +1,7 @@
 import { renderToReadableStream } from "react-dom/server.edge";
 import { Results } from "@/components/leaderboard";
 import { runIds } from "@/data/source";
-import { DEFAULT_SLICE } from "@/lib/config";
+import { LEADERBOARD_SLICE } from "@/lib/config";
 import { leaderboardData } from "@/lib/page-data";
 import type { Slice } from "@/lib/ranking";
 
@@ -18,7 +18,7 @@ import type { Slice } from "@/lib/ranking";
 
 export const dynamic = "force-static";
 
-const DEFAULT_KEY = `${DEFAULT_SLICE.profile}|${DEFAULT_SLICE.cache}|${DEFAULT_SLICE.percentile}`;
+const DEFAULT_KEY = `${LEADERBOARD_SLICE.profile}|${LEADERBOARD_SLICE.cache}|${LEADERBOARD_SLICE.percentile}`;
 const toFile = (key: string) => `${key.replaceAll("|", "_")}.html`;
 const fromFile = (file: string) => file.replace(/\.html$/, "").replaceAll("_", "|");
 

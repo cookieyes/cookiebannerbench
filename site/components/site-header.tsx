@@ -60,7 +60,7 @@ export async function SiteHeader({ current }: { current?: string }) {
             <span className="sr-only">GitHub repository</span>
             {stars !== null && (
               <span className="gh-stars">
-                <span aria-hidden="true">★ {formatStars(stars)}</span>
+                <span aria-hidden="true">{formatStars(stars)}</span>
                 <span className="sr-only">, {stars} stars</span>
               </span>
             )}

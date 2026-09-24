@@ -2419,9 +2419,6 @@ body {
 .section-head p {
   max-width: var(--prose-max);
 }
-.notice {
-  max-width: var(--prose-max);
-}
 /* timeline labels ("Largest paint", "Banner visible") wrapped in 96px */
 .timeline .lane {
   grid-template-columns: 128px minmax(0, 1fr) 72px;
@@ -3376,7 +3373,6 @@ body {
 /* No narrower measure inside the column: one left edge and one right edge. */
 .page.doc .prose,
 .page.doc .prose > *,
-.page.doc .notice,
 .page.doc .section-head p {
   max-width: none;
 }

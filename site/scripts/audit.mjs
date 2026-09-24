@@ -173,26 +173,29 @@ try {
   // option the select actually offers rather than a name written here.
   const optionsOf = (name) =>
     page.locator(`[name=${name}]`).evaluate((s) => [...s.options].map((o) => o.value));
-  const [profiles, caches, percentiles] = await Promise.all([
+  const [profiles, percentiles] = await Promise.all([
     optionsOf("profile"),
-    optionsOf("cache"),
     optionsOf("percentile"),
   ]);
+  // Runs are cold-cache only, so there is no cache control to operate.
+  const cache = await page
+    .locator(".results-region")
+    .first()
+    .evaluate((r) => r.dataset.condition.split("|")[1]);
   const target = {
     profile: profiles.at(-1),
-    cache: caches.at(-1),
+    cache,
     percentile: percentiles.at(-1),
   };
   const condition = `${target.profile}|${target.cache}|${target.percentile}`;
   await page.locator("[name=profile]").focus();
   await page.locator("[name=profile]").selectOption(target.profile);
-  await page.locator("[name=cache]").selectOption(target.cache);
   await page.locator("[name=percentile]").selectOption(target.percentile);
   await page.locator(`.results-region[data-condition="${condition}"]:not([aria-busy])`).waitFor();
   assert.equal(await rows().count(), total);
   assert.match(
     await page.evaluate(() => document.activeElement?.getAttribute("name") ?? "body"),
-    /^(profile|cache|percentile)$/,
+    /^(profile|percentile)$/,
     "focus must stay on the condition controls while a fragment loads",
   );
   // The sort resets to what the header says after a condition swap.

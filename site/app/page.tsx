@@ -3,7 +3,7 @@ import { JsonLd } from "@/components/json-ld";
 import { Leaderboard } from "@/components/leaderboard";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { DEFAULT_SLICE, SITE_URL } from "@/lib/config";
+import { LEADERBOARD_SLICE, SITE_URL } from "@/lib/config";
 import { leaderboardData } from "@/lib/page-data";
 import { PUBLISHED } from "@/lib/published";
 import { datasetLd, itemListLd } from "@/lib/structured-data";
@@ -29,7 +29,9 @@ export const metadata: Metadata = {
 export default function Home() {
   const { run, slices } = leaderboardData();
   const rows =
-    slices[`${DEFAULT_SLICE.profile}|${DEFAULT_SLICE.cache}|${DEFAULT_SLICE.percentile}`] ?? [];
+    slices[
+      `${LEADERBOARD_SLICE.profile}|${LEADERBOARD_SLICE.cache}|${LEADERBOARD_SLICE.percentile}`
+    ] ?? [];
   return (
     <>
       <SiteHeader current="/" />

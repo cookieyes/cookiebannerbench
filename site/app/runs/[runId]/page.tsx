@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Notice } from "@/components/ui";
 import { loadHistory, runIds } from "@/data/source";
-import { DEFAULT_SLICE, SITE_URL } from "@/lib/config";
+import { LEADERBOARD_SLICE, SITE_URL } from "@/lib/config";
 import { formatDate } from "@/lib/metrics";
 import { leaderboardData } from "@/lib/page-data";
 import { methodForRun } from "@/lib/scoring";
@@ -36,7 +36,9 @@ export default async function Run({ params }: { params: Promise<{ runId: string 
   const { run, slices } = leaderboardData(runId);
   const history = loadHistory().find((r) => r.id === runId);
   const rows =
-    slices[`${DEFAULT_SLICE.profile}|${DEFAULT_SLICE.cache}|${DEFAULT_SLICE.percentile}`] ?? [];
+    slices[
+      `${LEADERBOARD_SLICE.profile}|${LEADERBOARD_SLICE.cache}|${LEADERBOARD_SLICE.percentile}`
+    ] ?? [];
   const hasControl = rows.some((r) => r.control);
   const latest = runIds().at(-1) === runId;
   return (

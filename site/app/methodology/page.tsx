@@ -79,7 +79,7 @@ export default function Methodology() {
             <p className="lede t-body">
               Every score comes from real test runs on identical pages, not opinions. Here is
               exactly how each number is produced, which installations appear and why, and what
-              these measurements cannot tell you — so you can check the lot yourself.
+              these measurements cannot tell you, so you can check the lot yourself.
             </p>
             <p className="run-line t-body-sm">
               <span className="t-ident-sm">Method v{METHOD_VERSION}</span>

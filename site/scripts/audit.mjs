@@ -39,7 +39,7 @@ try {
     const response = await page.goto(base + path);
     assert.equal(response.status(), 200, path);
     const canonical = await page.locator("link[rel=canonical]").getAttribute("href");
-    assert.equal(canonical, `https://cookiebannerbench.com${path}`);
+    assert.equal(canonical, `https://www.cookiebannerbench.com${path}`);
     assert.equal(await page.locator('script[src*="/_next/"]').count(), 0);
     const broken = await page
       .locator("img")

@@ -9,7 +9,7 @@ waits to be asked, what the banner transfers, how much of the first screen it
 covers, and how much it disturbs the page while loading — published alongside
 every measurement that produced it.
 
-Published at **[cookiebannerbench.com](https://cookiebannerbench.com)**.
+Published at **[cookiebannerbench.com](https://www.cookiebannerbench.com)**.
 
 > CookieYes publishes this benchmark and appears in it. That is a conflict of
 > interest, and it is stated on the site rather than left to be discovered. The
@@ -96,7 +96,7 @@ the inputs that remain.
 
 The anchors, the weights and the exact arithmetic live in
 [`site/lib/scoring.ts`](site/lib/scoring.ts) and are restated on
-[the method pages](https://cookiebannerbench.com/methodology/).
+[the method pages](https://www.cookiebannerbench.com/methodology/).
 
 ## Reading a comparison
 

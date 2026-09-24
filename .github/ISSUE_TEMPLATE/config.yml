@@ -7,9 +7,9 @@ contact_links:
     about: Please do NOT report security vulnerabilities as a public issue. Use private reporting instead.
 
   - name: 📖 How we test
-    url: https://cookiebannerbench.com/methodology/
+    url: https://www.cookiebannerbench.com/methodology/
     about: The method, what is published and the known limits — read this before disputing a number or proposing a change.
 
   - name: 📈 The leaderboard
-    url: https://cookiebannerbench.com
+    url: https://www.cookiebannerbench.com
     about: Every published number, with the run that produced it.

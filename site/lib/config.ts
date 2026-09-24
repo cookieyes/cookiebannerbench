@@ -1,4 +1,4 @@
-export const SITE_URL = "https://cookiebannerbench.com";
+export const SITE_URL = "https://www.cookiebannerbench.com";
 export const SITE_NAME = "Cookiebannerbench";
 export const GITHUB_URL = "https://github.com/cookieyes/cookiebannerbench";
 export const DISCLOSURE =

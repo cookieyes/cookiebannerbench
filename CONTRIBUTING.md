@@ -15,7 +15,7 @@ not edited.
 **Add a consent SDK.** Open an issue first so we can agree the setup before you
 build it. A target is published only when its banner was detected in every
 iteration and its licensing permits the test domain. See
-[What is published](https://cookiebannerbench.com/methodology/#tab-published).
+[What is published](https://www.cookiebannerbench.com/methodology/#tab-published).
 
 **Improve the harness or the site.** Bug fixes and clearer disclosure are always
 welcome.

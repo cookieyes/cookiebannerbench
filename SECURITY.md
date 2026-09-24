@@ -8,7 +8,7 @@ community in responsibly disclosing vulnerabilities.
 
 This repository holds a measurement harness, a set of test applications, the
 recorded runs and the static site published at
-[cookiebannerbench.com](https://cookiebannerbench.com). It ships no product code
+[cookiebannerbench.com](https://www.cookiebannerbench.com). It ships no product code
 to end users and publishes no npm package.
 
 In scope:

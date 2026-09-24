@@ -16,8 +16,8 @@
     "build": "pnpm --filter @cookiebannerbench/site build"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.8",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.9"
+    "@biomejs/biome": "^2.5.14",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
   }
 }

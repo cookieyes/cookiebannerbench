@@ -16,10 +16,10 @@
     "playwright": "^1.57.0"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
+    "@types/node": "^26.6.2",
     "axe-core": "^4.13.0",
-    "lighthouse": "^13.4.1",
-    "typescript": "^5.9.3"
+    "lighthouse": "^13.5.0",
+    "typescript": "^7.0.2"
   },
   "engines": {
     "node": ">=20.9.0"

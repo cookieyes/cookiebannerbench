@@ -21,7 +21,8 @@
         {
           "key": "Link",
           "value": "</index.md>; rel=\"alternate\"; type=\"text/markdown\", </methodology/>; rel=\"help\", </sitemap.xml>; rel=\"describedby\"; type=\"application/xml\", <https://github.com/cookieyes/cookiebannerbench/blob/main/LICENSE>; rel=\"license\""
-        }
+        },
+        { "key": "Vary", "value": "Accept" }
       ]
     },
     {

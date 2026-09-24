@@ -1236,6 +1236,12 @@ button.pill {
   background: var(--surface);
   z-index: var(--z-sticky);
 }
+/* A header tooltip is confined to its cell's layer; lift the sticky header
+   cells above the sticky body cells so the Score tooltip is not drawn under them. */
+.lb thead .sticky-1,
+.lb thead .sticky-2 {
+  z-index: calc(var(--z-sticky) + 1);
+}
 .lb .sticky-1 {
   left: 0;
 }

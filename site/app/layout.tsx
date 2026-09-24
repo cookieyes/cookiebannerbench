@@ -56,6 +56,25 @@ window.clarity = window.clarity || function(){(window.clarity.q = window.clarity
   document.head.appendChild(s);
 });`;
 
+// Google Consent Mode v2 defaults. Must run before the CookieYes script, which
+// updates these once the visitor makes a choice.
+const consentDefaultsScript = `window.dataLayer = window.dataLayer || [];
+function gtag() {
+  dataLayer.push(arguments);
+}
+gtag("consent", "default", {
+  ad_storage: "denied",
+  ad_user_data: "denied",
+  ad_personalization: "denied",
+  analytics_storage: "denied",
+  functionality_storage: "denied",
+  personalization_storage: "denied",
+  security_storage: "granted",
+  wait_for_update: 2000,
+});
+gtag("set", "ads_data_redaction", true);
+gtag("set", "url_passthrough", true);`;
+
 const themeScript =
   'try{var t=localStorage.getItem("cookiebannerbench-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}';
 
@@ -67,6 +86,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {process.env.ENABLE_ANALYTICS === "true" && (
           <>
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant Consent Mode defaults. */}
+            <script dangerouslySetInnerHTML={{ __html: consentDefaultsScript }} />
             {/* Start cookieyes banner */}
             <script
               id="cookieyes"

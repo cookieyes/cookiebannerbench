@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ICONS, Mark, MetricCard, Notice, Pill, ScoreChip, Value } from "@/components/ui";
 import { loadAppMetadata, loadMeasurements, loadTargets } from "@/data/source";
-import { DEFAULT_SLICE, detailHref } from "@/lib/config";
+import { DEFAULT_SLICE, detailHref, LEADERBOARD_SLICE } from "@/lib/config";
 import { detailData } from "@/lib/detail";
 import { formatDate, formatMetric } from "@/lib/metrics";
 import { MODEL_LABEL } from "@/lib/models";
@@ -83,6 +83,9 @@ export function DetailPage({
       ? "Not scored"
       : `${scores.provisional ? "Provisional" : BAND_WORD[band ?? "fair"]}${spread ? ` · ${spread}` : ""}`;
   const loadCount = row.n ?? run.iterations;
+  // Back to the leaderboard on the profile this page shows.
+  const leaderboardHref =
+    profile === LEADERBOARD_SLICE.profile ? "/" : `/?profile=${encodeURIComponent(profile)}`;
   const conditionLine = `${profile.replace("-", " ")} · cold cache · p75 of ${loadCount} loads`;
   // The npm name, which for a package's mode (c15t offline) is not the shown name.
   const npm = entry.npmPackage ?? row.package;
@@ -107,12 +110,12 @@ export function DetailPage({
         <JsonLd data={datasetLd(run, detailHref(app, profile), [row])} />
 
         <div className="page-top">
-          <a className="btn ghost back" href="/">
+          <a className="btn ghost back" href={leaderboardHref}>
             <BackArrow />
             Back to leaderboard
           </a>
           <nav className="crumbs t-ident-sm" aria-label="Breadcrumb">
-            <a href="/">Leaderboard</a>
+            <a href={leaderboardHref}>Leaderboard</a>
             <span aria-hidden="true">/</span>
             <span aria-current="page">{row.package ?? row.label}</span>
           </nav>

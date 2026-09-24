@@ -376,6 +376,19 @@ const enhance = () => {
     });
     enable();
     update();
+    // A detail page links back with ?profile=, so the reader returns to the
+    // test profile they left rather than the default one.
+    const wanted = new URLSearchParams(location.search).get("profile");
+    const profile = control("profile");
+    if (
+      wanted &&
+      profile &&
+      wanted !== profile.value &&
+      [...profile.options].some((o) => o.value === wanted)
+    ) {
+      profile.value = wanted;
+      profile.dispatchEvent(new Event("change", { bubbles: true }));
+    }
   }
 };
 

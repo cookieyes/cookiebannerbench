@@ -19,3 +19,8 @@ demos/
 # Working snapshots of targets.json taken during deploys
 targets.deployed.json
 targets.existing.json
+
+# Local operator scripts (Vercel deploy, EC2 sweep runner), kept out of the repo
+deploy.sh
+scripts/ec2-bootstrap.sh
+scripts/run-benchmark.sh

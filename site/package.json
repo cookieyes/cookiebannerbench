@@ -1,0 +1,31 @@
+{
+  "name": "@consentbench/site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3100",
+    "build": "pnpm test && next build && node scripts/finalize-export.mjs && CHECK_EXPORT=1 vitest run lib/__tests__/publication.test.ts",
+    "start": "next start --port 3100",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "serve": "node serve.mjs",
+    "audit:a11y": "node scripts/audit.mjs",
+    "audit:perf": "node scripts/lighthouse.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

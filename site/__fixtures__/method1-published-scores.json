@@ -1,0 +1,16 @@
+{
+  "_comment": "Method-1 scores as published from this run. The gate only means something against this run: it proves the categories refactor did not move a score, which is a claim about the code, not about any later measurements.",
+  "run": "2026-09-15T11-15-12-142Z",
+  "slice": "throttled-mobile|cold|p75",
+  "scores": {
+    "cookieyes-nextjs": 89,
+    "cookieyes-react": 87,
+    "enzuzo": 65,
+    "osano": 57,
+    "c15t-nextjs": 53,
+    "c15t-react": 53,
+    "iubenda": 51,
+    "onetrust": 36,
+    "ketch": 14
+  }
+}

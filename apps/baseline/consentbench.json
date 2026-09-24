@@ -1,0 +1,8 @@
+{
+  "name": "baseline",
+  "label": "Baseline (no SDK)",
+  "vendor": "none",
+  "bannerSelectors": [],
+  "serviceHosts": [],
+  "tags": ["control"]
+}

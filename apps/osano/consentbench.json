@@ -1,0 +1,8 @@
+{
+  "name": "osano",
+  "label": "Osano",
+  "vendor": "osano",
+  "bannerSelectors": [".osano-cm-window__dialog"],
+  "serviceHosts": ["cmp.osano.com"],
+  "tags": ["cdn"]
+}

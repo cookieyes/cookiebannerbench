@@ -1,0 +1,8 @@
+{
+  "name": "cookieyes-nextjs",
+  "label": "CookieYes (@cookieyes/nextjs)",
+  "vendor": "cookieyes",
+  "bannerSelectors": ["[data-cky-banner]", ".cy-banner"],
+  "serviceHosts": [],
+  "tags": ["npm", "offline"]
+}

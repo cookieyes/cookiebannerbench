@@ -1,0 +1,13 @@
+{
+  "name": "didomi",
+  "label": "Didomi",
+  "vendor": "didomi",
+  "bannerSelectors": [
+    ".didomi-popup-container",
+    "#didomi-popup",
+    ".didomi-notice-popup",
+    ".didomi-host"
+  ],
+  "serviceHosts": ["sdk.privacy-center.org", "api.privacy-center.org"],
+  "tags": ["npm", "cdn"]
+}

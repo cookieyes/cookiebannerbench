@@ -1,0 +1,8 @@
+{
+  "name": "matched-cookieyes-backend",
+  "label": "CookieYes (matched, self-hosted)",
+  "vendor": "cookieyes",
+  "bannerSelectors": ["[data-cky-banner]", ".cy-banner"],
+  "serviceHosts": [],
+  "tags": ["matched", "backend"]
+}

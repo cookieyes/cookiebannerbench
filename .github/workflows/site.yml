@@ -1,0 +1,55 @@
+name: site
+
+on:
+  push:
+    paths: ["site/**", "results/**", "apps/**/consentbench.json", "targets.json", "lighthouserc.json"]
+  pull_request:
+    paths: ["site/**", "results/**", "lighthouserc.json"]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9.15.4 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm --filter @consentbench/site typecheck
+      # `build` runs the unit tests, exports (pages plus the leaderboard
+      # condition fragments), strips the hydration runtime, then scans every
+      # exported file for removed vendor names. Fails on harness schema drift.
+      - run: pnpm --filter @consentbench/site build
+
+      - name: Install Chromium
+        run: pnpm --filter @consentbench/harness exec playwright install --with-deps chromium
+
+      - name: Serve the export
+        run: |
+          node site/serve.mjs &
+          npx wait-on http://127.0.0.1:3100/ -t 30000
+
+      # Every sitemap route × {1280px, 390px} × {light, dark}: axe-core (WCAG 2.2 AA
+      # + best-practice), no horizontal overflow, no page errors, valid JSON-LD,
+      # canonical URLs; then sort/filter/condition/theme interactions with the
+      # keyboard, and the no-JavaScript render at both widths.
+      - name: Accessibility and interaction audit
+        run: pnpm --filter @consentbench/site audit:a11y
+        env:
+          AUDIT_OUTPUT: ${{ github.workspace }}/audit
+
+      # Mobile emulation, median of 3 per route, thresholds from lighthouserc.json:
+      # 100 in all four categories, CLS ≤ 0.02, TBT ≤ 100 ms, FCP ≤ 1.2 s, LCP ≤ 1.8 s.
+      - name: Lighthouse
+        run: pnpm --filter @consentbench/site audit:perf
+        env:
+          LH_OUTPUT: ${{ github.workspace }}/audit/lighthouse
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: site-audit
+          path: audit

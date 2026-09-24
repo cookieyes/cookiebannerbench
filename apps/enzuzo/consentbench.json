@@ -1,0 +1,8 @@
+{
+  "name": "enzuzo",
+  "label": "Enzuzo",
+  "vendor": "enzuzo",
+  "bannerSelectors": [".enzuzo-cookiebanner-container"],
+  "serviceHosts": ["app.enzuzo.com"],
+  "tags": ["cdn"]
+}

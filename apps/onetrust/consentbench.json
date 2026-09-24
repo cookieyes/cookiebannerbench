@@ -1,0 +1,8 @@
+{
+  "name": "onetrust",
+  "label": "OneTrust",
+  "vendor": "onetrust",
+  "bannerSelectors": ["#onetrust-banner-sdk", ".ot-sdk-container"],
+  "serviceHosts": ["cdn.cookielaw.org", "onetrust.com"],
+  "tags": ["cdn"]
+}

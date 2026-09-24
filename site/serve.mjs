@@ -24,8 +24,9 @@ const TYPES = {
   ".xml": "application/xml",
   ".txt": "text/plain; charset=utf-8",
   ".json": "application/json",
+  ".md": "text/markdown; charset=utf-8",
 };
-const COMPRESSIBLE = new Set([".html", ".js", ".css", ".svg", ".xml", ".txt", ".json"]);
+const COMPRESSIBLE = new Set([".html", ".js", ".css", ".svg", ".xml", ".txt", ".json", ".md"]);
 
 createServer((req, res) => {
   const url = (req.url ?? "/").split("?")[0];

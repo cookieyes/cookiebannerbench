@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3100",
-    "build": "pnpm test && next build && node scripts/finalize-export.mjs && CHECK_EXPORT=1 vitest run lib/__tests__/publication.test.ts",
+    "build": "pnpm test && next build && node scripts/finalize-export.mjs && node scripts/markdown-export.mjs && CHECK_EXPORT=1 vitest run lib/__tests__/publication.test.ts",
     "start": "next start --port 3100",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
@@ -22,6 +22,8 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "node-html-markdown": "^2.0.0",
+    "node-html-parser": "6.1.13",
     "typescript": "^5.9.3",
     "vitest": "^4.1.9"
   },

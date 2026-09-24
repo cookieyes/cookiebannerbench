@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     "What consent banners cost the pages they sit on: banner speed, page impact, network cost and visitor experience, measured on identical pages and scored against published anchors.",
   openGraph: { siteName: SITE_NAME, type: "website" },
   twitter: { card: "summary_large_image" },
+  // Kept out of search engines for now. robots.txt still allows crawling, so
+  // crawlers can fetch the pages and see this tag.
+  robots: { index: false, follow: false },
 };
 
 const gtagScript = `window.dataLayer = window.dataLayer || [];

@@ -8,7 +8,7 @@
     "start": "next start --port 3007"
   },
   "dependencies": {
-    "@cookieyes/nextjs": "0.6.0",
+    "@cookieyes/nextjs": "0.6.1",
     "next": "16.3.4",
     "react": "^19.2.1",
     "react-dom": "^19.2.1"

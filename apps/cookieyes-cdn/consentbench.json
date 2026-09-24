@@ -1,0 +1,8 @@
+{
+  "name": "cookieyes-cdn",
+  "label": "CookieYes (CDN)",
+  "vendor": "cookieyes",
+  "bannerSelectors": [".cky-consent-container"],
+  "serviceHosts": ["cdn-cookieyes.com"],
+  "tags": ["cdn"]
+}

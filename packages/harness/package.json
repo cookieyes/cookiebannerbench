@@ -1,0 +1,27 @@
+{
+  "name": "@consentbench/harness",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "consentbench": "./dist/index.js"
+  },
+  "exports": "./dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "tsc -b --watch",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.57.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "axe-core": "^4.13.0",
+    "lighthouse": "^13.4.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}

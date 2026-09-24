@@ -1,0 +1,8 @@
+{
+  "name": "usercentrics",
+  "label": "Usercentrics",
+  "vendor": "usercentrics",
+  "bannerSelectors": ["#usercentrics-cmp-ui"],
+  "serviceHosts": ["app.usercentrics.eu", "api.service.cmp.usercentrics.eu"],
+  "tags": ["cdn"]
+}

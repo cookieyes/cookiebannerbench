@@ -1,0 +1,8 @@
+{
+  "name": "iubenda",
+  "label": "Iubenda",
+  "vendor": "iubenda",
+  "bannerSelectors": [".iubenda-cs-content"],
+  "serviceHosts": ["cdn.iubenda.com", "cs.iubenda.com"],
+  "tags": ["cdn"]
+}

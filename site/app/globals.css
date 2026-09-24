@@ -1,0 +1,3853 @@
+/* A small reset of our own — no framework. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+fieldset {
+  margin: 0;
+}
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+fieldset,
+legend {
+  padding: 0;
+}
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: inherit;
+}
+input,
+select {
+  margin: 0;
+}
+summary {
+  display: list-item;
+}
+[hidden] {
+  display: none !important;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Tokens — Cookiebannerbench design system v4.
+   Two ramps and two hues. `ink-*` carries the green-black for text, marks and
+   fills; `paper-*` carries the page, cards and hairlines. Exactly three things
+   carry a hue: a provider's own mark, the score, and a notice about our own
+   reporting. Everything else is ink.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  --ink-950: #031009;
+  --ink-900: #0c1b13;
+  --ink-800: #23322a;
+  --ink-700: #3d4c44;
+  --ink-600: #5f6d65;
+  --ink-500: #7e8983;
+  --ink-400: #9da8a2;
+  --ink-100: #edf1ef;
+  --paper-0: #ffffff;
+  --paper-50: #f9fbfa;
+  --paper-100: #edf0ee;
+  --paper-200: #e6e9e7;
+  --paper-300: #dfe2e0;
+  --paper-400: #c9cdcb;
+  --green-700: #2a6908;
+  --green-600: #39860e;
+  --green-400: #55c11b;
+  --green-50: #eafae4;
+  --scarlet-700: #a60d10;
+  --scarlet-600: #d31517;
+  --scarlet-400: #fc7567;
+  --scarlet-50: #faf2f1;
+  --amber-300: #ecb420;
+
+  --canvas: var(--paper-50);
+  --surface: var(--paper-0);
+  --inset: var(--paper-100);
+  --hairline: var(--paper-200);
+  --border: var(--paper-300);
+  --border-control: var(--ink-500);
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--ink-600);
+  /* The sheet's ink-500 tertiary reads 3.49:1 on paper — fine for icons and
+     ticks, short of AA for 11px text. Text takes ink-600; icons keep ink-500. */
+  --text-tertiary: var(--ink-600);
+  --icon-rest: var(--ink-500);
+  --text-unmeasured: var(--ink-600);
+  --text-disabled: var(--ink-400);
+  --text-pill: var(--ink-700);
+  --text-inverse: var(--paper-0);
+  --surface-hover: var(--paper-100);
+  --surface-pressed: var(--paper-200);
+  --surface-selected: var(--paper-100);
+  --fill-disabled: var(--paper-100);
+  --border-disabled: var(--paper-300);
+  --focus-ring: var(--ink-900);
+  --band-good: var(--green-600);
+  --band-good-text: var(--green-700);
+  --band-fair: var(--ink-900);
+  --band-fair-arc: var(--ink-600);
+  --band-poor: var(--scarlet-600);
+  --band-poor-text: var(--scarlet-700);
+  --status-warning-fill: var(--amber-300);
+  --status-success-fill: var(--green-50);
+  --status-error-fill: var(--scarlet-50);
+  --interactive: var(--ink-900);
+  --interactive-fill: var(--ink-900);
+  --link-underline: var(--paper-300);
+  --chart-dot: var(--paper-400);
+  --bar-2: var(--ink-900);
+  --bar-3: var(--ink-800);
+  --bar-4: var(--ink-700);
+  --bar-5: var(--ink-600);
+  --bar-6: var(--ink-500);
+  --bar-7: var(--ink-400);
+  --bar-8: var(--paper-400);
+  --mark-plate: #ffffff;
+  --mark-plate-edge: rgba(3, 16, 9, 0.08);
+  --shadow-popover: 0 2px 6px rgba(3, 16, 9, 0.06), 0 8px 24px rgba(3, 16, 9, 0.1);
+  --scrim: rgba(3, 16, 9, 0.5);
+
+  --font-sans: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+  --navbar-height: 3.25rem;
+  --gutter: 1.25rem;
+  --page-max: 90rem;
+  --prose-max: 64ch;
+  --block-gap: 1.5rem;
+  --section-gap: 3rem;
+  --region-gap: 4.5rem;
+  --bar-gap: 6px;
+  --bar-max: 56px;
+  --head-height: 2.25rem;
+  --row-pad-x: 0.75rem;
+  --row-pad-y: 0.75rem;
+  --z-sticky: 10;
+  --z-navbar: 20;
+  --z-popover: 30;
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  color-scheme: light;
+}
+
+/* Dark: every token has a value. Tokenised rather than finished — the ring
+   track and dark provider marks are the two known checks (states-and-access). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: var(--ink-950);
+    --surface: var(--ink-900);
+    --inset: var(--ink-950);
+    --hairline: var(--ink-800);
+    --border: var(--ink-700);
+    --border-control: var(--ink-600);
+    --text-primary: var(--ink-100);
+    --text-secondary: var(--ink-400);
+    --text-tertiary: var(--ink-500);
+    --icon-rest: var(--ink-500);
+    --text-unmeasured: var(--ink-400);
+    --text-disabled: var(--ink-600);
+    --text-pill: var(--ink-400);
+    --text-inverse: var(--ink-950);
+    --surface-hover: var(--ink-800);
+    --surface-pressed: var(--ink-700);
+    --surface-selected: var(--ink-800);
+    --fill-disabled: var(--ink-800);
+    --border-disabled: var(--ink-700);
+    --focus-ring: var(--ink-100);
+    --band-good: var(--green-400);
+    --band-good-text: var(--green-400);
+    --band-fair: var(--ink-100);
+    --band-fair-arc: var(--ink-400);
+    --band-poor: var(--scarlet-400);
+    --band-poor-text: var(--scarlet-400);
+    --status-success-fill: var(--green-700);
+    --status-error-fill: var(--scarlet-700);
+    --interactive: var(--ink-100);
+    --interactive-fill: var(--ink-100);
+    --link-underline: var(--ink-700);
+    --chart-dot: var(--ink-700);
+    --bar-2: var(--ink-400);
+    --bar-3: var(--ink-500);
+    --bar-4: var(--ink-600);
+    --bar-5: var(--ink-700);
+    --bar-6: var(--ink-700);
+    --bar-7: var(--ink-800);
+    --bar-8: var(--ink-800);
+    --mark-plate: #f4f6f5;
+    --mark-plate-edge: rgba(255, 255, 255, 0.14);
+    --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.36), 0 8px 24px rgba(0, 0, 0, 0.44);
+    --scrim: rgba(3, 16, 9, 0.65);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --canvas: var(--ink-950);
+  --surface: var(--ink-900);
+  --inset: var(--ink-950);
+  --hairline: var(--ink-800);
+  --border: var(--ink-700);
+  --border-control: var(--ink-600);
+  --text-primary: var(--ink-100);
+  --text-secondary: var(--ink-400);
+  --text-tertiary: var(--ink-500);
+  --icon-rest: var(--ink-500);
+  --text-unmeasured: var(--ink-400);
+  --text-disabled: var(--ink-600);
+  --text-pill: var(--ink-400);
+  --text-inverse: var(--ink-950);
+  --surface-hover: var(--ink-800);
+  --surface-pressed: var(--ink-700);
+  --surface-selected: var(--ink-800);
+  --fill-disabled: var(--ink-800);
+  --border-disabled: var(--ink-700);
+  --focus-ring: var(--ink-100);
+  --band-good: var(--green-400);
+  --band-good-text: var(--green-400);
+  --band-fair: var(--ink-100);
+  --band-fair-arc: var(--ink-400);
+  --band-poor: var(--scarlet-400);
+  --band-poor-text: var(--scarlet-400);
+  --status-success-fill: var(--green-700);
+  --status-error-fill: var(--scarlet-700);
+  --interactive: var(--ink-100);
+  --interactive-fill: var(--ink-100);
+  --link-underline: var(--ink-700);
+  --chart-dot: var(--ink-700);
+  --bar-2: var(--ink-400);
+  --bar-3: var(--ink-500);
+  --bar-4: var(--ink-600);
+  --bar-5: var(--ink-700);
+  --bar-6: var(--ink-700);
+  --bar-7: var(--ink-800);
+  --bar-8: var(--ink-800);
+  --mark-plate: #f4f6f5;
+  --mark-plate-edge: rgba(255, 255, 255, 0.14);
+  --shadow-popover: 0 2px 6px rgba(0, 0, 0, 0.36), 0 8px 24px rgba(0, 0, 0, 0.44);
+  --scrim: rgba(3, 16, 9, 0.65);
+  color-scheme: dark;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+* {
+  border-color: var(--hairline);
+}
+html {
+  background: var(--canvas);
+}
+body {
+  background: var(--canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.3125rem;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  margin: 0;
+}
+a {
+  color: var(--interactive);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+@media (hover: hover) {
+  a:hover {
+    text-decoration-color: var(--interactive);
+  }
+}
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+button,
+select,
+input {
+  font: inherit;
+  color: inherit;
+}
+table {
+  border-collapse: collapse;
+}
+code,
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+::selection {
+  background: var(--ink-900);
+  color: var(--paper-0);
+}
+
+/* ─── Type styles ────────────────────────────────────────────────────────── */
+.t-display {
+  font-size: 2.75rem;
+  line-height: 3rem;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+.t-title {
+  font-size: 1.375rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.t-section {
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+}
+.t-body {
+  font-size: 0.875rem;
+  line-height: 1.3125rem;
+}
+.t-body-sm {
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+}
+.t-data {
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  font-variant-numeric: tabular-nums;
+}
+.t-data-lg {
+  font-size: 1.1875rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.t-score {
+  font-size: 2.75rem;
+  line-height: 2.75rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.t-ident {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  font-weight: 400;
+}
+.t-ident-sm {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 0.9375rem;
+  font-weight: 400;
+}
+.t-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.secondary {
+  color: var(--text-secondary);
+}
+.tertiary {
+  color: var(--text-tertiary);
+}
+.unmeasured {
+  color: var(--text-unmeasured);
+}
+.prose {
+  max-width: var(--prose-max);
+}
+.prose p + p,
+.prose ul + p,
+.prose p + ul {
+  margin-top: var(--space-3);
+}
+.prose li + li {
+  margin-top: var(--space-2);
+}
+.prose ul {
+  padding-left: 1.1em;
+  list-style: disc;
+}
+.prose h2 {
+  margin-top: var(--section-gap);
+  margin-bottom: var(--space-3);
+}
+.prose h3 {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-2);
+}
+.prose code {
+  background: var(--inset);
+  border-radius: var(--radius-xs);
+  padding: 0 0.3em;
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  z-index: var(--z-popover);
+  background: var(--interactive-fill);
+  color: var(--text-inverse);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+}
+.skip-link:focus {
+  top: var(--space-2);
+}
+
+/* A value and its unit: sans, tabular, unit in the secondary colour a space-1 away. */
+.v {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.v .u {
+  color: var(--text-secondary);
+  margin-left: var(--space-1);
+  font-size: 0.85em;
+  font-weight: 400;
+}
+.v.unmeasured {
+  color: var(--text-unmeasured);
+}
+
+/* ─── Layout ─────────────────────────────────────────────────────────────── */
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter) var(--section-gap);
+}
+
+.region + .region {
+  margin-top: var(--region-gap);
+}
+.block + .block {
+  margin-top: var(--block-gap);
+}
+.opening {
+  padding-top: var(--space-16);
+}
+.opening h1 {
+  max-width: 24ch;
+}
+.opening .run-line {
+  margin-top: var(--space-4);
+  color: var(--text-secondary);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  align-items: baseline;
+}
+.opening .lede {
+  margin-top: var(--space-4);
+  max-width: var(--prose-max);
+  color: var(--text-secondary);
+}
+
+/* Cards and panels: a hairline and a surface step, never a shadow. */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+}
+.card-pad {
+  padding: var(--space-6);
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+.section-head p {
+  color: var(--text-secondary);
+  max-width: var(--prose-max);
+}
+
+/* ─── Top bar ────────────────────────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-navbar);
+  background: var(--surface);
+  border-bottom: 1px solid var(--hairline);
+}
+.navbar-inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  min-height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.navbar nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-left: auto;
+}
+.navbar nav a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  padding: var(--space-2) 0;
+}
+.navbar nav a[aria-current="page"],
+.navbar nav a:hover {
+  color: var(--text-primary);
+}
+.navbar .tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Theme toggle: three real buttons, ink only. */
+.theme-toggle {
+  display: inline-flex;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  padding: 1px;
+  gap: 1px;
+  margin: 0;
+}
+.theme-toggle button {
+  width: 30px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: 0;
+}
+.theme-toggle button[aria-pressed="true"] {
+  background: var(--interactive-fill);
+  color: var(--text-inverse);
+}
+@media (hover: hover) {
+  .theme-toggle button:not([aria-pressed="true"]):hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+  }
+}
+
+/* ─── Pills, chips, buttons ──────────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--inset);
+  border-radius: var(--radius-pill);
+  padding: 3px var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 0.9375rem;
+  color: var(--text-pill);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.pill.active {
+  background: var(--interactive-fill);
+  color: var(--text-inverse);
+}
+.pill.unmeasured {
+  color: var(--text-pill);
+  font-style: italic;
+}
+button.pill {
+  border: 0;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  button.pill:not(.active):hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--border-control);
+  background: var(--surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn.primary {
+  background: var(--interactive-fill);
+  color: var(--text-inverse);
+  border-color: var(--interactive-fill);
+}
+.btn.ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--text-secondary);
+}
+@media (hover: hover) {
+  .btn:hover {
+    background: var(--surface-hover);
+  }
+  .btn.primary:hover {
+    background: var(--ink-800);
+  }
+  .btn.ghost:hover {
+    color: var(--text-primary);
+  }
+}
+.btn:active {
+  background: var(--surface-pressed);
+}
+.btn:disabled {
+  background: var(--fill-disabled);
+  border-color: var(--border-disabled);
+  color: var(--text-disabled);
+  cursor: default;
+}
+.btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.score-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1;
+}
+.score-num {
+  font-size: 1.1875rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.band-good .score-num,
+.score-num.good {
+  color: var(--band-good);
+}
+.score-num.fair {
+  color: var(--band-fair);
+}
+.score-num.poor {
+  color: var(--band-poor);
+}
+.score-num.none {
+  color: var(--text-unmeasured);
+}
+.band-word {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 0.9375rem;
+  color: var(--text-tertiary);
+  margin-top: 3px;
+}
+.band-word.good {
+  color: var(--band-good-text);
+}
+.band-word.poor {
+  color: var(--band-poor-text);
+}
+
+/* Provider mark: the one loud hue a row may carry that is not the score. */
+/* A provider's mark sits on a fixed light plate: a dark brand mark on the
+   dark canvas would otherwise disappear (states-and-access). The plate is the
+   same in both themes so the mark reads identically. */
+.mark {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  background: var(--mark-plate);
+  box-shadow: inset 0 0 0 1px var(--mark-plate-edge);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 600;
+  flex: none;
+  letter-spacing: 0;
+  overflow: hidden;
+}
+.mark img {
+  object-fit: contain;
+}
+.mark.lg {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+.mark.sm {
+  width: 26px;
+  height: 26px;
+  font-size: 10px;
+}
+.mark.control {
+  background: var(--inset);
+  color: var(--text-tertiary);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+
+/* ─── Notice ─────────────────────────────────────────────────────────────── */
+.notice {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--inset);
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  color: var(--text-primary);
+}
+.notice svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  margin-top: 1px;
+}
+.notice.warning {
+  background: var(--status-warning-fill);
+  border-color: var(--status-warning-fill);
+  color: var(--ink-900);
+}
+.notice b {
+  font-weight: 600;
+}
+
+/* ─── Control bar (above a data region) ──────────────────────────────────── */
+.control-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  flex-wrap: wrap;
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.control-bar label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.control-bar select,
+.search {
+  height: 32px;
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: 0 var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+}
+.control-bar select {
+  font-family: var(--font-mono);
+}
+.search {
+  min-width: 180px;
+}
+.search::placeholder {
+  color: var(--text-tertiary);
+}
+.control-bar select:disabled,
+.search:disabled,
+.control-bar button:disabled {
+  background: var(--fill-disabled);
+  border-color: var(--border-disabled);
+  color: var(--text-disabled);
+}
+
+/* ─── Hero chart: ranked bars ────────────────────────────────────────────── */
+.hero {
+  margin-top: var(--space-8);
+}
+/* A card so the comparison is one object, separate from the table below it.
+   The inner rows carry the hairlines; the card carries the outer edge. */
+.chart-card {
+  padding: var(--space-4) var(--space-5) var(--space-2);
+  overflow: hidden;
+}
+.chart-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding-bottom: var(--space-4);
+}
+.chart-head .t-label {
+  flex: none;
+}
+.chart-tabs {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+/* A chiplet is a real target: 32px tall, 12px of padding, and a 44px hit area
+   on touch that grows without changing the visible height. */
+.pill.tap {
+  position: relative;
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  gap: var(--space-2);
+  font-size: 0.75rem;
+}
+.pill.tap .w {
+  color: var(--text-tertiary);
+  font-size: 0.6875rem;
+}
+.pill.tap.active .w {
+  color: var(--text-inverse);
+  opacity: 0.7;
+}
+@media (pointer: coarse) {
+  .pill.tap::after {
+    content: "";
+    position: absolute;
+    inset: -6px -2px;
+  }
+}
+/* The provider marks, on the same column grid as the bars and the feet. */
+.bar-heads {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--bar-gap);
+  justify-items: center;
+  padding-bottom: var(--space-3);
+}
+.bar-head {
+  display: flex;
+  min-width: 0;
+}
+.bars {
+  position: relative;
+  border-top: 1px solid var(--hairline);
+  background-color: var(--surface);
+  background-image: radial-gradient(var(--chart-dot) 1px, transparent 1.2px);
+  background-size: 16px 16px;
+  background-position: 8px 8px;
+  border-bottom: 1px solid var(--hairline);
+}
+/* Inset to the bar area exactly: the same 32px the bars reserve for their
+   labels, so a line at 60% sits where a 60-point bar ends. */
+.bars .cuts {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--space-8);
+  bottom: 0;
+  pointer-events: none;
+}
+.bars .cut {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+.bars .cut i {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-style: normal;
+  color: var(--text-tertiary);
+  background: var(--surface);
+  padding-left: 4px;
+}
+.bars-inner {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: end;
+  gap: var(--bar-gap);
+  height: 272px;
+  padding: var(--space-8) 0 0;
+}
+.bar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+/* Narrow, so the shape of the ranking carries the comparison rather than the
+   weight of ink. Capped in px so a short list does not grow slabs. */
+.bar .fill {
+  width: 64%;
+  max-width: var(--bar-max);
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  background: var(--ink-900);
+  min-height: 2px;
+}
+.bar[data-tone="1"] .fill {
+  background: var(--band-good);
+}
+.bar[data-tone="1"][data-band="fair"] .fill,
+.bar[data-tone="1"][data-band="none"] .fill {
+  background: var(--bar-2);
+}
+.bar[data-tone="1"][data-band="poor"] .fill {
+  background: var(--band-poor);
+}
+.bar[data-tone="2"] .fill {
+  background: var(--bar-2);
+}
+.bar[data-tone="3"] .fill {
+  background: var(--bar-3);
+}
+.bar[data-tone="4"] .fill {
+  background: var(--bar-4);
+}
+.bar[data-tone="5"] .fill {
+  background: var(--bar-5);
+}
+.bar[data-tone="6"] .fill {
+  background: var(--bar-6);
+}
+.bar[data-tone="7"] .fill {
+  background: var(--bar-7);
+}
+.bar[data-tone="8"] .fill,
+.bar[data-tone="9"] .fill,
+.bar[data-tone="10"] .fill {
+  background: var(--bar-8);
+}
+.bar.control .fill {
+  background: transparent;
+  border: 1px dashed var(--border-control);
+  border-bottom: 0;
+}
+.bar .val {
+  align-self: stretch;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.0625rem;
+  padding: 0 var(--space-1) var(--space-2);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bar .val .cost {
+  display: block;
+  font-size: 0.625rem;
+  line-height: 0.875rem;
+  color: var(--text-tertiary);
+}
+.bar.none .fill {
+  border: 1px dashed var(--border-control);
+  border-bottom: 0;
+  background: transparent;
+  min-height: 8px;
+  height: 8px;
+}
+.bar.none .val {
+  color: var(--text-unmeasured);
+}
+.bar .val.unmeasured {
+  color: var(--text-unmeasured);
+}
+.bar-feet {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--bar-gap);
+  padding: var(--space-3) 0 var(--space-2);
+}
+.bar-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  max-width: 100%;
+  padding: 0 var(--space-1);
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+.bar-foot .name {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 0.9375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bar-foot .pkg {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 0.875rem;
+  color: var(--text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Leaderboard table ──────────────────────────────────────────────────── */
+/* Scroll containers are positioned so that the absolutely-positioned
+   visually-hidden text inside them stays inside them instead of widening the page. */
+.table-scroll {
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+/* A border, so the table is as much an object as the chart above it. The first
+   and last cells get the card's own inset instead of the row inset. */
+.table-scroll.card {
+  margin-top: var(--space-6);
+}
+.table-scroll.card .lb th:first-child,
+.table-scroll.card .lb td:first-child {
+  padding-left: var(--space-4);
+}
+.table-scroll.card .lb th:last-child,
+.table-scroll.card .lb td:last-child {
+  padding-right: var(--space-4);
+}
+.table-scroll.card .lb thead th {
+  padding-top: var(--space-3);
+  background: var(--surface);
+}
+.table-scroll:focus-visible {
+  outline-offset: -2px;
+}
+.lb {
+  width: 100%;
+  table-layout: auto;
+  font-size: 0.875rem;
+}
+.lb th,
+.lb td {
+  padding: var(--row-pad-y) var(--row-pad-x);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.lb th {
+  height: var(--head-height);
+  padding-top: 0;
+  padding-bottom: var(--space-2);
+  vertical-align: bottom;
+  font-weight: 500;
+}
+.lb th.l,
+.lb td.l {
+  text-align: left;
+}
+.lb tbody tr {
+  border-top: 1px solid var(--hairline);
+  scroll-margin-top: calc(var(--navbar-height) + var(--space-3));
+}
+[id] {
+  scroll-margin-top: calc(var(--navbar-height) + var(--space-3));
+}
+.lb tbody tr:hover {
+  background: var(--surface-hover);
+}
+@media (hover: none) {
+  .lb tbody tr:hover {
+    background: transparent;
+  }
+}
+.lb tbody tr:has(a:focus-visible) {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+.lb tbody tr:has(a:focus-visible) a:focus-visible {
+  outline: none;
+}
+.lb tbody tr.control-row {
+  background: var(--canvas);
+}
+.lb th button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.lb th button:disabled {
+  cursor: default;
+}
+.lb th[aria-sort="ascending"] button,
+.lb th[aria-sort="descending"] button {
+  color: var(--text-primary);
+}
+.lb th .arrow {
+  font-family: var(--font-sans);
+  width: 8px;
+  display: inline-block;
+}
+.lb .rank {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  width: 34px;
+}
+.lb .identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+.lb .identity a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+.lb .identity .slug {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 0.9375rem;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+.lb .identity .aff {
+  margin-top: 4px;
+}
+.lb .identity > span:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+.lb .change {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.lb .change.none {
+  color: var(--text-tertiary);
+}
+.lb .sticky-1,
+.lb .sticky-2 {
+  position: sticky;
+  background: var(--surface);
+  z-index: var(--z-sticky);
+}
+.lb .sticky-1 {
+  left: 0;
+}
+.lb .sticky-2 {
+  box-shadow: inset -1px 0 0 var(--hairline);
+}
+.lb tbody tr:hover .sticky-1,
+.lb tbody tr:hover .sticky-2 {
+  background: var(--surface-hover);
+}
+.lb tbody tr.control-row .sticky-1,
+.lb tbody tr.control-row .sticky-2 {
+  background: var(--canvas);
+}
+.lb td.unmeasured-cell {
+  color: var(--text-unmeasured);
+}
+.lb td.unmeasured-cell .t-ident-sm {
+  color: var(--text-secondary);
+}
+.lb tr[hidden] {
+  display: none;
+}
+.lb .cell-bar {
+  display: inline-block;
+  height: 3px;
+  background: var(--paper-400);
+  border-radius: 1px;
+  margin-top: 4px;
+  vertical-align: baseline;
+}
+
+/* Column priority. Dropped from the right as width shrinks unless the reader
+   has set the column picker (data-cols="custom"), in which case `hidden`
+   attributes set by enhance.js are the only rule. */
+.leaderboard[data-cols="auto"] [data-priority="8"],
+.leaderboard[data-cols="auto"] [data-priority="9"],
+.leaderboard[data-cols="auto"] [data-priority="11"] {
+  display: none;
+}
+
+.control-bar .mobile-metric {
+  display: none;
+}
+
+.leaderboard[data-cols="custom"] [data-metric][hidden] {
+  display: none;
+}
+
+/* Column picker popover — the one floating layer on the leaderboard. */
+.col-picker {
+  position: relative;
+}
+.col-picker summary {
+  list-style: none;
+  cursor: pointer;
+}
+.col-picker summary::-webkit-details-marker {
+  display: none;
+}
+.col-picker .menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: var(--z-popover);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-popover);
+  padding: var(--space-2);
+  min-width: 220px;
+  display: grid;
+  gap: 2px;
+}
+.col-picker .menu label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+}
+@media (hover: hover) {
+  .col-picker .menu label:hover {
+    background: var(--surface-hover);
+  }
+}
+.col-picker .menu label.locked {
+  color: var(--text-tertiary);
+}
+.col-picker input[type="checkbox"] {
+  accent-color: var(--interactive);
+}
+
+/* The count is a live region for filtering, not a headline. It appears only
+   when a search has narrowed the field; the rows are the count otherwise. */
+.result-count:not([data-filtered="true"]) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.empty-state {
+  padding: var(--space-6);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  margin-top: var(--space-3);
+}
+
+/* Header definitions: hover and focus, body-sm, floating. */
+.def {
+  position: relative;
+}
+.def .tip {
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: var(--z-popover);
+  width: 240px;
+  white-space: normal;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-popover);
+  padding: var(--space-2) var(--space-3);
+}
+.def.l .tip {
+  left: 0;
+  right: auto;
+}
+@media (hover: hover) {
+  .def:hover .tip {
+    display: block;
+  }
+}
+.def:focus-within .tip {
+  display: block;
+}
+
+/* ─── Explainer grid ─────────────────────────────────────────────────────── */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.principle {
+  padding: var(--space-6);
+}
+.principle .t-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.principle .t-label svg {
+  width: 20px;
+  height: 20px;
+  color: var(--icon-rest);
+}
+.principle h3 {
+  margin-top: var(--space-3);
+}
+.principle p {
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+}
+
+/* ─── Metric card ────────────────────────────────────────────────────────── */
+.metric-card {
+  padding: 13px 14px;
+}
+.metric-card .t-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.metric-card .t-label svg {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  color: var(--icon-rest);
+}
+.metric-card .value {
+  margin-top: 7px;
+}
+.metric-card .sub {
+  margin-top: 3px;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--text-secondary);
+}
+
+/* ─── Detail page ────────────────────────────────────────────────────────── */
+.crumbs {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  padding-top: var(--space-6);
+  color: var(--text-tertiary);
+}
+.crumbs a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.provider-head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+}
+.provider-head .names {
+  min-width: 0;
+}
+.provider-head .pills {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-2);
+}
+.provider-head .links {
+  margin-left: auto;
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.score-panel {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: var(--space-6);
+  padding: var(--space-6);
+  align-items: start;
+}
+
+.score-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+.score-ring {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+.score-ring .mid {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.score-ring .track {
+  stroke: var(--inset);
+}
+:root[data-theme="dark"] .score-ring .track {
+  stroke: var(--ink-800);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .score-ring .track {
+    stroke: var(--ink-800);
+  }
+}
+.score-ring .arc.good {
+  stroke: var(--band-good);
+}
+.score-ring .arc.fair {
+  stroke: var(--band-fair-arc);
+}
+.score-ring .arc.poor {
+  stroke: var(--band-poor);
+}
+.score-ring .band-word {
+  margin-top: 4px;
+}
+.score-ring-cap {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  color: var(--text-tertiary);
+  text-align: center;
+  max-width: 180px;
+}
+.composition {
+  display: grid;
+  gap: 0;
+}
+.composition .row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) 64px minmax(0, 1fr) 64px;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--hairline);
+}
+.composition .row:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.composition .row .lbl {
+  font-weight: 500;
+}
+.composition .row .note {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  margin-top: 1px;
+}
+.composition .row .w {
+  text-align: right;
+}
+.composition .row .sub {
+  text-align: right;
+}
+.composition .sub-bar {
+  height: 4px;
+  background: var(--inset);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.composition .sub-bar i {
+  display: block;
+  height: 100%;
+  background: var(--ink-700);
+}
+.composition .anchors {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--hairline);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+/* Run distribution */
+.dist {
+  padding: 14px;
+}
+.dist .plot {
+  position: relative;
+  height: 42px;
+  margin-top: 14px;
+}
+.dist .ax {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 19px;
+  height: 1px;
+  background: var(--hairline);
+}
+.dist .d {
+  position: absolute;
+  top: 14px;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 50%;
+  background: var(--chart-dot);
+}
+.dist .m {
+  position: absolute;
+  top: 11px;
+  width: 13px;
+  height: 13px;
+  margin-left: -6.5px;
+  border-radius: 50%;
+  background: var(--text-primary);
+}
+.dist .scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+}
+.dist .scale b {
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+/* Position in the field */
+.field {
+  padding: 14px;
+}
+.field .strip {
+  position: relative;
+  height: 44px;
+  margin-top: 14px;
+}
+.field .ax {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 21px;
+  height: 1px;
+  background: var(--hairline);
+}
+.field .cut {
+  position: absolute;
+  top: 12px;
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+}
+.field .cut span {
+  position: absolute;
+  top: 22px;
+  left: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-tertiary);
+}
+.field .tick {
+  position: absolute;
+  top: 15px;
+  width: 2px;
+  height: 13px;
+  margin-left: -1px;
+  background: var(--chart-dot);
+}
+.field .me {
+  position: absolute;
+  top: 10px;
+  width: 4px;
+  height: 22px;
+  margin-left: -2px;
+  border-radius: 1px;
+  background: var(--text-primary);
+}
+.field .me.good {
+  background: var(--band-good);
+}
+.field .me.poor {
+  background: var(--band-poor);
+}
+.field .scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+/* Load timeline */
+.timeline {
+  padding: 14px;
+}
+.timeline .lanes {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+.timeline .lane {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) 72px;
+  gap: var(--space-3);
+  align-items: center;
+}
+.timeline .lane .lbl {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.timeline .track {
+  position: relative;
+  height: 14px;
+  background: var(--inset);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.timeline .track i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--ink-600);
+  border-radius: 2px;
+}
+.timeline .track i.banner {
+  background: var(--ink-900);
+}
+.timeline .track i.control {
+  background: var(--chart-dot);
+}
+.timeline .lane .end {
+  text-align: right;
+}
+.timeline .axis {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  margin-top: 8px;
+  padding-left: calc(96px + var(--space-3));
+  padding-right: calc(72px + var(--space-3));
+}
+
+/* Reported, not scored */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0;
+}
+.facts > div {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--hairline);
+}
+.facts .t-label {
+  margin-bottom: 4px;
+}
+.facts .val {
+  word-break: break-word;
+}
+
+/* Small comparison table (conditions, methodology) */
+.mini {
+  width: 100%;
+}
+.mini th,
+.mini td {
+  padding: var(--space-2) var(--space-3);
+  text-align: right;
+  border-top: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+.mini th {
+  border-top: 0;
+  padding-top: 0;
+  vertical-align: bottom;
+}
+.mini th.l,
+.mini td.l {
+  text-align: left;
+}
+.mini tbody tr:first-child td {
+  border-top: 0;
+}
+.mini-wrap {
+  position: relative;
+  overflow-x: auto;
+}
+
+/* ─── Runs list ──────────────────────────────────────────────────────────── */
+.runs {
+  width: 100%;
+}
+.runs th,
+.runs td {
+  padding: var(--space-3);
+  text-align: left;
+  border-top: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+.runs th {
+  border-top: 0;
+}
+.runs td.r,
+.runs th.r {
+  text-align: right;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--hairline);
+  margin-top: var(--region-gap);
+  background: var(--surface);
+  overflow: hidden;
+}
+.footer-inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-16) var(--gutter) var(--space-8);
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr));
+  gap: var(--space-8) var(--space-6);
+}
+/* Positioned so the visually-hidden accessible name stays inside it instead of
+   widening the page. */
+.footer-brand .footer-lockup {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--radius-xs);
+}
+/* The lockup: mark at 30px, word at 22px, `space-4` of clear space beneath. */
+.lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-primary);
+}
+.lockup .word {
+  font-family: var(--font-mono);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-tertiary);
+}
+.lockup .word b {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.footer-brand p {
+  color: var(--text-secondary);
+  max-width: 34ch;
+}
+.footer-brand p:first-of-type {
+  margin-top: var(--space-4);
+}
+.footer-inner nav .t-label {
+  color: var(--text-tertiary);
+}
+.footer-inner ul {
+  margin-top: var(--space-4);
+  display: grid;
+  gap: 0;
+}
+.footer-inner li a {
+  display: inline-block;
+  padding: var(--space-2) 0;
+  text-decoration: none;
+  color: var(--text-secondary);
+}
+.footer-inner li a:hover {
+  color: var(--text-primary);
+}
+/* The name at display size, as a halftone of the charts' own dot grid. Purely
+   decorative, so it is clipped by the footer rather than given room of its own. */
+.footer-wordmark {
+  display: block;
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  height: clamp(4.5rem, 12vw, 11rem);
+  color: var(--chart-dot);
+  box-sizing: border-box;
+}
+.footer-wordmark text {
+  font-family: var(--font-sans);
+  font-size: 150px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.footer-bottom {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--gutter);
+  border-top: 1px solid var(--hairline);
+  color: var(--text-tertiary);
+}
+.footer-bottom span {
+  display: block;
+  max-width: var(--prose-max);
+}
+
+/* ─── Motion ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .btn,
+  .pill,
+  .theme-toggle button,
+  .lb tbody tr {
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN REFINEMENTS — Cookiebannerbench canvas, leaderboard artboard.
+   Everything below is the refinement stack from the design file, applied over
+   the v4 sheet in the same order it was drawn. Plain `:root` blocks carry the
+   light values; the dark deltas sit in the two dark blocks at the end of this
+   section, which outrank them on specificity whatever the order.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Leaderboard refinement · Archivo + 8px rhythm ─────────────────────
+   Scale: 8px base. --space-1 (4px) is permitted INSIDE a component only
+   (pill padding, caption gaps). --space-3 (12) and --space-5 (20) are
+   retired: aliased up to 16 / 24 so nothing off-grid survives. */
+:root {
+  --font-sans: var(--font-archivo);
+  --space-3: 1rem; /* 12 → 16 (retired step) */
+  --space-5: 1.5rem; /* 20 → 24 (retired step) */
+  --bar-gap: var(--space-2); /* 6 → 8 */
+  --bar-max: 56px;
+  --navbar-height: 3rem; /* 52 → 48 */
+  --head-height: 2.5rem; /* 36 → 40 */
+  --row-pad-x: var(--space-2); /* 12 → 8  (16 between columns) */
+  --row-pad-y: var(--space-2); /* 12 → 8  (row = 8 + 40 + 8 = 56) */
+}
+/* type: line-heights moved to the 4px grid */
+body {
+  line-height: 1.25rem;
+}
+.t-display {
+  letter-spacing: -0.01em;
+}
+.wordmark {
+  letter-spacing: -0.005em;
+  line-height: 1.25rem;
+}
+.t-body,
+.t-body-sm,
+.notice,
+.def .tip,
+.navbar nav a,
+.lb .identity a {
+  line-height: 1.25rem;
+}
+.t-ident-sm,
+.t-label,
+.pill,
+.band-word,
+.lb th button,
+.lb .identity .slug,
+.bar-foot .name,
+.bar .val {
+  line-height: 1rem;
+}
+.bar .val .cost,
+.bar-foot .pkg {
+  line-height: 0.75rem;
+}
+/* navbar: 48 = 20 wordmark, 36 nav items, 32 toggle, all centred */
+.navbar .tools {
+  gap: var(--space-2);
+}
+.theme-toggle {
+  padding: 2px;
+  gap: 0;
+}
+.theme-toggle button {
+  width: 28px;
+  height: 28px;
+}
+.skip-link {
+  padding: var(--space-2) var(--space-4);
+}
+/* opening */
+.opening .run-line {
+  gap: var(--space-1) var(--space-2);
+}
+/* pills: 24 tall at rest (4 + 16 + 4); 32 tall when they act as controls */
+.pill {
+  padding: var(--space-1) var(--space-2);
+}
+.pill.tap {
+  padding: 0 var(--space-4);
+}
+.col-picker summary.pill {
+  min-height: 32px;
+  padding: 0 var(--space-4);
+  font-size: 0.75rem;
+}
+/* control bar: every control 32 tall, one gap */
+.control-bar {
+  gap: var(--space-4);
+}
+.notice {
+  padding: var(--space-4);
+  gap: var(--space-2);
+}
+.empty-state {
+  margin-top: var(--space-4);
+}
+/* chart card: 16 / 24 / 16, internals on 8 */
+.hero {
+  margin-top: var(--space-6); /* 24, same as the table below it */
+}
+.chart-card {
+  padding: var(--space-4) var(--space-6) var(--space-4);
+}
+.bar-heads {
+  padding-bottom: var(--space-4); /* 24 mark + 16 = 40 */
+}
+.bar-feet {
+  padding: var(--space-4) 0 0; /* 16 + 16 name + 4 + 12 pkg = 48 */
+}
+/* table: 40 head, 56 rows (80 with a publisher pill), 16 card inset */
+.table-scroll.card .lb thead th {
+  padding-top: var(--space-4);
+}
+.lb th {
+  padding-bottom: var(--space-2);
+}
+.lb .rank {
+  width: 32px;
+}
+.lb th button {
+  gap: var(--space-1);
+}
+.lb .identity {
+  gap: var(--space-2);
+}
+.lb .identity .slug {
+  margin-top: 0;
+}
+.lb .identity .aff {
+  margin-top: var(--space-1);
+}
+.band-word {
+  margin-top: 0;
+}
+/* logo plates: 24 / 32 / 40 holding the mark edge to edge */
+.mark {
+  width: 32px;
+  height: 32px;
+}
+.mark.sm {
+  width: 24px;
+  height: 24px;
+}
+.mark.lg {
+  width: 40px;
+  height: 40px;
+}
+/* popovers */
+.col-picker .menu {
+  top: calc(100% + var(--space-2));
+  gap: 0;
+}
+.col-picker .menu label {
+  padding: var(--space-1) var(--space-2);
+  line-height: 1rem;
+}
+.def .tip {
+  top: calc(100% + var(--space-2));
+  padding: var(--space-2) var(--space-4);
+}
+/* footer */
+.lockup {
+  gap: var(--space-2);
+}
+.footer-inner li a {
+  padding: var(--space-2) 0;
+  line-height: 1rem; /* 32 per link */
+}
+.footer-wordmark {
+  height: 176px;
+}
+.footer-bottom {
+  padding: var(--space-6) var(--gutter);
+}
+
+/* ── Dropdowns and the column picker ──────────────────────────────────────
+   Native select chrome replaced: 32 tall, 16 text inset, 40 reserved for a
+   6px chevron drawn in CSS (no image), so the value never collides with
+   the arrow. Column menu rows are 32 tall with a 16px box, on the grid. */
+.control-bar label {
+  position: relative;
+}
+.control-bar select {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 32px;
+  padding: 0 2.5rem 0 var(--space-4);
+  line-height: 1rem;
+  border-radius: var(--radius-sm);
+}
+.control-bar label::after {
+  content: "";
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -5px;
+  border-right: 1.5px solid var(--icon-rest);
+  border-bottom: 1.5px solid var(--icon-rest);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.control-bar label:has(select:disabled)::after {
+  border-color: var(--text-disabled);
+}
+.control-bar .mobile-metric::after {
+  content: none;
+}
+.search {
+  padding: 0 var(--space-4);
+  min-width: 224px;
+}
+.col-picker summary.pill {
+  gap: var(--space-2);
+}
+.col-picker summary.pill::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+.col-picker .menu {
+  min-width: 224px;
+  padding: var(--space-2);
+  top: calc(100% + var(--space-2));
+  gap: 0;
+}
+.col-picker .menu label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 32px;
+  padding: 0 var(--space-2);
+  line-height: 1rem;
+  border-radius: var(--radius-sm);
+}
+.col-picker input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex: none;
+}
+
+/* ── Site-wide rhythm · every page's components on the 8px grid ──────────
+   Applies the same scale to the detail, method and about pages. */
+.t-data,
+.t-ident {
+  line-height: 1.25rem; /* 18 → 20 */
+}
+.t-score {
+  line-height: 3rem; /* 44 → 48 */
+}
+.prose p + p,
+.prose p + ul,
+.prose ul + p {
+  margin-top: var(--space-4); /* 12 → 16 */
+}
+.prose h2 {
+  margin-bottom: var(--space-4);
+}
+.section-head {
+  margin-bottom: var(--space-4);
+}
+.grid-2,
+.grid-3,
+.grid-4 {
+  gap: var(--space-4);
+}
+/* buttons match every other control: 32 tall, 16 inset */
+.btn {
+  height: 32px;
+  padding: 0 var(--space-4);
+}
+/* metric cards */
+.metric-card {
+  padding: var(--space-4);
+}
+.metric-card .t-label {
+  gap: var(--space-2);
+}
+.metric-card .t-label svg {
+  width: 16px;
+  height: 16px;
+}
+.metric-card .value {
+  margin-top: var(--space-2);
+}
+.metric-card .sub {
+  margin-top: var(--space-1);
+  line-height: 1rem;
+}
+.principle h3 {
+  margin-top: var(--space-4);
+}
+/* score panel: 224 ring column, 56px composition rows */
+.score-panel {
+  grid-template-columns: 224px minmax(0, 1fr);
+}
+.score-ring-wrap {
+  gap: var(--space-4);
+}
+.score-ring-cap {
+  line-height: 1rem;
+}
+.composition .row {
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  min-height: 56px;
+}
+.composition .row:first-of-type {
+  padding-top: 0;
+  min-height: 48px;
+}
+.composition .row .note {
+  line-height: 1rem;
+  margin-top: 0;
+}
+.composition .sub-bar {
+  margin-top: var(--space-1);
+}
+.composition .anchors {
+  padding-top: var(--space-4);
+  line-height: 1rem;
+}
+/* field strip: 48 tall, axis at 24 */
+.field {
+  padding: var(--space-4);
+}
+.field .strip {
+  height: 48px;
+  margin-top: var(--space-4);
+}
+.field .ax {
+  top: 24px;
+}
+.field .cut {
+  top: 14px;
+  height: 20px;
+}
+.field .cut span {
+  top: 22px;
+}
+.field .tick {
+  top: 18px;
+  height: 12px;
+}
+.field .me {
+  top: 13px;
+  height: 22px;
+}
+.field .scale {
+  margin-top: var(--space-1);
+  line-height: 1rem;
+}
+/* load timeline: 16px tracks, 20px lanes, 8 between */
+.timeline {
+  padding: var(--space-4);
+}
+.timeline .lanes {
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+.timeline .lane {
+  gap: var(--space-4);
+}
+.timeline .lane .lbl {
+  line-height: 1rem;
+}
+.timeline .track {
+  height: 16px;
+}
+.timeline .axis {
+  margin-top: var(--space-2);
+  line-height: 1rem;
+  padding-left: calc(96px + var(--space-4));
+  padding-right: calc(72px + var(--space-4));
+}
+/* distribution card (same geometry as the field strip) */
+.dist {
+  padding: var(--space-4);
+}
+.dist .plot {
+  height: 48px;
+  margin-top: var(--space-4);
+}
+.dist .ax {
+  top: 24px;
+}
+.dist .d {
+  top: 20px;
+}
+.dist .m {
+  top: 17px;
+}
+/* facts, small tables, notices */
+.facts > div {
+  padding: var(--space-4);
+}
+.mini td,
+.mini th {
+  padding: var(--space-2) var(--space-4);
+}
+.runs td,
+.runs th {
+  padding: var(--space-4);
+}
+.notice svg {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+}
+
+/* ── Contrast fixes (WCAG 2.1 AA audit) ───────────────────────────────────
+   Every failure was a raw ink-/paper- value bypassing the semantic layer.
+   Two new tokens close them: --interactive-fill-hover and --mark-muted
+   (a data mark that must clear 3:1, unlike the decorative --chart-dot). */
+.btn.primary:hover {
+  background: var(--interactive-fill-hover); /* was ink-800 hardcoded: 1.4:1 in dark */
+}
+.timeline .track i.banner {
+  background: var(--text-primary); /* was ink-900 hardcoded: 1.1:1 in dark */
+}
+.timeline .track i.control {
+  background: var(--mark-muted); /* was --chart-dot: 1.4 / 2.1 */
+}
+.field .tick {
+  background: var(--mark-muted); /* was --chart-dot: 1.6 / 2.0 */
+}
+.composition .sub-bar i {
+  background: var(--text-secondary); /* was ink-700 hardcoded: 2.1 in dark */
+}
+.lb .cell-bar {
+  background: var(--mark-muted); /* was paper-400 hardcoded: 1.6 in light */
+}
+.band-good .score-num,
+.score-num.good {
+  color: var(--band-good-text); /* 4.57 → 6.7 light; holds 5.9 on row hover */
+}
+.mark {
+  color: var(--ink-700); /* plate is always light: 8.4 on both */
+}
+.mark.control {
+  color: var(--text-tertiary); /* control plate uses the inset, keep theme ink */
+}
+::selection {
+  background: var(--interactive-fill);
+  color: var(--text-inverse); /* was ink-900: invisible on dark cards */
+}
+:root {
+  --interactive-fill-hover: var(--ink-800);
+  --mark-muted: var(--ink-500); /* 3.6 on surface */
+  --bar-7: var(--ink-500); /* ink-400 2.45 → 3.6 */
+  --bar-8: var(--ink-500); /* paper-400 1.6 → 3.6 */
+}
+
+/* ── Alignment · one left axis on the text pages ──────────────────────────
+   Section descriptions sat at the far right of a 1344px row while the prose
+   under them ran 576px wide on the left. Everything textual now starts on
+   the gutter and shares the prose measure; cards, tables and grids still
+   span the full width. */
+.section-head {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.section-head p {
+  max-width: var(--prose-max);
+}
+.notice {
+  max-width: var(--prose-max);
+}
+/* timeline labels ("Largest paint", "Banner visible") wrapped in 96px */
+.timeline .lane {
+  grid-template-columns: 128px minmax(0, 1fr) 72px;
+}
+.timeline .axis {
+  padding-left: calc(128px + var(--space-4));
+}
+
+/* reading text: 16/24 at a 72ch measure (≈740px), same lede on every page */
+:root {
+  --prose-max: 72ch;
+}
+.opening .lede {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+/* ── Leaderboard hero · same axis as the page ─────────────────────────────
+   Stacked like everything below it: title, intro, run line, all starting on
+   the gutter. The title wraps to two lines at 24ch; the intro runs the full
+   content width like the control bar and table under it. */
+.opening {
+  display: block;
+}
+.opening h1 {
+  max-width: 24ch;
+}
+.opening .run-line {
+  margin-top: var(--space-4);
+}
+
+/* ── Chart headline · "Compare by" as the card's title ───────────────────
+   The eyebrow label becomes a real title in the title face, with the unit
+   as a secondary caption on the same baseline, and the option chips sit
+   directly beneath it, so the card reads: Compare by → [the five options]. */
+.chart-card {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+}
+.chart-head {
+  display: grid;
+  gap: var(--space-4);
+  padding-bottom: var(--space-6);
+}
+.chart-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.chart-title h2 {
+  margin: 0;
+}
+.chart-title p {
+  margin: 0;
+}
+
+/* ── Chart options · selectable buttons, not tags ─────────────────────────
+   The tags elsewhere (Publisher, Self-hosted npm) are 24px borderless mono
+   pills. These five are controls, so they take the control silhouette
+   instead: 40px, outlined in --border-control like the selects and the
+   Download button, sans label, weight as a mono suffix, selected one filled. */
+.chart-tabs {
+  gap: var(--space-2);
+}
+.pill.tap {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  gap: var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border-control);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.pill.tap .w {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+}
+.pill.tap.active {
+  background: var(--interactive-fill);
+  color: var(--text-inverse);
+  box-shadow: inset 0 0 0 1px var(--interactive-fill);
+}
+.pill.tap.active .w {
+  color: var(--text-inverse);
+  opacity: 0.75;
+}
+@media (hover: hover) {
+  button.pill.tap:not(.active):hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+    box-shadow: inset 0 0 0 1px var(--interactive);
+  }
+}
+
+/* ── Filters live with what they filter ───────────────────────────────────
+   The condition selects (profile, cache, percentile) move into the chart
+   card's title row; search and the column picker move into a toolbar at the
+   top of the table card. The free-floating control bar is gone. */
+.hero {
+  margin-top: 0;
+}
+.chart-title .control-bar {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  gap: var(--space-4);
+  flex-wrap: nowrap;
+}
+.table-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.table-tools .col-picker {
+  margin-left: auto;
+}
+.table-tools .search {
+  min-width: 320px;
+}
+
+/* chart grid dots: decorative only on this page (data marks use --mark-muted), so they can go lighter */
+:root {
+  --chart-dot: var(--paper-300);
+}
+
+/* ── Run conditions in the chart title row · quieter ─────────────────────
+   These set context, not the view, so they step down a level: 28px, hairline
+   outline, no fill, 12px mono value, tertiary label, smaller chevron. */
+.chart-title .control-bar {
+  gap: var(--space-3);
+}
+.chart-title .control-bar label {
+  gap: var(--space-1);
+}
+.chart-title .control-bar .t-label {
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+}
+.chart-title .control-bar select,
+.chart-title .control-bar select:disabled {
+  height: 28px;
+  padding: 0 1.75rem 0 var(--space-2);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  background: transparent;
+  border: 1px solid var(--hairline);
+  color: var(--text-secondary);
+}
+.chart-title .control-bar label::after {
+  right: 10px;
+  width: 5px;
+  height: 5px;
+  margin-top: -4px;
+  border-color: var(--text-tertiary);
+}
+.chart-title .control-bar label:has(select:disabled)::after {
+  border-color: var(--text-tertiary);
+}
+
+/* logos sit with the names under the bars: bars → logo row → name row */
+.chart .bar-heads {
+  padding: var(--space-4) 0 var(--space-2);
+}
+.chart .bar-feet {
+  padding: 0 0 var(--space-2);
+}
+
+/* ── Navbar · current page + GitHub mark ─────────────────────────────────
+   The supplied GitHub mark is used as a CSS mask filled with currentColor,
+   so it takes the nav link's ink in both themes (secondary at rest, primary
+   on hover). The current page's link carries aria-current and a 2px rule
+   flush with the navbar's bottom edge. */
+.navbar nav {
+  align-self: stretch;
+  gap: var(--space-6);
+}
+.navbar nav a {
+  display: inline-flex;
+  align-items: center;
+  height: var(--navbar-height);
+  padding: 0;
+}
+.navbar nav a[aria-current="page"] {
+  color: var(--text-primary);
+  font-weight: 500;
+  box-shadow: inset 0 -2px 0 var(--interactive);
+}
+.navbar nav a.nav-icon {
+  width: 32px;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+}
+.navbar nav a.nav-icon:hover {
+  color: var(--text-primary);
+  background: var(--surface-hover);
+}
+.navbar nav a.nav-icon svg {
+  width: 18px;
+  height: 18px;
+}
+.gh-mark {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: currentColor;
+  -webkit-mask: url(/brand/github-mark.png) center / contain no-repeat;
+  mask: url(/brand/github-mark.png) center / contain no-repeat;
+}
+
+/* Fair band · amber, so the scale reads Poor red → Fair amber → Good green */
+:root {
+  --amber-500: #b87f06;
+  --amber-700: #8a5d04;
+  --band-fair: var(--amber-700);
+  --band-fair-arc: var(--amber-500);
+  --band-fair-text: var(--amber-700);
+}
+.band-word.fair {
+  color: var(--band-fair-text);
+}
+.field .me.fair {
+  background: var(--band-fair);
+}
+
+/* Site logo · one asset per theme, scaled per placement */
+.wordmark .logo {
+  display: block;
+  height: 28px;
+  width: auto;
+}
+.footer-lockup .logo {
+  display: block;
+  height: 36px;
+  width: auto;
+}
+/* The dark-theme lockup is the same drawing in the inverse ink; only one of
+   the two is ever rendered, so neither costs the other a request. */
+.logo.logo-dark {
+  display: none;
+}
+
+/* Accessibility pass · static controls show their resting state, not a disabled one */
+.search:disabled {
+  background: var(--surface);
+  border-color: var(--border-control);
+  color: var(--text-primary);
+}
+.search:disabled::placeholder {
+  color: var(--text-tertiary);
+}
+/* Band cut labels join the site's 11px floor */
+.field .cut span {
+  font-size: 0.6875rem;
+}
+
+/* Opening lede · reading measure, not full width */
+.opening .lede {
+  max-width: var(--prose-max);
+}
+
+/* Chart bars · two alternating inks, no bar singled out by colour */
+.bars-inner .bar[data-tone]:not(.control):not(.none) .fill {
+  background: var(--bar-odd);
+}
+.bars-inner .bar[data-tone="2"]:not(.control):not(.none) .fill,
+.bars-inner .bar[data-tone="4"]:not(.control):not(.none) .fill,
+.bars-inner .bar[data-tone="6"]:not(.control):not(.none) .fill,
+.bars-inner .bar[data-tone="8"]:not(.control):not(.none) .fill,
+.bars-inner .bar[data-tone="10"]:not(.control):not(.none) .fill {
+  background: var(--bar-even);
+}
+:root {
+  --bar-odd: var(--ink-800);
+  --bar-even: var(--ink-600);
+}
+/* Column headers · the sort-arrow slot only exists while a column is sorted,
+   so header text ends flush with the values */
+.lb th .arrow:empty {
+  display: none;
+}
+
+/* Gridline labels · sit in a right-hand gutter outside the plot instead of over the bars */
+.bars {
+  --axis-gutter: var(--space-8);
+}
+.bars-inner {
+  padding-right: var(--axis-gutter);
+}
+.bars .cut {
+  right: var(--axis-gutter);
+}
+.bars .cut i {
+  right: calc(-1 * var(--axis-gutter));
+  width: var(--axis-gutter);
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 1;
+  text-align: left;
+  padding-left: var(--space-2);
+  background: transparent;
+}
+
+/* Run summary · sits at the right of the table tools row, same line as the search box */
+.table-tools .run-summary {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  margin: 0 0 0 auto;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.table-tools .run-summary a {
+  color: var(--text-primary);
+  text-underline-offset: 3px;
+}
+
+/* Leaderboard rows · 12px vertical and horizontal cell padding instead of 8px, so rows breathe */
+.lb {
+  --row-pad-y: var(--space-3);
+  --row-pad-x: var(--space-3);
+}
+
+/* Chart columns · heads and feet share the bars' right-hand axis gutter, so
+   logos and names sit under their bars */
+.chart {
+  --axis-gutter: var(--space-8);
+}
+.chart .bar-heads,
+.chart .bar-feet {
+  padding-right: var(--axis-gutter);
+}
+
+/* Provider marks · the logo fills its circular plate instead of sitting small inside it */
+.mark {
+  overflow: hidden;
+}
+.mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* Chart values · inside the top of each bar, in the bar's inverse text colour,
+   instead of floating above */
+.bars-inner .bar .fill {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.bars-inner .bar .fill .val {
+  align-self: auto;
+  padding: var(--space-1) var(--space-1) 0;
+  color: var(--text-inverse);
+  font-weight: 500;
+}
+
+/* Chart grid · horizontal rules only, every 20 points (48px apart on the
+   240px plot); no dot grid, no box edges */
+.bars {
+  background-image: none;
+  border-top: 0;
+  border-bottom: 0;
+}
+.bars-inner {
+  height: 256px;
+  padding-top: var(--space-4);
+}
+.bars .cuts {
+  top: var(--space-4);
+}
+.bars .cut.base {
+  background: var(--border-control);
+}
+
+/* Metric info icons · LCP, CLS, TBT, FCP headers: a focusable (i) that opens
+   the header tooltip.
+
+   Both the (i) and the sort button beside it are drawn at 16px, which is under
+   the 24px minimum target, and standing next to each other they also take away
+   each other's clear space. Each gets a real 24px box: the height is absorbed
+   by a negative block margin so the header stays 40px, and the (i)'s negative
+   inline margin keeps the glyph on its drawn centre. The only movement is on
+   the three-letter headers, whose text is 21.8px wide and is carried out to 24
+   — the widest column shifts by about two pixels. */
+.lb th button {
+  min-height: 24px;
+  min-width: 24px;
+  margin-block: -4px;
+}
+.lb th .def.has-info {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.lb th .info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: -4px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-tertiary);
+  cursor: help;
+}
+.lb th .info svg {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+.lb th .def.has-info:hover .info,
+.lb th .info:focus-visible {
+  color: var(--text-primary);
+}
+.lb th .info:focus-visible {
+  outline-offset: 1px;
+  border-radius: 50%;
+}
+/* Metric tooltips · bold name on its own line, explanation below */
+.def .tip .tip-title {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.def .tip .tip-body {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--text-secondary);
+}
+
+/* ── Dark deltas for everything above ────────────────────────────────────
+   Deeper surfaces than the tokenised dark set, the contrast-pass values
+   recomputed against them, amber-300 for the Fair band, and the bar pair
+   mirrored so the inverse value text inside a bar reads on both. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #020806;
+    --surface: #08120c;
+    --inset: #020806;
+    --scrim: rgba(2, 8, 6, 0.65);
+    --text-tertiary: var(--ink-400); /* 4.9 → 7.2; 5.5 on hovered rows */
+    --interactive-fill-hover: var(--ink-400); /* ink-950 label on it: 7.9 */
+    --mark-muted: var(--ink-600); /* 3.3 on surface, 3.6 on inset */
+    --bar-4: var(--ink-500); /* 3.3 → 4.9 */
+    --bar-5: var(--ink-600); /* ink-700 1.96 → 3.3 */
+    --bar-6: var(--ink-600);
+    --bar-7: var(--ink-600); /* ink-800 1.3 → 3.3 */
+    --bar-8: var(--ink-600);
+    --chart-dot: var(--ink-800);
+    --band-fair: var(--amber-300);
+    --band-fair-arc: var(--amber-300);
+    --band-fair-text: var(--amber-300);
+    --bar-odd: var(--ink-100);
+    --bar-even: var(--ink-400);
+  }
+}
+:root[data-theme="dark"] {
+  --canvas: #020806;
+  --surface: #08120c;
+  --inset: #020806;
+  --scrim: rgba(2, 8, 6, 0.65);
+  --text-tertiary: var(--ink-400);
+  --interactive-fill-hover: var(--ink-400);
+  --mark-muted: var(--ink-600);
+  --bar-4: var(--ink-500);
+  --bar-5: var(--ink-600);
+  --bar-6: var(--ink-600);
+  --bar-7: var(--ink-600);
+  --bar-8: var(--ink-600);
+  --chart-dot: var(--ink-800);
+  --band-fair: var(--amber-300);
+  --band-fair-arc: var(--amber-300);
+  --band-fair-text: var(--amber-300);
+  --bar-odd: var(--ink-100);
+  --bar-even: var(--ink-400);
+}
+/* The inverse lockup swaps in with the theme. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo-light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .logo-dark {
+    display: block;
+  }
+}
+:root[data-theme="dark"] .logo-light {
+  display: none;
+}
+:root[data-theme="dark"] .logo-dark {
+  display: block;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DETAIL PAGE — the provider artboard's own refinement layer, applied over
+   the leaderboard's. Same order it was drawn in.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* The provider header is not a .region, so it got no gap under it. */
+.provider-head + .region {
+  margin-top: var(--space-8);
+}
+/* Breadcrumb: the current page in medium weight and primary ink. */
+.crumbs {
+  align-items: center;
+  min-height: 32px;
+}
+.crumbs [aria-current="page"] {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+/* Page top · back link on its own row, breadcrumb beneath it; the link's
+   padding is pulled back so its arrow sits on the content edge. */
+.page-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding-top: var(--space-6);
+}
+.page-top .crumbs {
+  padding-top: 0;
+  min-height: 0;
+}
+.page-top .back {
+  margin-left: calc(-1 * var(--space-4));
+  font-family: var(--font-sans);
+}
+/* Blocks following a grid or card inside a region were touching it
+   (.block + .block never matched). */
+.region > .grid-2 + *,
+.region > .grid-3 + *,
+.region > .grid-4 + *,
+.region > .card + *,
+.region > .block + * {
+  margin-top: var(--block-gap);
+}
+/* Contrast pass 2 · the load dots are data, so they take the data-mark token. */
+.dist .d {
+  background: var(--mark-muted);
+}
+
+/* ── Detail restructure · flat stack of self-titled cards ─────────────────
+   Score panel reduced to label · weight · sub-score; four metric cards;
+   dots + field; a devtools-style waterfall; conditions as a titled card;
+   facts as a two-column key/value list. Spacing stays on the 8px tokens. */
+.page > .region + .region {
+  margin-top: var(--space-8);
+}
+.page > .region.headed {
+  margin-top: var(--section-gap);
+}
+.score-panel {
+  grid-template-columns: 224px minmax(0, 1fr);
+  gap: var(--space-8);
+  padding: var(--space-6);
+  align-items: center;
+}
+.score-ring-wrap {
+  gap: 0;
+}
+.score-ring {
+  width: 224px;
+  height: 224px;
+}
+.score-ring svg {
+  width: 224px;
+  height: 224px;
+}
+.score-ring .mid .t-score {
+  font-size: 3.5rem;
+  line-height: 3.5rem;
+}
+.score-ring .mid .band-line {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--text-tertiary);
+  margin-top: var(--space-2);
+}
+.score-ring .mid .band-line.good {
+  color: var(--band-good-text);
+}
+.score-ring .mid .band-line.fair {
+  color: var(--band-fair-text);
+}
+.score-ring .mid .band-line.poor {
+  color: var(--band-poor-text);
+}
+.score-table {
+  display: grid;
+  align-self: stretch;
+}
+.score-table .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+/* Column headings; the weight column is fixed so the heading row and the
+   data rows line up. */
+.score-table .row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 80px 64px;
+  gap: var(--space-4);
+  align-items: center;
+  min-height: 48px;
+  border-top: 1px solid var(--hairline);
+}
+.score-table .row .w {
+  justify-self: end;
+}
+.score-table .row .sub {
+  text-align: right;
+}
+.score-table .row .sub.unmeasured {
+  color: var(--text-unmeasured);
+}
+.score-table .row.cols {
+  min-height: 0;
+  border-top: 0;
+  padding-bottom: var(--space-2);
+  align-items: end;
+}
+.score-table .row.cols > :not(:first-child) {
+  text-align: right;
+}
+/* Composition bars take the score's own green and a 6px track. */
+.composition .sub-bar {
+  height: 6px;
+  border-radius: 3px;
+}
+.composition .sub-bar i {
+  background: var(--band-good);
+}
+.metric-card .sub {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.field .scale .me-label {
+  font-weight: 500;
+}
+.field .scale .me-label.good {
+  color: var(--band-good-text);
+}
+.field .scale .me-label.fair {
+  color: var(--band-fair-text);
+}
+.field .scale .me-label.poor {
+  color: var(--band-poor-text);
+}
+.mini-wrap .t-label {
+  display: block;
+  padding: var(--space-1) var(--space-1) var(--space-3);
+}
+.facts-kv {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-8);
+  padding: var(--space-2) var(--space-6);
+}
+.facts-kv .kv {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: var(--space-4);
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.facts-kv .col .kv:last-child {
+  border-bottom: 0;
+}
+.facts-kv .k {
+  color: var(--text-secondary);
+}
+.facts-kv .v {
+  /* `.v` is also the measured-value class, which is nowrap so a figure and its
+     unit never split. A fact is prose, so it wraps. */
+  white-space: normal;
+  word-break: break-word;
+  /* A package identifier has no spaces to break at, so it must be allowed to
+     break anywhere rather than set the column's floor. */
+  overflow-wrap: anywhere;
+}
+.facts-kv .k {
+  overflow-wrap: anywhere;
+}
+
+/* ── Waterfall · staggered phases, event lines, dense rows ─────────────────
+   Each row starts where the previous phase hands over, as in a browser's
+   network panel. First paint, LCP and the control's LCP are vertical event
+   lines across every row; measured anchors are exact, phase hand-overs are
+   interpolated. */
+.wf .ruler {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr) 120px;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+.wf .ruler .ticks {
+  position: relative;
+  height: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  color: var(--text-tertiary);
+}
+.wf .ruler .ticks span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.wf .ruler .ticks span:first-child {
+  transform: none;
+}
+.wf .ruler .ticks span:last-child {
+  transform: translateX(-100%);
+}
+.wf .events {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr) 120px;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+.wf .events .tags {
+  position: relative;
+  height: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1rem;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+}
+.wf .events .tags span {
+  position: absolute;
+  top: 0;
+  padding-left: 6px;
+  white-space: nowrap;
+  border-left: 1px solid var(--text-secondary);
+}
+.wf .events .tags span.ctl {
+  border-left: 1px dashed var(--text-tertiary);
+  color: var(--text-tertiary);
+}
+.wf .events .tags span.flip {
+  padding-left: 0;
+  padding-right: 6px;
+  transform: translateX(-100%);
+  border-left: 0;
+  border-right: 1px solid var(--text-secondary);
+}
+.wf .events .tags span.flip.ctl {
+  border-right: 1px dashed var(--text-tertiary);
+}
+.wf .lanes {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  margin-top: 0;
+  padding: var(--space-1) 0;
+}
+.wf .lanes .gridlines {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(128px + var(--space-4));
+  right: calc(120px + var(--space-4));
+  pointer-events: none;
+}
+.wf .lanes .gridlines i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--hairline);
+}
+.wf .lanes .gridlines i.ev {
+  background: var(--text-secondary);
+}
+.wf .lanes .gridlines i.ev.ctl {
+  width: 0;
+  background: none;
+  border-left: 1px dashed var(--text-tertiary);
+}
+.wf .lane {
+  grid-template-columns: 128px minmax(0, 1fr) 120px;
+  height: 28px;
+  position: relative;
+}
+.wf .lane .lbl {
+  white-space: nowrap;
+}
+.wf .track {
+  height: 28px;
+  background: none;
+  border-radius: 0;
+  overflow: visible;
+}
+.wf .track .bar {
+  position: absolute;
+  top: 9px;
+  height: 10px;
+  min-width: 3px;
+  border-radius: 2px;
+  background: var(--text-secondary);
+}
+.wf .track .bar.wait {
+  background: var(--border);
+  border-radius: 2px 0 0 2px;
+}
+.wf .track .bar.req {
+  background: var(--mark-muted);
+}
+.wf .track .bar.exec.good {
+  background: var(--band-good);
+}
+.wf .track .bar.exec.fair {
+  background: var(--band-fair-arc);
+}
+.wf .track .bar.exec.poor {
+  background: var(--band-poor);
+}
+.wf .track .mark {
+  position: absolute;
+  top: 5px;
+  width: 3px;
+  height: 18px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: var(--text-primary);
+}
+.wf .track .mark.good {
+  background: var(--band-good);
+}
+.wf .track .mark.fair {
+  background: var(--band-fair-arc);
+}
+.wf .track .mark.poor {
+  background: var(--band-poor);
+}
+.wf .track .none {
+  position: absolute;
+  top: 0;
+  line-height: 28px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+.wf .lane .end {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--text-primary);
+}
+.wf .lane .end .secondary {
+  display: block;
+  font-size: 0.625rem;
+  line-height: 0.75rem;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+.wf .foot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--hairline);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--text-secondary);
+}
+.wf .foot b {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEXT PAGES — the "How we test" boards. One measure for everything: text,
+   tables and card grids share a 960px column, and each section carries its
+   own number. Scoped to `.page.doc`, because the leaderboard and the detail
+   page are full-width and must not inherit any of it.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.page.doc {
+  /* The design's column is 960 flat; the gutter is added around it so the
+     column still clears the viewport edge below that width. */
+  max-width: calc(960px + 2 * var(--gutter));
+}
+/* A page numbers its sections from 01; a part of a tabbed page numbers its
+   own, so the inner reset shadows the outer one. */
+.page.doc,
+.doc-panel {
+  counter-reset: sec;
+}
+/* The lead groups the opening with anything that belongs to it — a publisher
+   notice, a disclosure — so those are outside the numbered sequence. */
+.page.doc .lead > .region:not(.opening) {
+  margin-top: var(--space-8);
+}
+.page.doc .prose,
+.page.doc .prose .t-body {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.page.doc .prose code {
+  font-size: 0.875rem;
+}
+.page.doc .prose h2 {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+}
+.page.doc .prose h3 {
+  margin-top: 0;
+}
+.page.doc .prose h3 + p {
+  margin-top: 0;
+}
+/* No narrower measure inside the column: one left edge and one right edge. */
+.page.doc .prose,
+.page.doc .prose > *,
+.page.doc .notice,
+.page.doc .section-head p {
+  max-width: none;
+}
+.page.doc .doc-panel > * + .region,
+.page.doc > * + .region:not(.opening) {
+  margin-top: var(--space-12);
+}
+.page.doc .doc-panel > .region,
+.page.doc > .region:not(.opening) {
+  counter-increment: sec;
+  border-top: 1px solid var(--hairline);
+  padding-top: var(--space-6);
+}
+.page.doc .doc-panel > .region > h2::before,
+.page.doc .doc-panel > .region > .section-head > h2::before,
+.page.doc > .region:not(.opening) > h2::before,
+.page.doc > .region:not(.opening) > .section-head > h2::before {
+  content: counter(sec, decimal-leading-zero);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-2);
+}
+.page.doc .section-head {
+  margin-bottom: var(--space-6);
+}
+/* A part with a single section carries no 01: a number is a position in a
+   sequence, and one section is not a sequence. */
+.page.doc .doc-panel > .region:only-child > h2::before,
+.page.doc .doc-panel > .region:only-child > .section-head > h2::before {
+  content: none;
+}
+/* The title runs the full column; the lede keeps the leaderboard's reading
+   measure, which is what closes the header on a page whose opening is one
+   short intro. `.opening.wide` is for an opening that is argument rather than
+   intro — About's is two full paragraphs — where a measure 300px short of
+   every block beneath it reads as a misalignment rather than a measure. */
+.page.doc .opening h1 {
+  max-width: none;
+}
+.page.doc .opening .lede {
+  max-width: var(--prose-max);
+}
+.page.doc .opening.wide .lede {
+  max-width: none;
+}
+
+/* Page switcher under the opening, drawn like the navbar's current-page
+   underline. The first section's own rule closes the opening, so the switcher
+   carries none of its own. */
+.page.doc .opening .subnav {
+  display: flex;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: var(--space-8);
+}
+/* Until the tabs are live every part is shown, and each one's own rule closes
+   the header; the strip drops its rule so they do not double up. */
+.page.doc .opening .subnav:not([data-live]) {
+  border-bottom: 0;
+  margin-bottom: 0;
+}
+.page.doc .opening .subnav a {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.page.doc .opening .subnav a:hover {
+  color: var(--text-primary);
+}
+.page.doc .opening .subnav a[aria-current="page"] {
+  color: var(--text-primary);
+  font-weight: 500;
+  box-shadow: inset 0 -2px 0 var(--interactive);
+}
+/* The switcher closes the opening, so the first section of a part carries no
+   rule of its own. */
+.page.doc .doc-panel:first-of-type > .region:first-child,
+.page.doc .doc-panel > .region:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+/* Without JavaScript every part is in the document, one after another; the
+   switcher above is then a list of links into one long page. */
+.page.doc .doc-panel + .doc-panel {
+  margin-top: var(--space-12);
+}
+.page.doc .doc-panel[hidden] {
+  display: none;
+}
+
+/* Privacy policy · the term leads each item, and the representative's postal
+   address is a block rather than an italic aside. */
+.page.doc .prose li > b {
+  font-weight: 600;
+}
+.page.doc .prose address {
+  font-style: normal;
+}
+.page.doc .prose p + address,
+.page.doc .prose address + p {
+  margin-top: var(--space-4);
+}
+.page.doc .prose address b {
+  font-weight: 600;
+}
+
+/* Definition lists (the changelog) run two across. */
+.page.doc .region.prose > dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-8) var(--space-12);
+}
+.page.doc .region.prose > dl .t-body {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+/* Glossary groups: a heading, then its cards. */
+.page.doc #glossary > h3 {
+  margin: 0 0 var(--space-4);
+}
+.page.doc #glossary > .grid-2 + h3 {
+  margin-top: var(--space-8);
+}
+
+/* ── Responsive · the width-scoped rules, re-stated after the refinements ──
+   These are the sheet's own breakpoints, moved here unchanged so they still
+   outrank the design refinements above them. Nothing in them was edited. */
+@media (max-width: 639px) {
+  :root {
+    --gutter: 1rem;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+@media (min-width: 1280px) {
+  :root {
+    --gutter: 3rem;
+  }
+}
+@media (max-width: 639px) {
+  .opening {
+    padding-top: var(--space-8);
+  }
+  .t-display {
+    font-size: 2rem;
+    line-height: 2.25rem;
+  }
+}
+@media (max-width: 639px) {
+  .navbar-inner {
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+    row-gap: var(--space-1);
+  }
+  .navbar nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .navbar .tools {
+    margin-left: auto;
+  }
+}
+@media (max-width: 639px) {
+  /* Inset to the bar area exactly: the same 32px the bars reserve for their
+   labels, so a line at 60% sits where a 60-point bar ends. */
+  .bars .cuts {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--space-8);
+    bottom: 0;
+    pointer-events: none;
+  }
+  .bars .cut {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--hairline);
+  }
+  .bars .cut i {
+    position: absolute;
+    right: 0;
+    bottom: 2px;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-style: normal;
+    color: var(--text-tertiary);
+    background: var(--surface);
+    padding-left: 4px;
+  }
+  .bars-inner {
+    height: 208px;
+  }
+  .bar .val {
+    font-size: 0.625rem;
+  }
+  .bar .val .cost {
+    display: none;
+  }
+  .bar-foot .pkg {
+    display: none;
+  }
+  .bar-foot .name {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    max-height: 88px;
+  }
+  .chart-card {
+    padding: var(--space-4) var(--space-3) var(--space-2);
+  }
+}
+@media (min-width: 1280px) {
+  .leaderboard[data-cols="auto"] [data-priority="8"],
+  .leaderboard[data-cols="auto"] [data-priority="9"],
+  .leaderboard[data-cols="auto"] [data-priority="11"] {
+    display: table-cell;
+  }
+}
+@media (max-width: 1023px) {
+  .leaderboard[data-cols="auto"] [data-priority="5"],
+  .leaderboard[data-cols="auto"] [data-priority="6"],
+  .leaderboard[data-cols="auto"] [data-priority="7"] {
+    display: none;
+  }
+}
+@media (max-width: 639px) {
+  .leaderboard[data-cols="auto"] [data-priority="3"],
+  .leaderboard[data-cols="auto"] [data-priority="4"] {
+    display: none;
+  }
+  /* Below 640 the reader picks the one metric that shows. */
+  .leaderboard [data-metric][data-mobile="true"] {
+    display: table-cell;
+  }
+  .leaderboard .rank-col {
+    display: none;
+  }
+  .lb th,
+  .lb td {
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+  /* Three columns must fit without a sideways scroll: nothing is sticky, the
+     identity cell gives up width, and the affiliation pill drops to its own line. */
+  .lb .sticky-1,
+  .lb .sticky-2 {
+    position: static;
+    box-shadow: none;
+  }
+  .lb {
+    table-layout: fixed;
+  }
+  .lb th.sticky-1,
+  .lb td.sticky-1 {
+    width: auto;
+  }
+  .lb th.sticky-2,
+  .lb td[data-metric="score"] {
+    width: 72px;
+  }
+  .lb [data-metric][data-mobile="true"] {
+    width: 96px;
+  }
+  .lb .identity {
+    gap: var(--space-2);
+  }
+  .lb .identity .slug {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .lb .identity .aff {
+    display: inline-flex;
+    margin: 4px 0 0;
+  }
+  .lb .identity > span:last-child {
+    min-width: 0;
+  }
+  .lb .identity a {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 639px) {
+  .control-bar .mobile-metric {
+    display: inline-flex;
+  }
+  .chart-head {
+    display: grid;
+    gap: var(--space-2);
+  }
+  .chart-tabs {
+    gap: var(--space-2);
+  }
+  .col-picker {
+    display: none;
+  }
+}
+@media (max-width: 1023px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .grid-3,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 639px) {
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 767px) {
+  .score-panel {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 639px) {
+  .composition .row {
+    grid-template-columns: minmax(0, 1fr) 56px 56px;
+  }
+  .composition .row .cost {
+    display: none;
+  }
+}
+@media (max-width: 639px) {
+  .timeline .lane {
+    grid-template-columns: 72px minmax(0, 1fr) 60px;
+  }
+  .timeline .axis {
+    padding-left: calc(72px + var(--space-3));
+    padding-right: calc(60px + var(--space-3));
+  }
+}
+@media (max-width: 1023px) {
+  .footer-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 639px) {
+  .footer-inner {
+    padding-top: var(--space-8);
+  }
+}
+
+/* ── Responsive · the refactored toolbars ────────────────────────────────
+   The conditions moved into the chart card's title row and search into the
+   table's toolbar, both of which assume a wide row. Narrow, they stack and
+   wrap like every other control group on this sheet. */
+@media (max-width: 1023px) {
+  .chart-title .control-bar {
+    flex-wrap: wrap;
+    margin-left: 0;
+    width: 100%;
+  }
+  .table-tools {
+    flex-wrap: wrap;
+  }
+  .table-tools .search {
+    min-width: 0;
+    flex: 1 1 224px;
+  }
+  .table-tools .run-summary {
+    white-space: normal;
+    flex-wrap: wrap;
+    margin-left: 0;
+    width: 100%;
+  }
+}
+/* Detail page · the waterfall's 128 + 120 fixed columns and the two-column
+   fact list need to give way before the track does. */
+.facts-kv .col,
+.facts-kv .kv > * {
+  min-width: 0;
+}
+@media (max-width: 767px) {
+  .page.doc .region.prose > dl {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .facts-kv {
+    grid-template-columns: 1fr;
+    padding: var(--space-2) var(--space-4);
+  }
+  .facts-kv .col:first-child .kv:last-child {
+    border-bottom: 1px solid var(--hairline);
+  }
+  .score-panel {
+    justify-items: center;
+  }
+  .score-table {
+    width: 100%;
+  }
+}
+@media (max-width: 639px) {
+  .wf .ruler,
+  .wf .events,
+  .wf .lane {
+    grid-template-columns: 76px minmax(0, 1fr) 60px;
+    gap: var(--space-2);
+  }
+  .wf .lanes .gridlines {
+    left: calc(76px + var(--space-2));
+    right: calc(60px + var(--space-2));
+  }
+  /* A phase's name is already in its lane label, so the end keeps the number
+     alone: a second line would push the 28px lane out of the card. */
+  .wf .lane .end .secondary {
+    display: none;
+  }
+  /* "Consent request" does not fit 76px on one line, so lanes wrap and grow. */
+  .wf .lane .lbl {
+    white-space: normal;
+    font-size: 0.625rem;
+    line-height: 0.875rem;
+  }
+  .wf .lane {
+    height: auto;
+    min-height: 28px;
+    align-items: center;
+  }
+  /* Event tags and gridlines are drawn from the plot's own coordinates; at this
+     width a long tag would otherwise widen the card rather than run off it. */
+  .wf .events .tags,
+  .wf .lanes {
+    overflow: hidden;
+  }
+  /* Five ruler labels will not sit side by side in 200px. */
+  .wf .ruler .ticks span:nth-child(even) {
+    display: none;
+  }
+  .wf .foot {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .score-ring,
+  .score-ring svg {
+    width: 180px;
+    height: 180px;
+  }
+  .score-ring .mid .t-score {
+    font-size: 2.75rem;
+    line-height: 2.75rem;
+  }
+}
+@media (max-width: 639px) {
+  .chart-title {
+    gap: var(--space-2);
+  }
+  .table-tools {
+    gap: var(--space-2);
+  }
+  .table-tools .search {
+    flex: 1 1 100%;
+  }
+  /* The design's column names are sentences ("Time to banner", "Viewport
+     blocked"), which do not fit the 96px the one chosen metric gets on a
+     phone. The head is the only place they may wrap; values stay on one line. */
+  .lb thead th {
+    white-space: normal;
+  }
+  .lb thead th button {
+    text-align: right;
+  }
+}

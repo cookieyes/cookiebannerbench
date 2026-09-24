@@ -1,0 +1,12 @@
+{
+  "note": "Each provider's own mark, fetched from their site into data/logo-raw/ as a 64px PNG. Identity, never judgement: a mark may be as loud as the brand, and it is the only hue in a row besides the score. public/logos/ holds the normalised copies the site serves \u2014 the plate is a circle, so a mark that bleeds to the corners of its square loses them. Run scripts/logos.mjs after changing anything in data/logo-raw/.",
+  "sources": {
+    "cookieyes.png": "https://www.cookieyes.com/favicon.png",
+    "c15t.png": "https://github.com/c15t.png?size=512",
+    "onetrust.png": "https://www.onetrust.com/favicon.ico",
+    "osano.png": "https://www.osano.com/hubfs/v2/icons/favicon/apple-icon-72x72.png",
+    "iubenda.png": "https://www.iubenda.com/wp-content/uploads/2026/09/iubenda_isotype-512-150x150.png.webp",
+    "ketch.png": "https://www.ketch.com/favicon-48.png",
+    "enzuzo.png": "https://www.enzuzo.com/hubfs/Enzuzo%20Logo%20(3).png"
+  }
+}

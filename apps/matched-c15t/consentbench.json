@@ -1,0 +1,8 @@
+{
+  "name": "matched-c15t",
+  "label": "c15t (matched, offline)",
+  "vendor": "c15t",
+  "bannerSelectors": ["[data-testid=\"consent-banner-root\"]"],
+  "serviceHosts": [],
+  "tags": ["matched", "offline"]
+}

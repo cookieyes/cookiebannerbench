@@ -1,0 +1,8 @@
+{
+  "name": "c15t-nextjs",
+  "label": "c15t (@c15t/nextjs)",
+  "vendor": "c15t",
+  "bannerSelectors": ["[data-testid=\"consent-banner-root\"]"],
+  "serviceHosts": ["c15t.com", "consent.io", "inth.app"],
+  "tags": ["npm", "backend"]
+}

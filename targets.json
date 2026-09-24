@@ -1,0 +1,113 @@
+{
+  "baseline": {
+    "url": "https://consentbench-baseline-henna.vercel.app",
+    "version": "n/a",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "c15t-nextjs": {
+    "url": "https://consentbench-c15t-nextjs.vercel.app",
+    "version": "@c15t/nextjs@2.2.1",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "c15t-nextjs-offline": {
+    "url": "https://consentbench-c15t-nextjs-offline.vercel.app",
+    "version": "@c15t/nextjs@2.2.1 (offline)",
+    "deployedAt": "2026-09-23T07:10:07Z"
+  },
+  "c15t-react": {
+    "url": "https://consentbench-c15t-react.vercel.app",
+    "version": "@c15t/react@2.2.1",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "c15t-react-offline": {
+    "url": "https://consentbench-c15t-react-offline.vercel.app",
+    "version": "@c15t/react@2.2.1 (offline)",
+    "deployedAt": "2026-09-23T07:10:07Z"
+  },
+  "cookie-control": {
+    "url": "https://consentbench-with-cookie-control.vercel.app",
+    "version": "cdn",
+    "deployedAt": "2026-09-15T06:24:28Z",
+    "note": "domain-licensed: new domain not registered with Civic"
+  },
+  "cookieyes-cdn": {
+    "url": "https://consentbench-with-cookie-yes.vercel.app",
+    "version": "cdn",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "cookieyes-core": {
+    "url": "https://consentbench-cookieyes-core.vercel.app",
+    "version": "@cookieyes/core@0.6.0",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "cookieyes-nextjs": {
+    "url": "https://consentbench-cookieyes-nextjs.vercel.app",
+    "version": "@cookieyes/nextjs@0.6.0",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "cookieyes-nextjs-no-critical-css": {
+    "url": "https://consentbench-cookieyes-nextjs-no-cr.vercel.app",
+    "version": "@cookieyes/nextjs@0.6.0",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "cookieyes-react": {
+    "url": "https://consentbench-cookieyes-react.vercel.app",
+    "version": "@cookieyes/react@0.8.0",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "didomi": {
+    "url": "https://consentbench-didomi.vercel.app",
+    "version": "@didomi/react@1.11.0",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "enzuzo": {
+    "url": "https://consentbench-enzuzo.vercel.app",
+    "version": "cdn",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "iubenda": {
+    "url": "https://consentbench-iubenda.vercel.app",
+    "version": "cdn",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "ketch": {
+    "url": "https://consentbench-ketch.vercel.app",
+    "version": "cdn",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "matched-c15t": {
+    "url": "https://consentbench-matched-c15t.vercel.app",
+    "version": "@c15t/nextjs@2.2.1",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "matched-c15t-backend": {
+    "url": "https://consentbench-matched-c15t-backend.vercel.app",
+    "version": "@c15t/nextjs@2.2.1",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "matched-cookieyes": {
+    "url": "https://consentbench-matched-cookieyes.vercel.app",
+    "version": "@cookieyes/nextjs@0.6.0",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "matched-cookieyes-backend": {
+    "url": "https://consentbench-matched-cookieyes-back.vercel.app",
+    "version": "@cookieyes/nextjs@0.6.0",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "onetrust": {
+    "url": "https://consentbench-onetrust.vercel.app",
+    "version": "cdn",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "osano": {
+    "url": "https://consentbench-osano.vercel.app",
+    "version": "cdn",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  },
+  "usercentrics": {
+    "url": "https://consentbench-usercentrics.vercel.app",
+    "version": "cdn",
+    "deployedAt": "2026-09-15T06:24:28Z"
+  }
+}

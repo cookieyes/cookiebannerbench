@@ -1,0 +1,21 @@
+node_modules/
+.next/
+dist/
+# The site's static export is a build artefact; it is rebuilt from results/.
+out/
+*.tsbuildinfo
+.DS_Store
+.vercel
+
+# Vercel deploy token, and the URLs a deploy writes back (never commit)
+.vercel-token
+deployed-urls.txt
+
+# Working files kept beside the project, not part of it
+Claude outputs/
+design-handoff/
+demos/
+*.docx
+# Working snapshots of targets.json taken during deploys
+targets.deployed.json
+targets.existing.json

@@ -1,0 +1,8 @@
+{
+  "name": "ketch",
+  "label": "Ketch",
+  "vendor": "ketch",
+  "bannerSelectors": ["#ketch-banner", "#ketch-modal", ".ketch-fixed"],
+  "serviceHosts": ["global.ketchcdn.com", "cdn.ketchjs.com"],
+  "tags": ["cdn"]
+}

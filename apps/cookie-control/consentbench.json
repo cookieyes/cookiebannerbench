@@ -1,0 +1,8 @@
+{
+  "name": "cookie-control",
+  "label": "Cookie Control",
+  "vendor": "civic",
+  "bannerSelectors": [".ccc-module--slideout"],
+  "serviceHosts": ["civiccomputing.com"],
+  "tags": ["cdn"]
+}

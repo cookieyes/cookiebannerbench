@@ -1,0 +1,8 @@
+{
+  "name": "c15t-react-offline",
+  "label": "c15t (@c15t/react, offline)",
+  "vendor": "c15t",
+  "bannerSelectors": ["[data-testid=\"consent-banner-root\"]"],
+  "serviceHosts": [],
+  "tags": ["npm", "offline"]
+}

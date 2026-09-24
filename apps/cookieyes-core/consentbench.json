@@ -1,0 +1,8 @@
+{
+  "name": "cookieyes-core",
+  "label": "CookieYes (@cookieyes/core, headless)",
+  "vendor": "cookieyes",
+  "bannerSelectors": [],
+  "serviceHosts": [],
+  "tags": ["npm", "headless"]
+}

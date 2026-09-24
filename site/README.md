@@ -26,6 +26,12 @@ not become the homepage. A run that is missing a target simply has no row for
 it; a banner detected in fewer loads than the run made keeps its row with the
 count stated; a condition with no banner at all is not scored.
 
+## Consent banner and analytics
+
+The live site loads the CookieYes banner, Google Analytics 4 and Microsoft
+Clarity (`app/layout.tsx`). They are only rendered when the build sets
+`ENABLE_ANALYTICS=true`, so local builds, CI audits and forks leave them out.
+
 ## The score
 
 `lib/scoring.ts` is the single source. Method 2: four categories over eight

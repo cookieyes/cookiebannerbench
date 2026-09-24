@@ -35,6 +35,20 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
+const gtagScript = `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KBJVQM960J');
+var s = document.createElement('script');
+s.async = true;
+s.src = 'https://www.googletagmanager.com/gtag/js?id=G-KBJVQM960J';
+document.head.appendChild(s);`;
+const clarityScript = `(function(c,l,a,r,i,t,y){
+  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "ymnkuq01qi");`;
+
 const themeScript =
   'try{var t=localStorage.getItem("cookiebannerbench-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}';
 
@@ -44,6 +58,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant theme bootstrap, no interpolated input. */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {process.env.ENABLE_ANALYTICS === "true" && (
+          <>
+            {/* Start cookieyes banner */}
+            <script
+              id="cookieyes"
+              type="text/javascript"
+              src="https://cdn-cookieyes.com/client_data/bd4f5728c291fc3c702303b1bdfa3f6c/script.js"
+            />
+            {/* End cookieyes banner */}
+            {/* Google tag (gtag.js), loaded from the snippet so it stays after CookieYes */}
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant GA4 snippet. */}
+            <script dangerouslySetInnerHTML={{ __html: gtagScript }} />
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant Microsoft Clarity snippet. */}
+            <script type="text/javascript" dangerouslySetInnerHTML={{ __html: clarityScript }} />
+          </>
+        )}
       </head>
       <body>
         <a href="#main" className="skip-link">

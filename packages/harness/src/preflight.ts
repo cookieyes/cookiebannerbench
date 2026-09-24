@@ -114,10 +114,14 @@ async function checkOne(
     }
 
     try {
-      await page.waitForFunction(() => window.__consentbench?.bannerVisible !== null, undefined, {
-        timeout: BANNER_TIMEOUT_MS,
-        polling: 200,
-      });
+      await page.waitForFunction(
+        () => window.__cookiebannerbench?.bannerVisible !== null,
+        undefined,
+        {
+          timeout: BANNER_TIMEOUT_MS,
+          polling: 200,
+        },
+      );
     } catch {
       return {
         ...base,
@@ -129,7 +133,7 @@ async function checkOne(
     // The probe gives up 5s after the banner appears, so 6s is long enough to
     // know the answer rather than to be still waiting for it.
     const becameUsable = await page
-      .waitForFunction(() => window.__consentbench?.bannerInteractive !== null, undefined, {
+      .waitForFunction(() => window.__cookiebannerbench?.bannerInteractive !== null, undefined, {
         timeout: 6_000,
         polling: 100,
       })
@@ -140,7 +144,7 @@ async function checkOne(
     // The selector that actually matched, not the first one declared: a
     // diagnostic that exists to catch a renamed selector has to name the one
     // in use.
-    const selector = await page.evaluate(() => window.__consentbench?.bannerSelector ?? null);
+    const selector = await page.evaluate(() => window.__cookiebannerbench?.bannerSelector ?? null);
     const visible = `banner at ${Math.round(sample.bannerVisible ?? 0)}ms`;
     if (!becameUsable) {
       return {

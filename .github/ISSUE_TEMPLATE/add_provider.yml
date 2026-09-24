@@ -1,0 +1,70 @@
+name: ➕ Add a consent provider
+description: Suggest a consent SDK or CMP the benchmark should measure
+title: "[Provider]: "
+labels: ["provider", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please open this before building the app, so we can agree the setup first.
+        An installation that does not match the vendor's own documentation makes
+        the whole comparison unfair, and that is easier to settle in an issue than
+        in review.
+
+  - type: input
+    id: provider
+    attributes:
+      label: Provider
+      placeholder: "e.g. Acme Consent"
+    validations:
+      required: true
+
+  - type: input
+    id: docs
+    attributes:
+      label: Installation documentation
+      description: The page you would follow to install it. This is what the app will be built from.
+      placeholder: "https://…"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-model
+    attributes:
+      label: How is it installed?
+      options:
+        - npm package
+        - Script tag / CDN snippet
+        - Tag manager
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: package
+    attributes:
+      label: Package or script URL
+      description: The exact package name, or the script the snippet loads.
+      placeholder: "e.g. @acme/consent, or https://cdn.acme.com/banner.js"
+    validations:
+      required: false
+
+  - type: textarea
+    id: access
+    attributes:
+      label: Account and licensing
+      description: >
+        Does measuring it need a paid plan, an API key or a registered domain?
+        Do the terms permit use on a test domain? A provider whose licensing does
+        not allow the test domain cannot be published, and we would rather find
+        that out now.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Are you willing to open a PR adding the app?
+      options:
+        - label: Yes, I'd like to work on this.
+          required: false

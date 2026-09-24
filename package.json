@@ -1,5 +1,5 @@
 {
-  "name": "consentbench",
+  "name": "cookiebannerbench",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@9.15.4",
@@ -7,13 +7,13 @@
     "node": ">=20.9.0"
   },
   "scripts": {
-    "bench": "pnpm --filter @consentbench/harness exec consentbench",
-    "build:harness": "pnpm --filter @consentbench/harness build",
+    "bench": "pnpm --filter @cookiebannerbench/harness exec cookiebannerbench",
+    "build:harness": "pnpm --filter @cookiebannerbench/harness build",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "test": "vitest run && pnpm --filter @consentbench/site test",
+    "test": "vitest run && pnpm --filter @cookiebannerbench/site test",
     "typecheck": "tsc -b packages/harness",
-    "build": "pnpm --filter @consentbench/site build"
+    "build": "pnpm --filter @cookiebannerbench/site build"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",

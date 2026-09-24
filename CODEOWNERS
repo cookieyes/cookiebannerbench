@@ -1,0 +1,23 @@
+# Default owners for everything in the repo.
+# These users/teams are requested for review on every pull request, and their
+# approval is required by the ruleset on `main`.
+* @cookieyes/sdk-maintainers
+
+# The measurement path. A change here changes what every published number means,
+# so it is owned explicitly rather than by the catch-all above.
+/packages/harness/        @cookieyes/sdk-maintainers
+/apps/                    @cookieyes/sdk-maintainers
+/targets.json             @cookieyes/sdk-maintainers
+
+# Recorded runs are evidence. They are written by the harness and are not edited
+# by hand; a pull request that touches one needs a maintainer to say why.
+/results/                 @cookieyes/sdk-maintainers
+
+# The scoring model and the publication boundary decide what a score means and
+# which vendors appear at all.
+/site/lib/scoring.ts      @cookieyes/sdk-maintainers
+/site/lib/published.ts    @cookieyes/sdk-maintainers
+
+# Anything that gates a release.
+/.github/                 @cookieyes/sdk-maintainers
+/lighthouserc.json        @cookieyes/sdk-maintainers

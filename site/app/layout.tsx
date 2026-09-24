@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 };
 
 const themeScript =
-  'try{var t=localStorage.getItem("consentbench-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}';
+  'try{var t=localStorage.getItem("cookiebannerbench-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

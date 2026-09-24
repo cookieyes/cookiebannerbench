@@ -118,14 +118,14 @@ async function timings(name: string, waitMs: number): Promise<Timings> {
     await installCollector(page, ["#banner"]);
     await page.goto(`${origin}/?case=${name}`, { waitUntil: "commit" });
     await page
-      .waitForFunction(() => window.__consentbench?.bannerInteractive !== null, undefined, {
+      .waitForFunction(() => window.__cookiebannerbench?.bannerInteractive !== null, undefined, {
         timeout: waitMs,
         polling: 50,
       })
       .catch(() => undefined);
     return await page.evaluate(() => ({
-      visible: window.__consentbench?.bannerVisible ?? null,
-      usable: window.__consentbench?.bannerInteractive ?? null,
+      visible: window.__cookiebannerbench?.bannerVisible ?? null,
+      usable: window.__cookiebannerbench?.bannerInteractive ?? null,
     }));
   } finally {
     await page.close();
@@ -190,14 +190,18 @@ describe("time to usable banner", () => {
     try {
       await installCollector(page, ["#banner"]);
       await page.goto(`${origin}/?case=big-banner`, { waitUntil: "commit" });
-      await page.waitForFunction(() => window.__consentbench?.bannerVisible !== null, undefined, {
-        timeout: 4000,
-      });
+      await page.waitForFunction(
+        () => window.__cookiebannerbench?.bannerVisible !== null,
+        undefined,
+        {
+          timeout: 4000,
+        },
+      );
       await page.waitForTimeout(400);
       const { lcp, contentLcp, visible } = await page.evaluate(() => ({
-        lcp: window.__consentbench?.lcp ?? 0,
-        contentLcp: window.__consentbench?.contentLcp ?? 0,
-        visible: window.__consentbench?.bannerVisible ?? 0,
+        lcp: window.__cookiebannerbench?.lcp ?? 0,
+        contentLcp: window.__cookiebannerbench?.contentLcp ?? 0,
+        visible: window.__cookiebannerbench?.bannerVisible ?? 0,
       }));
       // Raw LCP moved to the banner's paint; the host's own paint did not.
       expect(lcp).toBeGreaterThanOrEqual(visible - 50);

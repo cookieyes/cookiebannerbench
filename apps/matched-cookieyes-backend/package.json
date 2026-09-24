@@ -1,5 +1,5 @@
 {
-  "name": "@consentbench/app-matched-cookieyes-backend",
+  "name": "@cookiebannerbench/app-matched-cookieyes-backend",
   "version": "1.0.0",
   "private": true,
   "scripts": {

@@ -1,0 +1,76 @@
+name: 💡 Feature request
+description: Suggest an improvement to the method, the harness or the site
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tell us about the *problem* first, then your proposed solution.
+
+        If you are proposing a change to what is measured, how it is scored, or
+        what is published, please read
+        [How we test](https://cookiebannerbench.com/methodology/) first and say
+        what it would do to numbers already published. Anchors and weights are
+        fixed before a run, and historical scores are not recomputed.
+
+  - type: checkboxes
+    id: existing-issue-check
+    attributes:
+      label: Is there an existing issue/request for this?
+      options:
+        - label: I have searched existing issues and this is not a duplicate.
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Measurement method or scoring
+        - Harness / CLI
+        - Site (what is shown or how)
+        - Documentation
+        - Not sure / multiple / other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      placeholder: "I'm trying to do X, but currently I can't because..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Your proposed solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Effect on published numbers
+      description: >
+        Would this change any figure already on the site, or the meaning of one?
+        Leave blank if it clearly wouldn't.
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you've considered
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Are you willing to submit a PR for this?
+      options:
+        - label: Yes, I'd like to work on this.
+          required: false

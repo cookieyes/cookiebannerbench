@@ -14,8 +14,8 @@ const enhance = () => {
       if (theme === "system") root.removeAttribute("data-theme");
       else root.setAttribute("data-theme", theme);
       try {
-        if (theme === "system") localStorage.removeItem("consentbench-theme");
-        else localStorage.setItem("consentbench-theme", theme);
+        if (theme === "system") localStorage.removeItem("cookiebannerbench-theme");
+        else localStorage.setItem("cookiebannerbench-theme", theme);
       } catch {
         /* The theme still applies for this visit. */
       }

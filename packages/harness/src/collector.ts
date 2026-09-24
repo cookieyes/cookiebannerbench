@@ -39,7 +39,7 @@ interface CollectorState {
 
 declare global {
   interface Window {
-    __consentbench?: CollectorState;
+    __cookiebannerbench?: CollectorState;
   }
 }
 
@@ -62,7 +62,7 @@ export async function installCollector(page: Page, selectors: string[]): Promise
       bannerSelector: null,
       bannerViewportCoverage: 0,
     };
-    window.__consentbench = state;
+    window.__cookiebannerbench = state;
 
     const observe = (type: string, callback: (entries: PerformanceEntryList) => void): void => {
       try {
@@ -368,7 +368,7 @@ export async function readSample(
   wire?: readonly WireRequest[],
 ): Promise<Sample> {
   const raw = await page.evaluate(() => {
-    const state = window.__consentbench;
+    const state = window.__cookiebannerbench;
     const navigation = performance.getEntriesByType("navigation")[0] as
       | PerformanceNavigationTiming
       | undefined;

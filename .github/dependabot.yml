@@ -1,0 +1,22 @@
+version: 2
+updates:
+  # One pnpm workspace, so the root lockfile covers the harness, the site and
+  # every app under apps/.
+  #
+  # A Dependabot PR that bumps a vendor SDK inside apps/ is not a routine
+  # update: targets.json records the exact version each deployment shipped, so
+  # merging one without redeploying and recording a new run makes the published
+  # attribution wrong. Those PRs get the version bump in targets.json and a
+  # fresh run, or they wait.
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      dev-dependencies:
+        dependency-type: development
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly

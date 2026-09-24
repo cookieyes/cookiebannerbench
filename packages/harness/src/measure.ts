@@ -54,7 +54,7 @@ async function waitUntilSettled(page: Page, expectsBanner: boolean): Promise<voi
   await page.waitForLoadState("load", { timeout: LOAD_TIMEOUT_MS });
   await page.waitForFunction(
     ({ quietMs, bannerTimeoutMs, needsBanner }) => {
-      const state = window.__consentbench;
+      const state = window.__cookiebannerbench;
       const navigation = performance.getEntriesByType("navigation")[0] as
         | PerformanceNavigationTiming
         | undefined;

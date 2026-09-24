@@ -1,7 +1,7 @@
 export type Theme = "system" | "light" | "dark";
 
 /** Shared with the blocking script in `layout.tsx`; changing one means changing both. */
-export const THEME_KEY = "consentbench-theme";
+export const THEME_KEY = "cookiebannerbench-theme";
 
 const stroke = {
   fill: "none",

@@ -168,7 +168,7 @@ export const loadHistory = cache(() =>
 );
 export const loadApps = cache((): AppConfig[] =>
   PUBLISHED.map((entry) =>
-    appConfigSchema.parse(read(join(REPO, "apps", entry.app, "consentbench.json"))),
+    appConfigSchema.parse(read(join(REPO, "apps", entry.app, "cookiebannerbench.json"))),
   ),
 );
 export const loadTargets = cache((): Record<string, Target> => {

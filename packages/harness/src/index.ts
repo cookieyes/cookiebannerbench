@@ -9,15 +9,15 @@ import { run } from "./run.js";
 import { scoreRun } from "./score.js";
 import type { MetricKey, RunManifest } from "./types.js";
 
-const USAGE = `consentbench — cookie-consent SDK performance harness
+const USAGE = `cookiebannerbench — cookie-consent SDK performance harness
 
 Usage:
-  consentbench run [options]         Measure every app against its deployed target
-  consentbench report [run] [opts]   Print a leaderboard for a completed run
-  consentbench compare <base> <head> Diff two runs, flagging real regressions
-  consentbench score [run] [opts]    Category scores for a completed run
-  consentbench apps                  List the apps defined in this workspace
-  consentbench preflight [opts]      Check every target renders its banner
+  cookiebannerbench run [options]         Measure every app against its deployed target
+  cookiebannerbench report [run] [opts]   Print a leaderboard for a completed run
+  cookiebannerbench compare <base> <head> Diff two runs, flagging real regressions
+  cookiebannerbench score [run] [opts]    Category scores for a completed run
+  cookiebannerbench apps                  List the apps defined in this workspace
+  cookiebannerbench preflight [opts]      Check every target renders its banner
 
 Options for "preflight":
   --apps <a,b>          Only these apps
@@ -84,7 +84,7 @@ function findRoot(from: string): string {
     }
     const parent = dirname(current);
     if (parent === current) {
-      throw new Error("could not find the consentbench workspace root from this directory");
+      throw new Error("could not find the cookiebannerbench workspace root from this directory");
     }
     current = parent;
   }
@@ -130,12 +130,12 @@ function loadRun(rootDir: string, reference: string | undefined): RunManifest {
   let path: string;
   if (reference === undefined) {
     if (!existsSync(resultsDir)) {
-      throw new Error("no results yet — run `consentbench run` first");
+      throw new Error("no results yet — run `cookiebannerbench run` first");
     }
     const runs = readdirSync(resultsDir).sort();
     const latest = runs.at(-1);
     if (latest === undefined) {
-      throw new Error("no results yet — run `consentbench run` first");
+      throw new Error("no results yet — run `cookiebannerbench run` first");
     }
     path = join(resultsDir, latest, "run.json");
   } else if (reference.endsWith(".json")) {
@@ -276,7 +276,7 @@ async function main(): Promise<void> {
     case "compare": {
       const [baseRef, headRef] = positional;
       if (baseRef === undefined || headRef === undefined) {
-        throw new Error("compare needs two runs: consentbench compare <base> <head>");
+        throw new Error("compare needs two runs: cookiebannerbench compare <base> <head>");
       }
       const base = loadRun(rootDir, baseRef);
       const head = loadRun(rootDir, headRef);
@@ -294,7 +294,7 @@ async function main(): Promise<void> {
     }
 
     default:
-      throw new Error(`unknown command "${command}" — run \`consentbench help\``);
+      throw new Error(`unknown command "${command}" — run \`cookiebannerbench help\``);
   }
 }
 

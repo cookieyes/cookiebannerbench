@@ -30,7 +30,9 @@ const COMPRESSIBLE = new Set([".html", ".js", ".css", ".svg", ".xml", ".txt", ".
 createServer((req, res) => {
   const url = (req.url ?? "/").split("?")[0];
   let file = join(ROOT, normalize(decodeURIComponent(url)).replace(/^(\.\.[/\\])+/, ""));
-  if (existsSync(`${file}.html`)) file = `${file}.html`;
+  // Clean URLs, as a CDN serves them: /a/b and /a/b/ both resolve to a/b.html.
+  const bare = file.replace(/[/\\]+$/, "");
+  if (existsSync(`${bare}.html`)) file = `${bare}.html`;
   else if (existsSync(file) && statSync(file).isDirectory()) file = join(file, "index.html");
   if (!existsSync(file)) {
     res.writeHead(404, { "content-type": "text/plain" });

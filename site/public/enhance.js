@@ -324,7 +324,9 @@ const enhance = () => {
       // select drops keyboard focus. A response only applies if it is still the
       // condition the selects describe when it arrives.
       current.setAttribute("aria-busy", "true");
-      fetch(`/slices/${board.dataset.run}/${key.replaceAll("|", "_")}.html`)
+      // The clean, trailing-slash URL: hosts such as Vercel serve an exported
+      // `<key>.html` there and answer the `.html` path itself with a 404.
+      fetch(`/slices/${board.dataset.run}/${key.replaceAll("|", "_")}/`)
         .then((response) => {
           if (!response.ok) throw new Error(String(response.status));
           return response.text();

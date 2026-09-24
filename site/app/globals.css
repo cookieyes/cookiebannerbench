@@ -2629,6 +2629,16 @@ body {
   color: var(--text-primary);
   background: var(--surface-hover);
 }
+.navbar nav a.nav-icon.has-stars {
+  width: auto;
+  gap: var(--space-1);
+  padding-inline: var(--space-1);
+}
+.gh-stars {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
 .navbar nav a.nav-icon svg {
   width: 18px;
   height: 18px;

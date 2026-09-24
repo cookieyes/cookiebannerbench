@@ -1,5 +1,6 @@
 import { ThemeToggle } from "@/components/theme-toggle";
 import { GITHUB_URL, SITE_NAME } from "@/lib/config";
+import { formatStars, githubStars } from "@/lib/github";
 
 const NAV = [
   { href: "/", label: "Leaderboard" },
@@ -18,8 +19,10 @@ const NAV = [
  *
  * The repository link is icon-only: the supplied GitHub mark is a CSS mask
  * filled with `currentColor`, so it takes the nav link's ink in both themes.
+ * Its star count is read at build time, so it costs visitors no request.
  */
-export function SiteHeader({ current }: { current?: string }) {
+export async function SiteHeader({ current }: { current?: string }) {
+  const stars = await githubStars();
   return (
     <header className="navbar">
       <div className="navbar-inner">
@@ -47,9 +50,20 @@ export function SiteHeader({ current }: { current?: string }) {
               {n.label}
             </a>
           ))}
-          <a href={GITHUB_URL} rel="noopener" className="nav-icon" title="GitHub repository">
+          <a
+            href={GITHUB_URL}
+            rel="noopener"
+            className={stars === null ? "nav-icon" : "nav-icon has-stars"}
+            title="GitHub repository"
+          >
             <span className="gh-mark" aria-hidden="true" />
             <span className="sr-only">GitHub repository</span>
+            {stars !== null && (
+              <span className="gh-stars">
+                <span aria-hidden="true">★ {formatStars(stars)}</span>
+                <span className="sr-only">, {stars} stars</span>
+              </span>
+            )}
           </a>
         </nav>
         <div className="tools">

@@ -38,19 +38,23 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const gtagScript = `window.dataLayer = window.dataLayer || [];
+// GA4 and Microsoft Clarity. The inline part only queues commands; the two tags
+// are created here with data-cookieyes set before src, so CookieYes holds them
+// until the visitor allows the Analytics category, on every page load. Being
+// created by script, they are also invisible to the browser's preloader, so
+// nothing is fetched from Google or Clarity before consent.
+const analyticsScript = `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-KBJVQM960J');
-var s = document.createElement('script');
-s.async = true;
-s.src = 'https://www.googletagmanager.com/gtag/js?id=G-KBJVQM960J';
-document.head.appendChild(s);`;
-const clarityScript = `(function(c,l,a,r,i,t,y){
-  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-})(window, document, "clarity", "script", "ymnkuq01qi");`;
+window.clarity = window.clarity || function(){(window.clarity.q = window.clarity.q || []).push(arguments)};
+['https://www.googletagmanager.com/gtag/js?id=G-KBJVQM960J', 'https://www.clarity.ms/tag/ymnkuq01qi'].forEach(function (src) {
+  var s = document.createElement('script');
+  s.setAttribute('data-cookieyes', 'cookieyes-analytics');
+  s.async = true;
+  s.src = src;
+  document.head.appendChild(s);
+});`;
 
 const themeScript =
   'try{var t=localStorage.getItem("cookiebannerbench-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}';
@@ -70,11 +74,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               src="https://cdn-cookieyes.com/client_data/bd4f5728c291fc3c702303b1bdfa3f6c/script.js"
             />
             {/* End cookieyes banner */}
-            {/* Google tag (gtag.js), loaded from the snippet so it stays after CookieYes */}
-            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant GA4 snippet. */}
-            <script dangerouslySetInnerHTML={{ __html: gtagScript }} />
-            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant Microsoft Clarity snippet. */}
-            <script type="text/javascript" dangerouslySetInnerHTML={{ __html: clarityScript }} />
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant GA4 and Clarity loader. */}
+            <script dangerouslySetInnerHTML={{ __html: analyticsScript }} />
           </>
         )}
       </head>

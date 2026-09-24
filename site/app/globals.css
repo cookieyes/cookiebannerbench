@@ -53,6 +53,7 @@ summary {
   display: list-item;
 }
 [hidden] {
+  /* biome-ignore lint/complexity/noImportantStyles: the hidden attribute must win over any component's display. */
   display: none !important;
 }
 

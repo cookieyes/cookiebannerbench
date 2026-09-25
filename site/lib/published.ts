@@ -33,7 +33,7 @@ export const PUBLISHED: readonly PublishedTarget[] = [
     vendor: "cookieyes",
     package: "@cookieyes/nextjs",
     installModel: "self-hosted-npm",
-    vendorUrl: "https://www.cookieyes.com",
+    vendorUrl: "https://developers.cookieyes.com/",
     affiliation: "Publishes this site",
   },
   {
@@ -42,7 +42,7 @@ export const PUBLISHED: readonly PublishedTarget[] = [
     vendor: "cookieyes",
     package: "@cookieyes/react",
     installModel: "self-hosted-npm",
-    vendorUrl: "https://www.cookieyes.com",
+    vendorUrl: "https://developers.cookieyes.com/",
     affiliation: "Publishes this site",
   },
   {

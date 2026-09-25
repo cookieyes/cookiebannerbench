@@ -254,7 +254,8 @@ try {
     assert.equal(await p.locator('[data-chart="score"] .bar').count(), n);
     // Whichever profile the leaderboard opens on, its link goes to that profile's page.
     await p.locator('tbody a[href^="/cmp/cookieyes-nextjs/"]').first().click();
-    assert.match(await p.title(), /to banner|LCP/);
+    // Landed on the detail page: its title names the installation and profile.
+    assert.match(await p.title(), /^CookieYes Next\.js Benchmark – /);
     report.noJavaScript.push({
       width,
       result: "server-rendered installations and working detail navigation",

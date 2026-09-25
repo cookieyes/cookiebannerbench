@@ -22,7 +22,6 @@ export interface Column {
   /** Spelled-out name, for the acronym columns; its presence draws the (i). */
   term?: string;
   unit?: Unit;
-  priority: number;
   /** "desc" for the score; every cost sorts ascending. */
   dir: "asc" | "desc";
   /** The tooltip hangs off the left edge on the columns nearest the provider. */
@@ -35,7 +34,6 @@ export const COLUMNS: Column[] = [
     label: "Score",
     define:
       "0–100 against published anchors: Banner Speed 30%, Page Impact 25%, Network Cost 25%, Visitor Experience 20%. Good ≥ 80, Fair 60–79, Poor < 60.",
-    priority: 2,
     dir: "desc",
     tipLeft: true,
   },
@@ -44,7 +42,6 @@ export const COLUMNS: Column[] = [
     label: "Time to banner",
     define: "From navigation start until the consent banner was detected as visible.",
     unit: "ms",
-    priority: 3,
     dir: "asc",
     tipLeft: true,
   },
@@ -53,7 +50,6 @@ export const COLUMNS: Column[] = [
     label: "Payload",
     define: "Bytes transferred beyond the no-SDK control on the same condition, read off the wire.",
     unit: "bytes",
-    priority: 4,
     dir: "asc",
   },
   {
@@ -61,7 +57,6 @@ export const COLUMNS: Column[] = [
     label: "Viewport blocked",
     define: "Share of the first viewport the banner's bounding box occupied when detected.",
     unit: "percent",
-    priority: 5,
     dir: "asc",
   },
   {
@@ -71,7 +66,6 @@ export const COLUMNS: Column[] = [
     define:
       "How much later the biggest element on screen, usually the main image or headline, renders than on the no-SDK control under the same condition. Reported, not scored.",
     unit: "ms",
-    priority: 8,
     dir: "asc",
   },
   {
@@ -81,7 +75,6 @@ export const COLUMNS: Column[] = [
     define:
       "How much more content jumps around than on the no-SDK control under the same condition, for example when a banner pushes it down. 0 means the banner moved nothing. Reported, not scored.",
     unit: "shift",
-    priority: 9,
     dir: "asc",
   },
   {
@@ -91,7 +84,6 @@ export const COLUMNS: Column[] = [
     define:
       "How much longer scripts kept the browser too busy to respond to a tap or click than on the no-SDK control under the same condition, counting only the part of each long task past 50 ms. Scored in Page Impact.",
     unit: "ms",
-    priority: 11,
     dir: "asc",
   },
   {
@@ -101,7 +93,6 @@ export const COLUMNS: Column[] = [
     define:
       "How much later the first text or image appears than on the no-SDK control under the same condition, so the site's own load time is taken out. Scored in Page Impact.",
     unit: "ms",
-    priority: 11,
     dir: "asc",
   },
 ];
@@ -346,8 +337,6 @@ export function Results({
   });
   const cellProps = (c: Column) => ({
     "data-metric": c.key,
-    "data-priority": String(c.priority),
-    "data-mobile": c.key === "bannerVisible" ? "true" : undefined,
   });
   return (
     <div
@@ -378,16 +367,6 @@ export function Results({
                 <select disabled name="percentile" defaultValue={slice.percentile}>
                   {["p50", "p75", "p95"].map((p) => (
                     <option key={p}>{p}</option>
-                  ))}
-                </select>
-              </label>
-              <label className="t-label mobile-metric">
-                Show
-                <select disabled name="mobile-metric" defaultValue="bannerVisible">
-                  {COLUMNS.filter((c) => c.key !== "score").map((c) => (
-                    <option key={c.key} value={c.key}>
-                      {c.label}
-                    </option>
                   ))}
                 </select>
               </label>

@@ -216,12 +216,15 @@ try {
   await rows().first().locator("td").nth(2).click();
   await page.waitForURL(`**${href}`);
   await page.goBack();
-  // Phone width: provider, score and one chosen metric.
+  // Phone width: every column stays; the table scrolls inside its card, not the page.
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.locator("[name=mobile-metric]").selectOption("lcp");
-  assert.equal(await page.locator("th[data-metric=lcp]").isVisible(), true);
-  assert.equal(await page.locator("th[data-metric=bannerVisible]").isVisible(), false);
+  for (const th of await page.locator("thead th[data-metric]").all())
+    assert.equal(await th.isVisible(), true);
   assert.equal(await page.locator("tbody tr:visible").count(), total);
+  assert.equal(
+    await page.locator(".table-scroll").evaluate((e) => e.scrollWidth > e.clientWidth),
+    true,
+  );
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   // Theme: explicit choice persists across a reload and yields to System.
   await page.getByRole("button", { name: "Dark theme", exact: true }).click();

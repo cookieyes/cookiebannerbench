@@ -1232,14 +1232,18 @@ button.pill {
 }
 .lb .sticky-1,
 .lb .sticky-2 {
-  position: sticky;
   background: var(--surface);
+}
+/* Only the provider is pinned. The score scrolls with the metrics: sticky with
+   no inset it never actually stuck, but it shared the provider's layer and, as
+   the later cell, was painted over the pinned name when the table scrolled. */
+.lb .sticky-1 {
+  position: sticky;
   z-index: var(--z-sticky);
 }
 /* A header tooltip is confined to its cell's layer; lift the sticky header
-   cells above the sticky body cells so the Score tooltip is not drawn under them. */
-.lb thead .sticky-1,
-.lb thead .sticky-2 {
+   cell above the sticky body cells so a tooltip is not drawn under them. */
+.lb thead .sticky-1 {
   z-index: calc(var(--z-sticky) + 1);
 }
 .lb .sticky-1 {
@@ -1272,19 +1276,6 @@ button.pill {
   border-radius: 1px;
   margin-top: 4px;
   vertical-align: baseline;
-}
-
-/* Column priority. Dropped from the right as width shrinks unless the reader
-   has set the column picker (data-cols="custom"), in which case `hidden`
-   attributes set by enhance.js are the only rule. */
-.leaderboard[data-cols="auto"] [data-priority="8"],
-.leaderboard[data-cols="auto"] [data-priority="9"],
-.leaderboard[data-cols="auto"] [data-priority="11"] {
-  display: none;
-}
-
-.control-bar .mobile-metric {
-  display: none;
 }
 
 .leaderboard[data-cols="custom"] [data-metric][hidden] {
@@ -2151,9 +2142,6 @@ body {
 }
 .control-bar label:has(select:disabled)::after {
   border-color: var(--text-disabled);
-}
-.control-bar .mobile-metric::after {
-  content: none;
 }
 .search {
   padding: 0 var(--space-4);
@@ -3603,84 +3591,39 @@ body {
     padding: var(--space-4) var(--space-3) var(--space-2);
   }
 }
-@media (min-width: 1280px) {
-  .leaderboard[data-cols="auto"] [data-priority="8"],
-  .leaderboard[data-cols="auto"] [data-priority="9"],
-  .leaderboard[data-cols="auto"] [data-priority="11"] {
-    display: table-cell;
-  }
-}
-@media (max-width: 1023px) {
-  .leaderboard[data-cols="auto"] [data-priority="5"],
-  .leaderboard[data-cols="auto"] [data-priority="6"],
-  .leaderboard[data-cols="auto"] [data-priority="7"] {
-    display: none;
-  }
-}
 @media (max-width: 639px) {
-  .leaderboard[data-cols="auto"] [data-priority="3"],
-  .leaderboard[data-cols="auto"] [data-priority="4"] {
-    display: none;
-  }
-  /* Below 640 the reader picks the one metric that shows. */
-  .leaderboard [data-metric][data-mobile="true"] {
-    display: table-cell;
-  }
-  .leaderboard .rank-col {
-    display: none;
-  }
   .lb th,
   .lb td {
     padding-left: var(--space-2);
     padding-right: var(--space-2);
   }
-  /* Three columns must fit without a sideways scroll: nothing is sticky, the
-     identity cell gives up width, and the affiliation pill drops to its own line. */
-  .lb .sticky-1,
-  .lb .sticky-2 {
-    position: static;
-    box-shadow: none;
-  }
-  .lb {
-    table-layout: fixed;
-  }
-  .lb th.sticky-1,
-  .lb td.sticky-1 {
-    width: auto;
-  }
-  .lb th.sticky-2,
-  .lb td[data-metric="score"] {
-    width: 72px;
-  }
-  .lb [data-metric][data-mobile="true"] {
-    width: 96px;
+  /* Every column stays at every width and the table scrolls sideways inside
+     its card. The provider stays pinned so a row can be read across; its name
+     and package are capped so the pin leaves room for the numbers. */
+  .lb .sticky-1 {
+    box-shadow: inset -1px 0 0 var(--hairline);
   }
   .lb .identity {
     gap: var(--space-2);
   }
+  .lb .identity > span:last-child {
+    min-width: 0;
+    max-width: 112px;
+  }
+  .lb .identity a,
   .lb .identity .slug {
+    display: block;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .lb .identity .aff {
     display: inline-flex;
     margin: 4px 0 0;
   }
-  .lb .identity > span:last-child {
-    min-width: 0;
-  }
-  .lb .identity a {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
 }
 @media (max-width: 639px) {
-  .control-bar .mobile-metric {
-    display: inline-flex;
-  }
   .chart-head {
     display: grid;
     gap: var(--space-2);
@@ -3854,15 +3797,6 @@ body {
   .table-tools .search {
     flex: 1 1 100%;
   }
-  /* The design's column names are sentences ("Time to banner", "Viewport
-     blocked"), which do not fit the 96px the one chosen metric gets on a
-     phone. The head is the only place they may wrap; values stay on one line. */
-  .lb thead th {
-    white-space: normal;
-  }
-  .lb thead th button {
-    text-align: right;
-  }
 }
 
 /* ── Responsive · phone-width fixes ───────────────────────────────────────
@@ -4002,4 +3936,11 @@ body {
   .wf .track .none {
     line-height: 20px;
   }
+}
+
+/* The toolbar lives inside the table's scroll container; pinned to its left
+   edge it stays in view while the columns scroll under it. */
+.table-scroll .table-tools {
+  position: sticky;
+  left: 0;
 }

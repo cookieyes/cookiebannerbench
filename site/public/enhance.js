@@ -103,7 +103,6 @@ const enhance = () => {
     // up fresh rather than held from setup.
     const control = (name) => region().querySelector(`[name=${name}]`);
     const query = () => control("query");
-    const mobileMetric = () => control("mobile-metric");
     const picker = () => region().querySelector(".col-picker");
     // Every run is cold-cache only, so there is no cache control; the cache
     // part of the key is read off the region itself.
@@ -178,14 +177,6 @@ const enhance = () => {
         `Columns · ${all.length - shown.size} hidden`,
       );
     };
-    /** Below 640 the reader picks the one metric that shows beside provider and score. */
-    const applyMobile = () => {
-      const chosen = mobileMetric();
-      if (!chosen) return;
-      for (const cell of region().querySelectorAll("[data-metric]"))
-        if (cell.dataset.metric === chosen.value) cell.dataset.mobile = "true";
-        else delete cell.dataset.mobile;
-    };
 
     const update = () => {
       const r = region();
@@ -258,7 +249,6 @@ const enhance = () => {
         } loads; intervals and every load are on the detail page.`,
       );
       applyColumns();
-      applyMobile();
       enable();
     };
 
@@ -300,10 +290,6 @@ const enhance = () => {
       if (name === "col") {
         board.dataset.cols = "custom";
         applyColumns();
-        return;
-      }
-      if (name === "mobile-metric") {
-        applyMobile();
         return;
       }
       if (!["profile", "percentile"].includes(name)) return;

@@ -6,16 +6,17 @@ import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Notice } from "@/components/ui";
-import { GITHUB_URL, SITE_URL } from "@/lib/config";
+import { GITHUB_URL } from "@/lib/config";
 import { FAQ } from "@/lib/faq";
+import { pageMetadata } from "@/lib/page-metadata";
 import { faqLd } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About — who publishes this, and why it can be checked",
   description:
     "CookieYes publishes Cookiebannerbench and appears in it. What that means, how the site is built, and answers to the questions worth asking.",
-  alternates: { canonical: `${SITE_URL}/about/` },
-};
+  path: "/about/",
+});
 
 /**
  * The one script the site ships, measured rather than remembered. A page that

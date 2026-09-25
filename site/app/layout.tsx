@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { SITE_NAME, SITE_URL } from "@/lib/config";
+import { INDEXABLE, SITE_NAME, SITE_URL } from "@/lib/config";
 import "./globals.css";
 
 // Archivo for language and every measured value; a 400–600 instance of the
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     "What consent banners cost the pages they sit on: banner speed, page impact, network cost and visitor experience, measured on identical pages and scored against published anchors.",
   openGraph: { siteName: SITE_NAME, type: "website" },
   twitter: { card: "summary_large_image" },
-  // Kept out of search engines for now. robots.txt still allows crawling, so
-  // crawlers can fetch the pages and see this tag.
-  robots: { index: false, follow: false },
+  // Indexed, except on Vercel preview builds (lib/config.ts). robots.txt allows
+  // crawling either way, so crawlers can fetch the pages and see this tag.
+  robots: INDEXABLE ? { index: true, follow: true } : { index: false, follow: false },
 };
 
 // GA4 and Microsoft Clarity. The inline part only queues commands; the two tags

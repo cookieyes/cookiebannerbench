@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import { Fragment } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { GITHUB_URL, LEGAL, SITE_NAME, SITE_URL } from "@/lib/config";
+import { GITHUB_URL, LEGAL, SITE_NAME } from "@/lib/config";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy policy",
   description:
     "What is processed when you visit cookiebannerbench.com, the cookies and local storage the site uses, and how to exercise your rights.",
-  alternates: { canonical: `${SITE_URL}/privacy/` },
-};
+  path: "/privacy/",
+});
 
 /** A postal address printed a line at a time, as the policy sets it. */
 function Lines({ lines }: { lines: readonly string[] }) {

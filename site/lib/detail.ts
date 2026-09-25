@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { loadRun, runIds } from "@/data/source";
-import { DEFAULT_SLICE, detailHref, SITE_URL } from "@/lib/config";
-import { formatMetric } from "@/lib/metrics";
-import { publishedTarget } from "@/lib/published";
+import { DEFAULT_SLICE, detailHref, profileLabel, SITE_URL } from "@/lib/config";
+import { formatDate, formatMetric } from "@/lib/metrics";
+import { pageMetadata } from "@/lib/page-metadata";
+import { installName, publishedTarget } from "@/lib/published";
 import { availableSlices, buildRows, type Row } from "@/lib/ranking";
 import { BAND_WORD, roundScore } from "@/lib/scoring";
 
@@ -28,37 +29,41 @@ export function detailData(app: string, profile: string = DEFAULT_SLICE.profile)
   return { entry, run, rows, row, control, conditions, profile };
 }
 
+const titleCase = (s: string) => s.replace(/\b\w/g, (c) => c.toUpperCase());
+
+/**
+ * The page's name: the installation and the test profile, and nothing that
+ * moves between runs. Live figures go in the description and the body, so the
+ * title a search result shows does not change every time the benchmark reruns.
+ */
+export function detailTitle(app: string, profile: string = DEFAULT_SLICE.profile) {
+  const entry = publishedTarget(app);
+  if (!entry) notFound();
+  return {
+    name: installName(entry),
+    title: `${installName(entry)} Benchmark – ${titleCase(profileLabel(profile))}`,
+  };
+}
+
 export function detailMetadata(app: string, profile: string = DEFAULT_SLICE.profile): Metadata {
   const { row, run } = detailData(app, profile);
+  const { name, title } = detailTitle(app, profile);
   const path = detailHref(app, profile);
-  const title = row.control
-    ? `Baseline, no consent SDK — ${formatMetric(row.values.lcp ?? null, "ms")} LCP`
-    : `${row.label}${row.package ? ` ${row.package}` : ""} — ${roundScore(row.scores.overall ?? 0)} ${
-        row.scores.band ? BAND_WORD[row.scores.band] : ""
-      }, ${formatMetric(row.values.bannerVisible ?? null, "ms")} to banner`;
-  const description = `${title}. Run ${run.runId}, ${profile.replace("-", " ")}, cold cache, p75. Score composition, every load, position in the field and the load timeline.`;
-  return {
+  const condition = `${profile} profile, run of ${formatDate(run.finishedAt)}, cold cache, p75`;
+  const bytes = row.scores.categories.flatMap((c) => c.metrics).find((m) => m.id === "bytes");
+  const description = row.control
+    ? `The no-SDK control on the ${condition}: ${formatMetric(row.values.lcp ?? null, "ms")} LCP. Every installation's first paint, blocking, bytes and requests are scored as the increase over this page.`
+    : `${name} on the ${condition}: ${
+        row.scores.overall === null
+          ? "not scored"
+          : `${roundScore(row.scores.overall)}/100${row.scores.band ? ` ${BAND_WORD[row.scores.band]}` : ""}`
+      }, ${formatMetric(row.values.bannerVisible ?? null, "ms")} to banner${
+        bytes?.measured ? `, ${formatMetric(bytes.cost, "bytes")} added` : ""
+      }. Score composition, every load, position in the field and the load timeline.`;
+  return pageMetadata({
     title,
     description,
-    alternates: { canonical: `${SITE_URL}${path}` },
-    openGraph: {
-      title,
-      description,
-      url: `${SITE_URL}${path}`,
-      images: [
-        {
-          url: `${SITE_URL}/cmp/${app}/opengraph-image`,
-          width: 1200,
-          height: 630,
-          alt: `${row.label} benchmark result`,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [`${SITE_URL}/cmp/${app}/opengraph-image`],
-    },
-  };
+    path,
+    image: { url: `${SITE_URL}/cmp/${app}/opengraph-image`, alt: `${name} benchmark result` },
+  });
 }

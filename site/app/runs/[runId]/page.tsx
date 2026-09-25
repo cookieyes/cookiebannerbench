@@ -6,11 +6,12 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Notice } from "@/components/ui";
 import { loadHistory, runIds } from "@/data/source";
-import { LEADERBOARD_SLICE, SITE_URL } from "@/lib/config";
+import { LEADERBOARD_SLICE } from "@/lib/config";
 import { formatDate } from "@/lib/metrics";
 import { leaderboardData } from "@/lib/page-data";
+import { pageMetadata } from "@/lib/page-metadata";
 import { methodForRun } from "@/lib/scoring";
-import { datasetLd, itemListLd } from "@/lib/structured-data";
+import { itemListLd, runDatasetLd } from "@/lib/structured-data";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -23,11 +24,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { runId } = await params;
   if (!runIds().includes(runId)) notFound();
-  return {
+  return pageMetadata({
     title: `Run ${runId.slice(0, 10)} — recorded results`,
     description: `Published installation measurements from run ${runId}, with the original profile and cache conditions.`,
-    alternates: { canonical: `${SITE_URL}/runs/${runId}/` },
-  };
+    path: `/runs/${runId}/`,
+  });
 }
 
 export default async function Run({ params }: { params: Promise<{ runId: string }> }) {
@@ -45,7 +46,7 @@ export default async function Run({ params }: { params: Promise<{ runId: string 
     <>
       <SiteHeader />
       <main id="main" className="page">
-        <JsonLd data={datasetLd(run, `/runs/${runId}/`, rows)} />
+        <JsonLd data={runDatasetLd(run, formatDate(run.finishedAt))} />
         <JsonLd data={itemListLd(rows, `/runs/${runId}/`)} />
         <section className="opening region">
           <nav className="crumbs t-ident-sm" aria-label="Breadcrumb" style={{ paddingTop: 0 }}>

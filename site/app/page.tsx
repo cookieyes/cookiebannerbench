@@ -3,18 +3,23 @@ import { JsonLd } from "@/components/json-ld";
 import { Leaderboard } from "@/components/leaderboard";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { LEADERBOARD_SLICE, SITE_URL } from "@/lib/config";
+import { LEADERBOARD_SLICE } from "@/lib/config";
 import { leaderboardData } from "@/lib/page-data";
+import { pageMetadata } from "@/lib/page-metadata";
 import { PUBLISHED } from "@/lib/published";
-import { datasetLd, itemListLd } from "@/lib/structured-data";
+import { benchmarkDatasetLd, itemListLd, siteLd } from "@/lib/structured-data";
 
 /** Counted from the published set, so the number in the description cannot drift. */
 const INSTALLS = PUBLISHED.filter((p) => p.installModel !== "control").length;
 
+// The layout's title template would append the site name a second time.
 export const metadata: Metadata = {
-  title: "What consent banners cost the pages they sit on",
-  description: `${INSTALLS} consent installations and a no-SDK control, measured on identical pages: banner speed, page impact, network cost and visitor experience, scored against published anchors.`,
-  alternates: { canonical: `${SITE_URL}/` },
+  ...pageMetadata({
+    title: "Cookie Banner Performance Benchmark | Cookiebannerbench",
+    description: `${INSTALLS} consent installations and a no-SDK control, measured on identical pages: banner speed, page impact, network cost and visitor experience, scored against published anchors.`,
+    path: "/",
+  }),
+  title: { absolute: "Cookie Banner Performance Benchmark | Cookiebannerbench" },
 };
 
 /**
@@ -36,15 +41,22 @@ export default function Home() {
     <>
       <SiteHeader current="/" />
       <main id="main" className="page">
-        <JsonLd data={datasetLd(run, "/", rows)} />
+        <JsonLd data={siteLd()} />
+        <JsonLd data={benchmarkDatasetLd(run, rows)} />
         <JsonLd data={itemListLd(rows)} />
 
         <section className="opening region">
-          <h1 className="t-display">The open benchmark for what consent banners actually cost.</h1>
+          {/* The h1 names the topic in the words people search for; the
+              display line beneath it is the page's headline as read. */}
+          <h1 className="t-label">Cookie banner performance benchmark</h1>
+          <p className="t-display headline">
+            The open benchmark for what consent banners actually cost.
+          </p>
           <p className="lede t-body">
-            We run every major consent banner under identical, fixed conditions and score it on
-            banner speed, page impact, network cost and visitor experience. Open source,
-            reproducible, and rerun as vendors change.
+            Compare how consent banners affect loading speed, page performance, network cost and
+            visitor experience under the same test conditions. Every result comes from repeatable
+            benchmark runs with a public methodology and raw measurements. Open source, and rerun as
+            vendors change.
           </p>
         </section>
 

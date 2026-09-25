@@ -1,22 +1,28 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
 import { MethodPanel, MethodTabs } from "@/components/method-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Notice, Pill } from "@/components/ui";
-import { DEFAULT_SLICE, GITHUB_URL, SITE_URL } from "@/lib/config";
+import { DEFAULT_SLICE, GITHUB_URL } from "@/lib/config";
 import { GLOSSARY } from "@/lib/glossary";
 import { formatDate, METRICS } from "@/lib/metrics";
 import { MODELS } from "@/lib/models";
 import { leaderboardData } from "@/lib/page-data";
+import { pageMetadata } from "@/lib/page-metadata";
 import { INCLUSION_RULE } from "@/lib/published";
 import { ANCHORS_FIXED, BANDS, formatAnchor, INPUTS, METHOD_VERSION } from "@/lib/scoring";
+import { methodologyLd } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-  title: "How we test",
+export const metadata: Metadata = pageMetadata({
+  title: "Cookie Banner Benchmark Methodology",
   description:
     "The run conditions, the four-category score with its eight measurements and their published anchors, shares and weights, the band cut-offs, number formatting, the collector's definition of every metric it records, what is published and why, and what these measurements cannot tell you.",
-  alternates: { canonical: `${SITE_URL}/methodology/` },
-};
+  path: "/methodology/",
+});
+
+/** The first published method (v1 in the changelog below). */
+const FIRST_PUBLISHED = "2026-09-15";
 
 /** Metrics the collector records, split the way the score treats them. */
 const SCORED = METRICS.filter((m) => m.scored !== "reported");
@@ -70,12 +76,13 @@ export default function Methodology() {
     <>
       <SiteHeader current="/methodology/" />
       <main id="main" className="page doc">
+        <JsonLd data={methodologyLd(FIRST_PUBLISHED, ANCHORS_FIXED)} />
         <section className="opening region">
           <div className="opening-copy">
             {/* One document, so one h1. The three parts are named by the
                 switcher beneath, which is where the design's board titles
                 went when they became tabs rather than pages. */}
-            <h1 className="t-display">How we test</h1>
+            <h1 className="t-display">How we test cookie banner performance</h1>
             <p className="lede t-body">
               Every score comes from real test runs on identical pages, not opinions. Here is
               exactly how each number is produced, which installations appear and why, and what

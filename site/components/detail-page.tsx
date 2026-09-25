@@ -4,13 +4,13 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ICONS, Mark, MetricCard, Notice, Pill, ScoreChip, Value } from "@/components/ui";
 import { loadAppMetadata, loadMeasurements, loadTargets } from "@/data/source";
-import { DEFAULT_SLICE, detailHref, LEADERBOARD_SLICE } from "@/lib/config";
-import { detailData } from "@/lib/detail";
+import { DEFAULT_SLICE, detailHref, LEADERBOARD_SLICE, profileLabel } from "@/lib/config";
+import { detailData, detailTitle } from "@/lib/detail";
 import { formatDate, formatMetric } from "@/lib/metrics";
 import { MODEL_LABEL } from "@/lib/models";
 import type { Row } from "@/lib/ranking";
 import { BAND_WORD, roundScore } from "@/lib/scoring";
-import { datasetLd } from "@/lib/structured-data";
+import { breadcrumbLd, installDatasetLd } from "@/lib/structured-data";
 
 const half = (ci: { lower: number; upper: number } | undefined) =>
   ci ? (ci.upper - ci.lower) / 2 : null;
@@ -48,6 +48,134 @@ const OutArrow = () => (
   </svg>
 );
 
+const ordinal = (n: number) => {
+  const tens = n % 100;
+  const suffix = tens >= 11 && tens <= 13 ? "th" : (["th", "st", "nd", "rd"][n % 10] ?? "th");
+  return `${n}${suffix}`;
+};
+
+/** A metric's name, linked to its definition on the methodology page. */
+const Term = ({ id, children }: { id: string; children: string }) => (
+  <a href={`/methodology/#${id}`}>{children}</a>
+);
+
+/**
+ * The test condition, and the result read out in words: generated from the
+ * same row the page draws, so it changes with every published run and never
+ * states a figure the page does not show.
+ */
+function Reading({
+  name,
+  profile,
+  row,
+  rows,
+  control,
+  bytesAdded,
+  over,
+  runDate,
+  loadCount,
+}: {
+  name: string;
+  profile: string;
+  row: Row;
+  rows: Row[];
+  control: Row | undefined;
+  bytesAdded: number | null;
+  over: (key: "fcp" | "tbt") => number | null;
+  runDate: string;
+  loadCount: number;
+}) {
+  // The control is a page, not a product, so it is not named like one.
+  const subject = row.control ? "the no-SDK control" : name;
+  const condition =
+    profile === "throttled-mobile" ? (
+      <>
+        This page shows {subject} under the <Term id="run">throttled-mobile profile</Term>, which
+        applies a 4× CPU slowdown, 1,638 kbps down, 750 kbps up and 150 ms of added latency to
+        simulate slower conditions; it does not emulate a phone screen.
+      </>
+    ) : profile === "fast-desktop" ? (
+      <>
+        This page shows {subject} under the <Term id="run">fast-desktop profile</Term>: desktop
+        Chromium with no CPU or network throttling.
+      </>
+    ) : (
+      <>
+        This page shows {subject} under the <Term id="run">{`${profile} profile`}</Term>.
+      </>
+    );
+  const cold = ` Every load is cold, and each figure is the p75 of ${loadCount} loads in the run of ${runDate}.`;
+  if (row.control)
+    return (
+      <p className="t-body">
+        {condition}
+        {cold} It is the same page with no consent banner, against which every installation's added
+        cost is measured.
+      </p>
+    );
+  const scored = rows.filter((r) => !r.control).length;
+  const overall = row.scores.overall;
+  const fcp = over("fcp");
+  const tbt = over("tbt");
+  const banner = row.values.bannerVisible;
+  const coverage = row.values.bannerViewportCoverage;
+  return (
+    <p className="t-body">
+      {condition}
+      {cold}{" "}
+      {overall === null
+        ? `${name} is not scored on this profile.`
+        : `${name} scored ${row.scores.provisional ? "a provisional " : ""}${roundScore(overall)}/100${
+            row.scores.band ? ` (${BAND_WORD[row.scores.band]})` : ""
+          }${row.rank ? ` and ranked ${ordinal(row.rank)} of the ${scored} tested installations` : ""}.`}{" "}
+      {banner === undefined || banner === null ? (
+        <>
+          No banner was detected, so <Term id="bannerVisible">time to banner</Term> and{" "}
+          <Term id="bannerViewportCoverage">viewport coverage</Term> have no value.
+        </>
+      ) : (
+        <>
+          The banner appeared in {formatMetric(banner, "ms")} (
+          <Term id="bannerVisible">time to banner</Term>)
+          {bytesAdded === null ? (
+            "."
+          ) : (
+            <>
+              {" "}
+              and the page transferred {formatMetric(bytesAdded, "bytes")} more than the no-SDK
+              control (<Term id="wireBytes">bytes over the wire</Term>).
+            </>
+          )}
+        </>
+      )}{" "}
+      {control && fcp !== null && tbt !== null ? (
+        <>
+          It{" "}
+          {fcp > 0
+            ? `delayed first paint by ${formatMetric(fcp, "ms")}`
+            : "did not delay first paint"}{" "}
+          (<Term id="fcp">FCP</Term>) and{" "}
+          {tbt > 0
+            ? `added ${formatMetric(tbt, "ms")} of Total Blocking Time`
+            : "added no Total Blocking Time"}{" "}
+          (<Term id="tbt">TBT</Term>)
+          {banner !== undefined &&
+          banner !== null &&
+          coverage !== undefined &&
+          coverage !== null ? (
+            <>
+              , and the banner covered {formatMetric(coverage, "percent")} of the first viewport (
+              <Term id="bannerViewportCoverage">viewport coverage</Term>).
+            </>
+          ) : (
+            "."
+          )}
+        </>
+      ) : null}
+    </p>
+  );
+}
+
 export function DetailPage({
   app,
   profile = DEFAULT_SLICE.profile,
@@ -56,6 +184,7 @@ export function DetailPage({
   profile?: string;
 }) {
   const { entry, run, rows, row, control, conditions } = detailData(app, profile);
+  const { name } = detailTitle(app, profile);
   const meta = loadAppMetadata(app);
   const target = loadTargets()[app];
   const loads = loadMeasurements(app).filter(
@@ -107,7 +236,20 @@ export function DetailPage({
     <>
       <SiteHeader />
       <main id="main" className="page">
-        <JsonLd data={datasetLd(run, detailHref(app, profile), [row])} />
+        <JsonLd
+          data={installDatasetLd(
+            run,
+            app,
+            detailHref(app, profile),
+            `${name} – ${profileLabel(profile)} benchmark results`,
+          )}
+        />
+        <JsonLd
+          data={breadcrumbLd([
+            { name: "Leaderboard", path: "/" },
+            { name: row.package ?? row.label, path: detailHref(app, profile) },
+          ])}
+        />
 
         <div className="page-top">
           <a className="btn ghost back" href={leaderboardHref}>
@@ -125,7 +267,9 @@ export function DetailPage({
         <header className="provider-head">
           <Mark app={entry} size="lg" />
           <div className="names">
-            <h1 className="t-title">{row.label}</h1>
+            <h1 className="t-title">
+              {name} – {profileLabel(profile)} benchmark
+            </h1>
             <div className="t-ident secondary">{slug}</div>
             {/* Delivery, and a provisional flag when one applies. The publisher
                 affiliation is carried by the footer and /about/, not repeated
@@ -157,6 +301,21 @@ export function DetailPage({
             </a>
           </div>
         </header>
+
+        {/* The condition, and the result in words */}
+        <section className="region prose detail-reading" aria-label="This result in words">
+          <Reading
+            name={name}
+            profile={profile}
+            row={row}
+            rows={rows}
+            control={control}
+            bytesAdded={row.control || !bytes?.measured ? null : bytes.cost}
+            over={over}
+            runDate={formatDate(run.finishedAt)}
+            loadCount={loadCount}
+          />
+        </section>
 
         {/* The score, and the four categories it is made of */}
         <section className="region card score-panel" aria-labelledby="score-h">

@@ -1,5 +1,9 @@
+import type { Metadata } from "next";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+
+// Never indexed, whatever the rest of the site is set to.
+export const metadata: Metadata = { robots: { index: false, follow: true } };
 
 export default function NotFound() {
   return (

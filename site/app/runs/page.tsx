@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { loadHistory } from "@/data/source";
-import { SITE_URL } from "@/lib/config";
 import { formatDate } from "@/lib/metrics";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Run history",
   description:
     "Every recorded run, with its date, target count, published installations and loads per condition.",
-  alternates: { canonical: `${SITE_URL}/runs/` },
-};
+  path: "/runs/",
+});
 
 export default function Runs() {
   const runs = loadHistory();

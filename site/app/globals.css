@@ -2434,6 +2434,14 @@ body {
 .opening h1 {
   max-width: 24ch;
 }
+/* The homepage's h1 is the topic label; its display line takes the measure. */
+.opening h1.t-label {
+  max-width: none;
+}
+.opening .headline {
+  max-width: 24ch;
+  margin-top: var(--space-3);
+}
 .opening .run-line {
   margin-top: var(--space-4);
 }

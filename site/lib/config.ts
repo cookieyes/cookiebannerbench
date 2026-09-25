@@ -1,6 +1,13 @@
 export const SITE_URL = "https://www.cookiebannerbench.com";
 export const SITE_NAME = "Cookiebannerbench";
 export const GITHUB_URL = "https://github.com/cookieyes/cookiebannerbench";
+export const LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`;
+/**
+ * Whether search engines may index the site: the robots meta tag and the
+ * robots.txt Content Signal both follow it. On, except in Vercel preview
+ * builds (VERCEL_ENV is set by Vercel itself), so previews stay out of search.
+ */
+export const INDEXABLE = process.env.VERCEL_ENV !== "preview";
 export const DISCLOSURE =
   "Published by CookieYes, which appears in these results. Anchors, weights, run conditions and every measurement are on the page so the comparison can be checked rather than trusted.";
 export const DEFAULT_PROFILE = "throttled-mobile";
@@ -23,6 +30,16 @@ export const LEADERBOARD_SLICE = { ...DEFAULT_SLICE, profile: "fast-desktop" };
  */
 export const detailHref = (app: string, profile: string = DEFAULT_SLICE.profile) =>
   profile === DEFAULT_SLICE.profile ? `/cmp/${app}/` : `/cmp/${app}/${profile}/`;
+/**
+ * A test profile as page titles and headings name it. "Throttled", not
+ * "mobile": the profile throttles CPU and network, it does not emulate a phone.
+ */
+const PROFILE_LABEL: Record<string, string> = {
+  "fast-desktop": "Fast desktop",
+  "throttled-mobile": "Throttled",
+};
+export const profileLabel = (profile: string) =>
+  PROFILE_LABEL[profile] ?? profile.replace("-", " ");
 
 // ---------------------------------------------------------------------------
 // Legal identity, used by /privacy/. Kept here so the details a reviewer will

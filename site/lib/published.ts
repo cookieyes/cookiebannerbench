@@ -216,5 +216,22 @@ export const REMOVED = [
 export function publishedTarget(app: string) {
   return PUBLISHED.find((entry) => entry.app === app);
 }
+const FRAMEWORK: Record<string, string> = { nextjs: "Next.js", react: "React" };
+/**
+ * One installation's name in words, unique across the published set: the
+ * vendor, then the framework its package targets and any mode ("c15t Next.js
+ * (offline mode)"), or "CDN script" where the vendor also ships a package.
+ * Titles and headings use it; the npm name stays beside it as the identifier.
+ */
+export function installName(entry: PublishedTarget): string {
+  if (entry.installModel === "control") return "No-SDK Baseline";
+  if (entry.package) {
+    const [name = "", ...mode] = entry.package.split(" ");
+    const slug = name.split("/").pop() ?? name;
+    return [entry.displayName, FRAMEWORK[slug] ?? slug, ...mode].join(" ");
+  }
+  const siblings = PUBLISHED.filter((p) => p.vendor === entry.vendor);
+  return siblings.length > 1 ? `${entry.displayName} CDN Script` : entry.displayName;
+}
 export const INCLUSION_RULE =
   "An installable consent product is published when its banner renders on the test domain and the vendor’s licensing permits that domain. A load in which no banner was detected is counted and shown on the row, never dropped quietly. Internal experimental variants are not published; the no-SDK baseline is shown separately as the control every cost is measured against.";

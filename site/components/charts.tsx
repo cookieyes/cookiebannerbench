@@ -382,6 +382,22 @@ export function Waterfall({ row, control }: { row: Row; control?: Row | undefine
             </span>
           ))}
         </div>
+        {/* The grouping above is measured against the full-width plot. Narrower,
+            the tags stack one per line instead, each still pinned to its own
+            event line, so no width can make two of them overprint. */}
+        <div className="tags stack">
+          {[...events]
+            .sort((a, b) => a.at - b.at)
+            .map((e) => (
+              <span
+                key={e.key}
+                className={`${e.ctl ? "ctl" : ""}${e.at / max > 0.5 ? " flip" : ""}`}
+                style={{ left: pc(e.at) }}
+              >
+                {e.label}
+              </span>
+            ))}
+        </div>
         <span />
       </div>
       <div className="lanes" role="img" aria-label={`How the banner lands, p75 load: ${label}.`}>

@@ -3864,3 +3864,142 @@ body {
     text-align: right;
   }
 }
+
+/* ── Responsive · phone-width fixes ───────────────────────────────────────
+   Twelve-plus bars in a 300px plot left each fill 10px wide, and the value
+   inside it clipped to one digit ("9" for 95). Below 640 the bars close up to
+   a 3px gap and take their whole column, and the marks shrink with the column
+   instead of overlapping their neighbours at 320px. */
+@media (max-width: 639px) {
+  .chart {
+    --bar-gap: 3px;
+  }
+  .bars-inner .bar .fill {
+    width: 100%;
+  }
+  .bars-inner .bar .fill .val {
+    padding-left: 0;
+    padding-right: 0;
+    overflow: visible;
+    text-overflow: clip;
+    letter-spacing: -0.04em;
+  }
+  .bar-head {
+    width: 100%;
+    justify-content: center;
+  }
+  .bar-head .mark.sm {
+    width: min(24px, 100%);
+    height: auto;
+    aspect-ratio: 1;
+  }
+}
+/* A metric card's label row carries a pill that can be longer than the name;
+   at 320px the pair pushed the card past the viewport. */
+.principle .t-label {
+  flex-wrap: wrap;
+}
+/* Breadcrumb links are 16px tall; on touch they get a 24px target without
+   moving the line they sit on. */
+@media (pointer: coarse) {
+  .crumbs a {
+    padding-block: 4px;
+    margin-block: -4px;
+  }
+}
+
+/* ── Responsive · the waterfall ───────────────────────────────────────────
+   The grouped event tags are merged against a 1032px plot, so on any narrower
+   plot "control LCP 217 ms" and "LCP 1.4 s" overprint. Below 1024 the stacked
+   set replaces them: one tag per line, each at its own event line. */
+.wf .events .tags {
+  grid-column: 2;
+  grid-row: 1;
+}
+.wf .events .tags.stack {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .wf .events .tags:not(.stack) {
+    display: none;
+  }
+  .wf .events .tags.stack {
+    display: grid;
+    height: auto;
+    row-gap: 2px;
+    overflow: visible;
+  }
+  .wf .events .tags.stack span {
+    position: relative;
+    justify-self: start;
+  }
+}
+/* Below 640 the 76px label and 60px value columns left the plot ~150px wide.
+   Each lane now puts its label and value on one line with the track beneath
+   at the card's full width, and the ruler, tags and gridlines follow it. */
+@media (max-width: 639px) {
+  .wf .ruler,
+  .wf .events {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .wf .ruler > span,
+  .wf .events > span {
+    display: none;
+  }
+  .wf .ruler .ticks,
+  .wf .events .tags {
+    grid-column: 1;
+  }
+  .wf .lanes .gridlines {
+    left: 0;
+    right: 0;
+  }
+  .wf .lanes {
+    gap: var(--space-2);
+  }
+  .wf .lane {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "lbl end"
+      "track track";
+    column-gap: var(--space-2);
+    row-gap: 0;
+  }
+  .wf .lane .lbl {
+    grid-area: lbl;
+    justify-self: start;
+    white-space: nowrap;
+    font-size: 0.6875rem;
+    line-height: 1rem;
+  }
+  .wf .lane .end {
+    grid-area: end;
+  }
+  /* Gridlines now run behind the label row; the text sits on the card. */
+  .wf .lane .lbl,
+  .wf .lane .end {
+    position: relative;
+    z-index: 1;
+    background: var(--surface);
+  }
+  .wf .lane .lbl {
+    padding-right: var(--space-1);
+  }
+  .wf .lane .end {
+    padding-left: var(--space-1);
+  }
+  .wf .track {
+    grid-area: track;
+    height: 20px;
+  }
+  .wf .track .bar {
+    top: 5px;
+  }
+  .wf .track .mark {
+    top: 1px;
+  }
+  .wf .track .none {
+    line-height: 20px;
+  }
+}

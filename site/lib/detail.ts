@@ -64,6 +64,6 @@ export function detailMetadata(app: string, profile: string = DEFAULT_SLICE.prof
     title,
     description,
     path,
-    image: { url: `${SITE_URL}/cmp/${app}/opengraph-image`, alt: `${name} benchmark result` },
+    image: { url: `${SITE_URL}/cmp/${app}/opengraph-image/`, alt: `${name} benchmark result` },
   });
 }

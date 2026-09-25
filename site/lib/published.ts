@@ -220,15 +220,17 @@ const FRAMEWORK: Record<string, string> = { nextjs: "Next.js", react: "React" };
 /**
  * One installation's name in words, unique across the published set: the
  * vendor, then the framework its package targets and any mode ("c15t Next.js
- * (offline mode)"), or "CDN script" where the vendor also ships a package.
+ * Offline"), or "CDN Script" where the vendor also ships a package.
  * Titles and headings use it; the npm name stays beside it as the identifier.
  */
 export function installName(entry: PublishedTarget): string {
   if (entry.installModel === "control") return "No-SDK Baseline";
   if (entry.package) {
-    const [name = "", ...mode] = entry.package.split(" ");
+    // "@c15t/nextjs (offline mode)" → "c15t Next.js Offline", short enough for a title.
+    const [name = "", mode] = entry.package.split(/ \((.+)\)$/);
     const slug = name.split("/").pop() ?? name;
-    return [entry.displayName, FRAMEWORK[slug] ?? slug, ...mode].join(" ");
+    const suffix = mode?.replace(/ mode$/, "").replace(/^\w/, (c) => c.toUpperCase());
+    return [entry.displayName, FRAMEWORK[slug] ?? slug, suffix].filter(Boolean).join(" ");
   }
   const siblings = PUBLISHED.filter((p) => p.vendor === entry.vendor);
   return siblings.length > 1 ? `${entry.displayName} CDN Script` : entry.displayName;

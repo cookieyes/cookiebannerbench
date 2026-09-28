@@ -72,8 +72,8 @@ gtag("consent", "default", {
   security_storage: "granted",
   wait_for_update: 2000,
 });
-gtag("set", "ads_data_redaction", true);
-gtag("set", "url_passthrough", true);`;
+gtag("set", "ads_data_redaction", false);
+gtag("set", "url_passthrough", false);`;
 
 const themeScript =
   'try{var t=localStorage.getItem("cookiebannerbench-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}';

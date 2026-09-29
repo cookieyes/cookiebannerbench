@@ -11,12 +11,18 @@ import { FAQ } from "@/lib/faq";
 import { pageMetadata } from "@/lib/page-metadata";
 import { faqLd } from "@/lib/structured-data";
 
-export const metadata: Metadata = pageMetadata({
-  title: "About — who publishes this, and why it can be checked",
-  description:
-    "CookieYes publishes Cookiebannerbench and appears in it. What that means, how the site is built, and answers to the questions worth asking.",
-  path: "/about/",
-});
+const TITLE = "Who publishes Cookiebannerbench and why you can check it";
+
+// The site name is in the sentence, so the layout's " | Cookiebannerbench" suffix is left off.
+export const metadata: Metadata = {
+  ...pageMetadata({
+    title: TITLE,
+    description:
+      "CookieYes publishes Cookiebannerbench and appears in it. What that means, how the site is built, and answers to the questions worth asking.",
+    path: "/about/",
+  }),
+  title: { absolute: TITLE },
+};
 
 /**
  * The one script the site ships, measured rather than remembered. A page that

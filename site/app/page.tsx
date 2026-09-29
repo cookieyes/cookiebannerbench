@@ -6,20 +6,19 @@ import { SiteHeader } from "@/components/site-header";
 import { LEADERBOARD_SLICE } from "@/lib/config";
 import { leaderboardData } from "@/lib/page-data";
 import { pageMetadata } from "@/lib/page-metadata";
-import { PUBLISHED } from "@/lib/published";
 import { benchmarkDatasetLd, itemListLd, siteLd } from "@/lib/structured-data";
 
-/** Counted from the published set, so the number in the description cannot drift. */
-const INSTALLS = PUBLISHED.filter((p) => p.installModel !== "control").length;
+const TITLE = "Consent Management Platform Comparison | Cookiebannerbench";
 
 // The layout's title template would append the site name a second time.
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "Cookie Banner Performance Benchmark | Cookiebannerbench",
-    description: `${INSTALLS} consent installations and a no-SDK control, measured on identical pages: banner speed, page impact, network cost and visitor experience, scored against published anchors.`,
+    title: TITLE,
+    description:
+      "Compare cookie banners on speed. See what each consent tool adds to time to banner, LCP, CLS and page weight, with every measurement public.",
     path: "/",
   }),
-  title: { absolute: "Cookie Banner Performance Benchmark | Cookiebannerbench" },
+  title: { absolute: TITLE },
 };
 
 /**
@@ -53,10 +52,8 @@ export default function Home() {
             The open benchmark for what consent banners actually cost.
           </p>
           <p className="lede t-body">
-            Compare how consent banners affect loading speed, page performance, network cost and
-            visitor experience under the same test conditions. Every result comes from repeatable
-            benchmark runs with a public methodology and raw measurements. Open source, and rerun as
-            vendors change.
+            Compare how cookie banners affect load speed and visitor experience under identical
+            conditions. Open source, with public methodology and raw data.
           </p>
         </section>
 

@@ -38,26 +38,40 @@ export const metadata: Metadata = {
   robots: INDEXABLE ? { index: true, follow: true } : { index: false, follow: false },
 };
 
-// GA4 and Microsoft Clarity. The inline part only queues commands; the two tags
-// are created here with data-cookieyes set before src, so CookieYes holds them
-// until the visitor allows the Analytics category, on every page load. Being
-// created by script, they are also invisible to the browser's preloader, so
-// nothing is fetched from Google or Clarity before consent.
+const COOKIEYES_SRC =
+  "https://cdn-cookieyes.com/client_data/bd4f5728c291fc3c702303b1bdfa3f6c/script.js";
+
+// CookieYes, then GA4 and Microsoft Clarity. CookieYes is inserted by script so
+// it no longer blocks first paint, and the two analytics tags are created only
+// from its load handler: CookieYes is always running before they exist, exactly
+// as it was when it loaded synchronously ahead of this code. Each tag gets
+// data-cookieyes before src, so CookieYes holds it until the visitor allows the
+// Analytics category, on every page load. If CookieYes fails to load (blocked,
+// offline), the tags are never created at all. The gtag and clarity calls
+// below only queue commands; nothing is fetched from Google or Clarity here.
 const analyticsScript = `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-KBJVQM960J');
 window.clarity = window.clarity || function(){(window.clarity.q = window.clarity.q || []).push(arguments)};
-['https://www.googletagmanager.com/gtag/js?id=G-KBJVQM960J', 'https://www.clarity.ms/tag/ymnkuq01qi'].forEach(function (src) {
-  var s = document.createElement('script');
-  s.setAttribute('data-cookieyes', 'cookieyes-analytics');
-  s.async = true;
-  s.src = src;
-  document.head.appendChild(s);
-});`;
+(function () {
+  var cy = document.createElement('script');
+  cy.id = 'cookieyes';
+  cy.src = '${COOKIEYES_SRC}';
+  cy.onload = function () {
+    ['https://www.googletagmanager.com/gtag/js?id=G-KBJVQM960J', 'https://www.clarity.ms/tag/ymnkuq01qi'].forEach(function (src) {
+      var s = document.createElement('script');
+      s.setAttribute('data-cookieyes', 'cookieyes-analytics');
+      s.async = true;
+      s.src = src;
+      document.head.appendChild(s);
+    });
+  };
+  document.head.appendChild(cy);
+})();`;
 
 // Google Consent Mode v2 defaults. Must run before the CookieYes script, which
-// updates these once the visitor makes a choice.
+// updates these once the visitor makes a choice; it runs first, synchronously.
 const consentDefaultsScript = `window.dataLayer = window.dataLayer || [];
 function gtag() {
   dataLayer.push(arguments);
@@ -86,16 +100,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {process.env.ENABLE_ANALYTICS === "true" && (
           <>
+            <link rel="preconnect" href="https://cdn-cookieyes.com" />
             {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant Consent Mode defaults. */}
             <script dangerouslySetInnerHTML={{ __html: consentDefaultsScript }} />
-            {/* Start cookieyes banner */}
-            <script
-              id="cookieyes"
-              type="text/javascript"
-              src="https://cdn-cookieyes.com/client_data/bd4f5728c291fc3c702303b1bdfa3f6c/script.js"
-            />
-            {/* End cookieyes banner */}
-            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant GA4 and Clarity loader. */}
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: constant CookieYes, GA4 and Clarity loader. */}
             <script dangerouslySetInnerHTML={{ __html: analyticsScript }} />
           </>
         )}

@@ -271,7 +271,7 @@ function HeroChart({
       <div className="bar-heads" aria-hidden="true">
         {items.map((i) => (
           <span key={i.row.app} className="bar-head">
-            <Mark app={i.row.app} size="sm" />
+            <Mark app={i.row.app} size="sm" lazy={!active} />
           </span>
         ))}
       </div>
@@ -474,7 +474,7 @@ export function Results({
                 <td className="l rank rank-col">{row.rank ? String(row.rank) : "—"}</td>
                 <th scope="row" className="l sticky-1">
                   <span className="identity">
-                    <Mark app={row.app} />
+                    <Mark app={row.app} lazy />
                     <span>
                       <a href={detailHref(row.app, slice.profile)}>{row.label}</a>
                       <span className="slug">{slugOf(row)}</span>

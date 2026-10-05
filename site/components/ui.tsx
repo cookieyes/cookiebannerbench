@@ -56,10 +56,20 @@ export function Pill({
  *
  * The plate is what makes that safe in both themes: a dark mark on `ink-950`
  * would vanish, so every mark sits on a fixed light plate (states-and-access).
- * A plain <img>, eager, with an explicit box: these are above the fold in every
- * row and a lazy image arriving late would shift the layout.
+ * A plain <img> with an explicit box; the plate's CSS size holds the space, so
+ * a mark that arrives late shifts nothing. Eager by default (the visible chart
+ * is above the fold); `lazy` for the hidden charts and the table below.
  */
-export function Mark({ app, size }: { app: string | PublishedTarget; size?: "sm" | "lg" }) {
+export function Mark({
+  app,
+  size,
+  lazy = false,
+}: {
+  app: string | PublishedTarget;
+  size?: "sm" | "lg";
+  /** For a mark in a hidden view or below the fold. */
+  lazy?: boolean;
+}) {
   const entry = typeof app === "string" ? publishedTarget(app) : app;
   if (!entry) return null;
   const control = entry.installModel === "control";
@@ -77,7 +87,7 @@ export function Mark({ app, size }: { app: string | PublishedTarget; size?: "sm"
           width={box}
           height={box}
           alt=""
-          loading="eager"
+          loading={lazy ? "lazy" : "eager"}
           decoding="async"
           style={{ width: "100%", height: "100%" }}
         />

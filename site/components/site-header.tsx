@@ -30,7 +30,7 @@ export async function SiteHeader({ current }: { current?: string }) {
           {/* biome-ignore lint/performance/noImgElement: images are unoptimized in this static export and next/image lazy-loads by default, which shifts the top bar. */}
           <img
             className="logo logo-light"
-            src="/brand/wordmark.png"
+            src="/brand/wordmark.webp"
             alt=""
             width={186}
             height={28}
@@ -38,7 +38,7 @@ export async function SiteHeader({ current }: { current?: string }) {
           {/* biome-ignore lint/performance/noImgElement: see above. */}
           <img
             className="logo logo-dark"
-            src="/brand/wordmark-dark.png"
+            src="/brand/wordmark-dark.webp"
             alt=""
             width={186}
             height={28}

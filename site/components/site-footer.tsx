@@ -76,7 +76,7 @@ export function SiteFooter() {
             {/* biome-ignore lint/performance/noImgElement: images are unoptimized in this static export and next/image lazy-loads by default. */}
             <img
               className="logo logo-light"
-              src="/brand/wordmark.png"
+              src="/brand/wordmark.webp"
               alt=""
               width={239}
               height={36}
@@ -84,7 +84,7 @@ export function SiteFooter() {
             {/* biome-ignore lint/performance/noImgElement: see above. */}
             <img
               className="logo logo-dark"
-              src="/brand/wordmark-dark.png"
+              src="/brand/wordmark-dark.webp"
               alt=""
               width={239}
               height={36}

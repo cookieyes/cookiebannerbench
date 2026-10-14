@@ -8,7 +8,7 @@ import { leaderboardData } from "@/lib/page-data";
 import { pageMetadata } from "@/lib/page-metadata";
 import { benchmarkDatasetLd, itemListLd, siteLd } from "@/lib/structured-data";
 
-const TITLE = "Consent Management Platform Comparison | Cookiebannerbench";
+const TITLE = "Cookie Banner Performance Comparison | Cookiebannerbench";
 
 // The layout's title template would append the site name a second time.
 export const metadata: Metadata = {

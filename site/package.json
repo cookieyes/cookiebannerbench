@@ -17,7 +17,7 @@
     "@cookieyes/vanilla": "0.1.1",
     "next": "15.5.26",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react-dom": "^19.3.1",
     "zod": "^3.24.1"
   },
   "devDependencies": {

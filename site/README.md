@@ -28,9 +28,15 @@ count stated; a condition with no banner at all is not scored.
 
 ## Consent banner and analytics
 
-The live site loads the CookieYes banner, Google Analytics 4 and Microsoft
-Clarity (`app/layout.tsx`). They are only rendered when the build sets
-`ENABLE_ANALYTICS=true`, so local builds, CI audits and forks leave them out.
+The live site uses the CookieYes banner from `@cookieyes/vanilla`, in
+`cookie-only` mode. The site ships no hydration runtime, so the banner's HTML
+and first-paint CSS are rendered into every page at build time
+(`app/layout.tsx`), and `scripts/build-consent.mjs` bundles `consent/entry.ts`
+to `out/consent.js`, which takes the banner over. Google Analytics 4 and
+Microsoft Clarity load through `@cookieyes/scripts` only once the visitor
+allows the Analytics category, behind a Consent Mode deny-by-default in
+`<head>`. All of it is only rendered when the build sets
+`ENABLE_ANALYTICS=true`, so local builds, CI audits and forks leave it out.
 
 ## The score
 

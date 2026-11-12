@@ -130,7 +130,7 @@ export default function Privacy() {
           <p className="t-body">
             You can use the site's cookie controls, where displayed, to accept or reject optional
             categories and change your choices later. You can change or withdraw your consent at any
-            time by selecting the floating “Revisit consent” button, shown on every page. This
+            time by selecting the floating “Consent Preferences” button, shown on every page. This
             reopens the preference panel, where you can enable or disable optional cookie categories
             and save your updated choices.
           </p>

@@ -207,6 +207,8 @@ export function loadAppMetadata(app: string) {
         openSource = "Yes (package license)";
     }
   }
+  if (entry.licenseNote && license !== "Not recorded")
+    license = `${license} (${entry.licenseNote})`;
   return {
     framework: deps.next ? `Next.js ${deps.next}` : "Not recorded",
     language: existsSync(join(REPO, "apps", app, "tsconfig.json"))

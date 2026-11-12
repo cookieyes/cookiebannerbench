@@ -25,6 +25,12 @@ export interface PublishedTarget {
   vendorUrl: string | null;
   /** Stated in the row when the provider is affiliated with whoever publishes the site. */
   affiliation: string | null;
+  /**
+   * Shown after the installed package's licence, for a licence change the
+   * measured version predates. The licence itself is still read from the
+   * installed package, so the row never claims more than that version grants.
+   */
+  licenseNote?: string;
 }
 export const PUBLISHED: readonly PublishedTarget[] = [
   {
@@ -35,6 +41,7 @@ export const PUBLISHED: readonly PublishedTarget[] = [
     installModel: "self-hosted-npm",
     vendorUrl: "https://developers.cookieyes.com/",
     affiliation: "Publishes this site",
+    licenseNote: "Apache-2.0 from the next release",
   },
   {
     app: "cookieyes-react",
@@ -44,6 +51,7 @@ export const PUBLISHED: readonly PublishedTarget[] = [
     installModel: "self-hosted-npm",
     vendorUrl: "https://developers.cookieyes.com/",
     affiliation: "Publishes this site",
+    licenseNote: "Apache-2.0 from the next release",
   },
   {
     app: "cookieyes-cdn",
